@@ -1,4 +1,15 @@
 <script setup>
+import { ref } from 'vue'
+import axios from 'axios'
+const total = ref(0)
+
+async function getValor() {
+    const { data } = await axios.get('http://localhost:8000/total')
+    console.log(data[0].total)
+    total.value = data[0].total
+}
+getValor()
+
 </script>
 
 <template>
@@ -9,7 +20,7 @@
         <div id="cofreInfo">
             <h2>Porquinho Fabricador</h2>
             <p>Dinheiro Contido No Porquinho:</p>
-            <h3 id="valor">R$: 00,00</h3>
+            <h3 id="valor">R$: {{ total.toFixed(2).replace(".",",") }}</h3>
             <div id="detalhes">
                 <div>
                     <p>Valor Contribuido No dia:</p>
@@ -28,7 +39,7 @@
 </template>
 
 <style scoped>
-section{
+section {
     display: flex;
     align-items: center;
     padding: 30px;
@@ -37,7 +48,7 @@ section{
     margin: 10px auto;
 }
 
-button#contribuir{
+button#contribuir {
     color: white;
     padding: 10px;
     background-color: #8C52FF;
@@ -50,37 +61,37 @@ button#contribuir{
     cursor: pointer;
 }
 
-section > div {
+section>div {
     width: 50%;
 }
 
-h3#valor{
+h3#valor {
     color: #8C52FF;
     font-size: 4vw;
 }
 
-#cofre{
+#cofre {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    
+
 }
 
-#cofreInfo{
+#cofreInfo {
     color: white;
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 30px;
-}   
+}
 
 
-img#cofrinho{
+img#cofrinho {
     width: 70%;
 }
 
-#detalhes{
+#detalhes {
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -89,7 +100,7 @@ img#cofrinho{
     word-wrap: break-word;
 }
 
-#detalhes div{
+#detalhes div {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -100,5 +111,12 @@ img#cofrinho{
     height: 150px;
     padding: 10px;
     text-align: center;
+}
+
+@media screen and (max-width: 1024px){
+    section{
+        flex-direction: column;
+        width: 100%;
+    }
 }
 </style>
