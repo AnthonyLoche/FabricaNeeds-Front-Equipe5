@@ -5,8 +5,8 @@ let menu = ref(false)
 
 <template>
     <header>
-        <div>
-            <h1 id="titulo">Fabrica Needs</h1>
+        <div id="titulo">
+            <h1>Fabrica Needs</h1>
         </div>
         <nav>
             <router-link to="/">Home</router-link>
@@ -48,6 +48,7 @@ header{
     align-items: center;
     padding: 30px;
     border-bottom: 2px solid #8C52FF;
+    background-color: #8C52FF;
 }
 
 span#navDois > a:hover{
@@ -75,8 +76,8 @@ button#menu{
     height: 100%;
 }
 
-h1#titulo{
-    color: #8C52FF;
+#titulo{
+    color: white;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -84,19 +85,21 @@ a{
     color: white;
     text-decoration: none;
     border-bottom: 2px solid white;
-    opacity: 0.8;
+    opacity: 1;
 }
 
 a:hover{
     opacity: 1;
     border-bottom: 2px solid #8C52FF;
     transition: 0.5s;
-    color: #8C52FF;
 }
 
 nav{
     display: flex;
     gap: 20px;
+    align-items: center;
+    font-size: 20px;
+    color: white;
 }
 
 #botoes{
@@ -174,7 +177,7 @@ a#github img{
      flex-direction: column;
     }
     button#menu{
-        color: #8C52FF;
+    color: white;
     padding: 10px;
     background-color: transparent;
     border: 0;
