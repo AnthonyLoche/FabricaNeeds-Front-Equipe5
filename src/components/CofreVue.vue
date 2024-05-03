@@ -25,9 +25,11 @@ getValor()
                 <div>
                     <p>Valor Contribuido No dia:</p>
                 </div>
+                <span></span>
                 <div>
                     <p>Maior Contribuidor:</p>
                 </div>
+                <span></span>
                 <div>
                     <p>Meta:</p>
                 </div>
@@ -39,6 +41,7 @@ getValor()
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Jersey+20+Charted&family=Oswald:wght@200..700&display=swap');
 section {
     display: flex;
     align-items: center;
@@ -53,6 +56,7 @@ button#contribuir {
     padding: 10px;
     background-color: #8C52FF;
     border: 0;
+    font-size: 20px;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -68,6 +72,9 @@ section>div {
 h3#valor {
     color: #8C52FF;
     font-size: 4vw;
+    font-family: "Oswald", sans-serif;
+    filter: brightness(1.2);
+    text-shadow: 0 0 15px #8C52FF;
 }
 
 #cofre {
@@ -84,6 +91,10 @@ h3#valor {
     align-items: center;
     flex-direction: column;
     gap: 30px;
+}
+#cofreInfo  > h2{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 30px;
 }
 
 
@@ -106,11 +117,14 @@ img#cofrinho {
     gap: 10px;
     width: 33%;
     align-items: center;
-    border-left: 2px solid #8C52FF;
-    border-right: 2px solid #8C52FF;
     height: 150px;
     padding: 10px;
     text-align: center;
+}
+#detalhes > span{
+    width: 2px;
+    height: 140px ;
+    border: 1px solid white;
 }
 
 @media screen and (max-width: 1024px){
