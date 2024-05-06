@@ -6,7 +6,7 @@ import axios from 'axios'
 
 const contribuicao = reactive({
     contribuicao: 0,
-    contribuinte: store().getId,
+    contribuinte: store.state.id,
 })
 
 
