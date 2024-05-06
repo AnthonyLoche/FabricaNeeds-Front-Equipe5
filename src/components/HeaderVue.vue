@@ -19,7 +19,7 @@ let menu = ref(false)
                 <img src="../../public/github.svg" alt="">
             </router-link>
             <router-link id="singup" to="/">Sing Up</router-link>
-            <router-link id="login" to="/">Log in</router-link>
+            <router-link id="login" to="/login">Log in</router-link>
         </div>
         <button id="menu" @click="menu = !menu">&#9776;</button>
         <span id="navDois" v-if="menu == true">
@@ -30,7 +30,7 @@ let menu = ref(false)
                 <router-link to="/about">Fábrica</router-link>
                 <div id="botoesDois">
             <router-link id="singup" to="/">Sing Up</router-link>
-            <router-link id="singup" to="/">Log in</router-link>
+            <router-link id="singup" to="/login">Log in</router-link>
             <router-link id="github" to="/">
                 <img src="../../public/github.svg" alt="">
             </router-link>
