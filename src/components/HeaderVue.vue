@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 let menu = ref(false)
+import store from '@/store/index.js'
 </script>
 
 <template>
@@ -20,27 +21,30 @@ let menu = ref(false)
             </router-link>
             <router-link id="singup" to="/">Sing Up</router-link>
             <router-link id="login" to="/login">Log in</router-link>
+            <button v-if="store.state.isLoged" @click="store.commit('logout')">Logout</button>
         </div>
         <button id="menu" @click="menu = !menu">&#9776;</button>
         <span id="navDois" v-if="menu == true">
             <button id="fechar" @click="menu = !menu">X</button>
-                <router-link to="/">Home</router-link>
-                <router-link to="/about">Cofre</router-link>
-                <router-link to="/about">Estoque</router-link>
-                <router-link to="/about">Fábrica</router-link>
-                <div id="botoesDois">
-            <router-link id="singup" to="/">Sing Up</router-link>
-            <router-link id="singup" to="/login">Log in</router-link>
-            <router-link id="github" to="/">
-                <img src="../../public/github.svg" alt="">
-            </router-link>
-        </div>
+            <router-link to="/">Home</router-link>
+            <router-link to="/about">Cofre</router-link>
+            <router-link to="/contribuir">Contribuir</router-link>
+            <router-link to="/about">Estoque</router-link>
+            <router-link to="/about">Fábrica</router-link>
+            <button v-if="store.state.isLoged" @click="store.commit('logout')">Logout</button>
+            <div id="botoesDois">
+                <router-link id="singup" to="/">Sing Up</router-link>
+                <router-link id="singup" to="/login">Log in</router-link>
+                <router-link id="github" to="/">
+                    <img src="../../public/github.svg" alt="">
+                </router-link>
+            </div>
         </span>
     </header>
 </template>
 
 <style scoped>
-header{
+header {
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -51,18 +55,18 @@ header{
     background-color: #8C52FF;
 }
 
-span#navDois > a:hover{
+span#navDois>a:hover {
     opacity: 1;
     border-bottom: 2px solid white;
     transition: 0.5s;
     color: white;
 }
 
-button#menu{
+button#menu {
     display: none;
 }
 
-#navDois{
+#navDois {
     position: fixed;
     display: flex;
     flex-direction: column;
@@ -76,25 +80,25 @@ button#menu{
     height: 100%;
 }
 
-#titulo{
+#titulo {
     color: white;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-a{
+a {
     color: white;
     text-decoration: none;
     border-bottom: 2px solid white;
     opacity: 1;
 }
 
-a:hover{
+a:hover {
     opacity: 1;
     border-bottom: 2px solid #8C52FF;
     transition: 0.5s;
 }
 
-nav{
+nav {
     display: flex;
     gap: 20px;
     align-items: center;
@@ -102,17 +106,17 @@ nav{
     color: white;
 }
 
-#botoes{
+#botoes {
     display: flex;
     gap: 20px;
 }
 
-#botoesDois{
+#botoesDois {
     display: none;
     gap: 20px;
 }
 
-a#github{
+a#github {
     color: white;
     padding: 10px;
     background-color: #8C52FF;
@@ -123,7 +127,7 @@ a#github{
     justify-content: center;
 }
 
-a#singup{
+a#singup {
     color: white;
     padding: 10px;
     background-color: rgb(46 46 46);
@@ -134,7 +138,7 @@ a#singup{
     justify-content: center;
 }
 
-button#fechar{
+button#fechar {
     color: white;
     background-color: transparent;
     font-size: 20pt;
@@ -146,7 +150,7 @@ button#fechar{
     justify-content: center;
 }
 
-a#login{
+a#login {
     color: white;
     padding: 10px;
     background-color: #8C52FF;
@@ -157,38 +161,41 @@ a#login{
     justify-content: center;
 }
 
-a#github img{
+a#github img {
     width: 30px;
     height: 30px;
 }
 
-@media screen and (max-width: 1024px){
-    nav{
+@media screen and (max-width: 1024px) {
+    nav {
         display: none;
     }
-    header{
+
+    header {
         justify-content: space-between;
     }
-    #botoes{
-     display: none;
-    }
-    #botoesDois{
-     display: flex;
-     flex-direction: column;
-    }
-    button#menu{
-    color: white;
-    padding: 10px;
-    background-color: transparent;
-    border: 0;
-    font-size: 25pt;
-    display: flex;
-    cursor: pointer;
+
+    #botoes {
+        display: none;
     }
 
-   
+    #botoesDois {
+        display: flex;
+        flex-direction: column;
+    }
+
+    button#menu {
+        color: white;
+        padding: 10px;
+        background-color: transparent;
+        border: 0;
+        font-size: 25pt;
+        display: flex;
+        cursor: pointer;
+    }
+
+
 
 
 }
-
 </style>

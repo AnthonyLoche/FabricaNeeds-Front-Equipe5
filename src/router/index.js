@@ -1,6 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
+import UserView from '../views/UserView.vue'
+import ContribuirView from '../views/CofreViews/ContribuirView.vue'
+
+import store from '../store/index.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,8 +18,29 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: LoginView
-    }
+    },
+    {
+      path: "/user",
+      name: "user",
+      component: UserView
+    },
+    {
+      path: "/contribuir",
+      name: "contribuir",
+      meta: {
+        requiresAuth: true
+      },
+      component: ContribuirView
+    },
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && !store.state.isLoggedIn) {
+    next('/')
+  } else {
+    next()
+  }
 })
 
 export default router

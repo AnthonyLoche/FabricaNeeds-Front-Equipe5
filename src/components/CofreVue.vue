@@ -30,9 +30,6 @@ getValor()
                     <p>Maior Contribuidor:</p>
                 </div>
                 <span></span>
-                <div>
-                    <p>Meta:</p>
-                </div>
             </div>
             <p>Contribua Você Também com o Nosso Amigo</p>
             <button id="contribuir">Contribuir</button>
