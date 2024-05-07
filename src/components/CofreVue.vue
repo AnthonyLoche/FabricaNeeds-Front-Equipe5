@@ -29,10 +29,10 @@ getValor()
                 <div>
                     <p>Maior Contribuidor:</p>
                 </div>
-                <span></span>
+                
             </div>
             <p>Contribua Você Também com o Nosso Amigo</p>
-            <button id="contribuir">Contribuir</button>
+            <router-link id="contribuir" to="/contribuir">Contribuir</router-link>
         </div>
     </section>
 </template>
@@ -48,11 +48,12 @@ section {
     margin: 10px auto;
 }
 
-button#contribuir {
+a#contribuir {
     color: white;
     padding: 10px;
     background-color: #8C52FF;
     border: 0;
+    text-decoration: none;
     font-size: 20px;
     border-radius: 10px;
     display: flex;

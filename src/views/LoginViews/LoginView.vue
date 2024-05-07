@@ -1,5 +1,5 @@
 <script setup>
-import HeaderVue from '../components/HeaderVue.vue'
+import HeaderVue from '../../components/HeaderVue.vue'
 import axios from 'axios';
 import { reactive } from 'vue'
 import store from '@/store/index.js'
@@ -16,8 +16,6 @@ function salvarDado(dado) {
 function salvarUsuario(dado) {
     store.commit('setUsuario', dado)
 }
-
-
 
 async function logar() {
     try {

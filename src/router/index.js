@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import LoginView from '../views/LoginView.vue'
-import UserView from '../views/UserView.vue'
+import LoginView from '../views/LoginViews/LoginView.vue'
+import SingInView from '../views/LoginViews/SingInView.vue'
+import UserView from '../views/LoginViews/UserView.vue'
 import ContribuirView from '../views/CofreViews/ContribuirView.vue'
+import EstoqueView from '../views/EstoqueViews/EstoqueView.vue'
 
 import store from '../store/index.js'
 
@@ -32,6 +34,17 @@ const router = createRouter({
       },
       component: ContribuirView
     },
+    {
+      path: "/singin",
+      name: "singin",
+      component: SingInView
+    
+    },
+    {
+      path: "/estoque",
+      name: "estoque",
+      component: EstoqueView
+    }
   ]
 })
 
