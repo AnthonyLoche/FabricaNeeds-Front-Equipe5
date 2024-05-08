@@ -53,6 +53,7 @@ header {
     padding: 30px;
     border-bottom: 2px solid #8C52FF;
     background-color: #8C52FF;
+    margin-bottom: 3rem;
 }
 
 span#navDois>a:hover {
