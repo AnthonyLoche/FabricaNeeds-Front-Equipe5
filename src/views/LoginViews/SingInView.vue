@@ -2,12 +2,43 @@
 import HeaderVue from '@/components/HeaderVue.vue'
 import { adicionar } from '@/api/api.js'
 import { reactive, ref } from 'vue'
+import axios from 'axios';
+import store from '@/store/index.js'
 
 const usuario = reactive({
   nome: '',
   email: '',
   senha: ''
 })
+
+const login = reactive({
+  nome: '',
+  senha: ''
+})
+
+function salvarDado(dado) {
+    store.commit('setisLoged', dado)
+}
+
+function salvarUsuario(dado) {
+    store.commit('setUsuario', dado)
+}
+
+async function logar() {
+    try {
+        const response = await axios.post('http://localhost:8000/login', login)
+        console.log(response.data)
+        salvarDado(true)
+        salvarUsuario(login.nome)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+
+
+
+
 const card = ref(null);
 const btnSign = ref(null);
 const btnLogin = ref(null);
@@ -47,9 +78,9 @@ const giraCard2 = () => {
         <div id="logIn">
           <form action="" method="post" @submit.prevent>
             <h2>Login:</h2>
-            <input type="email" v-model="usuario.email" placeholder="Email"  class="input" />
-            <input type="password" v-model="usuario.senha" placeholder="Senha"  class="input" />
-            <button @click="adicionar('contribuinte/', usuario)">Cadastrar</button>
+            <input type="text" v-model="login.nome" placeholder="Email"  class="input" />
+            <input type="password" v-model="login.senha" placeholder="Senha"  class="input" />
+            <button @click="logar">Login</button>
           </form>
         </div>
       </div>
