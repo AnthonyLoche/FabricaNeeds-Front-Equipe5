@@ -19,6 +19,7 @@
     "express": "^4.19.2",
     "mercadopago": "^2.0.9",
     "pinia": "^2.1.7",
+    "postgres": "^3.4.4",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
     "vuex": "^4.1.0"

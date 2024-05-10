@@ -43,6 +43,8 @@ app.post('/pagamento', (req, res) => {
      .catch((error) => console.log(error)) // Envie um erro caso ocorra um problema
 })
 
+
+
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 })  
