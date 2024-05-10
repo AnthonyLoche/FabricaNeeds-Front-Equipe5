@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.post('/pagamento', (req, res) => {
-    const client = new MercadoPagoConfig({ accessToken: 'APP_USR-942949289577962-050812-4019ece557a9f806f53560a6aa186e7a-1138000306' });
+    const client = new MercadoPagoConfig({ accessToken: '' });
     const payment = new Payment(client);
 
     const { paymentData } = req.body
