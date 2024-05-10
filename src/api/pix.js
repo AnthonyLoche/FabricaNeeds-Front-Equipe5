@@ -4,16 +4,26 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 const app = express();
 
+function gerarIdempotencyKey(tamanho) {
+    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-$#_@&';
+    let resultado = '';
+    for (let i = 0; i < tamanho; i++) {
+      resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+    }
+    console.log(resultado);
+    return resultado;
+  }
+
 app.use(bodyParser.json());
 app.use(cors());
 
 app.post('/pagamento', (req, res) => {
-    const client = new MercadoPagoConfig({ accessToken: '' });
+    const client = new MercadoPagoConfig({ accessToken: 'APP_USR-942949289577962-050812-4019ece557a9f806f53560a6aa186e7a-1138000306' });
     const payment = new Payment(client);
 
     const { paymentData } = req.body
 
-
+    
      payment.create({
          body: { 
              transaction_amount: paymentData.transaction_amount,
@@ -27,7 +37,7 @@ app.post('/pagamento', (req, res) => {
                  }
              }
          },
-         requestOptions: { idempotencyKey: '123123131' }
+         requestOptions: { idempotencyKey: gerarIdempotencyKey(40) }
      })
      .then((result) => res.send(result))  // Envie o resultado da criação do pagamento
      .catch((error) => console.log(error)) // Envie um erro caso ocorra um problema

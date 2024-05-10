@@ -12,6 +12,7 @@ async function testePagar(objeto){
     isOpen.value = true
     qrcode.value = data.point_of_interaction.transaction_data.qr_code_base64
     console.log(qrcode.value)
+    window.open(data.point_of_interaction.transaction_data.ticket_url)
 }
 
 const pagamento = reactive({
@@ -21,7 +22,7 @@ const pagamento = reactive({
         paymentMethodId: "pix",
         email: "",
         identificationType: "CPF",
-        number: ""
+        number: 0
     }
 })
 
@@ -38,7 +39,7 @@ const pagamento = reactive({
             <label for="email">Email</label>
             <input type="email" v-model="pagamento.paymentData.email" placeholder="Email" required>
             <label for="cpf">CPF</label>
-            <input type="text" v-model="pagamento.paymentData.number" placeholder="CPF" required>
+            <input type="number" v-model="pagamento.paymentData.number" placeholder="CPF" required>
             <label for="description">Descrição</label>
             <input type="text" v-model="pagamento.paymentData.description" placeholder="Descrição" required>
 
