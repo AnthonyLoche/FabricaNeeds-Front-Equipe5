@@ -5,7 +5,7 @@ const pessoas = ref([])
 import store from '.'
 
 async function fetchPessoas() {
-    const { data } = await axios.get('http://localhost:8000/contribuinte')
+    const { data } = await axios.get('https://fabricaneeds-back-equipe5-3edw.onrender.com/contribuinte')
     pessoas.value = data
     for (const item of pessoas.value) {
         const user = store.state.usuario

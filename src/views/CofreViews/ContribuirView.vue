@@ -5,7 +5,6 @@ import axios from 'axios';
 import store from '@/store/index.js'
 
 const isOpen = ref(false)
-const qrcode = ref("")
 
 
 const pagamento = reactive({
@@ -32,6 +31,7 @@ async function testePagar(objeto) {
         status: "pendent",
     })
     const { teste2 } = await axios.post("https://webhook.peraza.live/cadastrarPagamento/", teste)
+    console.log(teste2)
     isOpen.value = true
     window.open(data.result.point_of_interaction.transaction_data.ticket_url)
 }

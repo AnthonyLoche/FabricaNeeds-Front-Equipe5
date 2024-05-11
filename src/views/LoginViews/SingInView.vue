@@ -26,7 +26,7 @@ function salvarUsuario(dado) {
 
 async function logar() {
     try {
-        const response = await axios.post('http://localhost:8000/login', login)
+        const response = await axios.post('https://fabricaneeds-back-equipe5-3edw.onrender.com/login', login)
         console.log(response.data)
         salvarDado(true)
         salvarUsuario(login.nome)

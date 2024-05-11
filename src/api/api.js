@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 async function carregar(url, array) {
-    const { data } = await axios.get(`http://localhost:8000/${url}`);
+    const { data } = await axios.get(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}`);
     array.value = data;
 }
 
 async function adicionar(url, objeto) {
     try {
-        const { data } = await axios.post(`http://localhost:8000/${url}`, objeto);
+        const { data } = await axios.post(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}`, objeto);
         console.log(data);
         window.location.reload();
     } catch (error) {
@@ -17,7 +17,7 @@ async function adicionar(url, objeto) {
 
 async function atualizar(id, objeto, url) {
     try{
-        const { data } = await axios.patch(`http://localhost:8000/${url}/${id}`, objeto);
+        const { data } = await axios.patch(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${id}`, objeto);
         console.log(data);
         window.location.reload();
     }catch(error){
