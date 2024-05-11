@@ -13,5 +13,3 @@ Esperamos botar no ar a aplicação desenvolvida por uma das equipes, que será 
 Qualquer dúvida, colocamo-nos à disposição para auxiliar.
 
 Contem também com o auxílio dos fabricadores Cauã, Vinícius Nilo, Rafael Bochi, Lucas Antonete e Mateus Albano.
-
-https://docs.google.com/spreadsheets/d/1di82vAkF0TpXDJkT4OyTLygiw964dMU4idoKVKe4KSs/edit?usp=sharing
