@@ -15,7 +15,7 @@ getValor()
 <template>
     <section>
         <div id="cofre">
-            <img src="../../public/cofre.png" alt="" id="cofrinho">
+            <img src="../assets/Cofre.png" alt="" id="cofrinho">
         </div>
         <div id="cofreInfo">
             <h2>Porquinho Fabricador</h2>

@@ -86,7 +86,7 @@ const giraCard2 = () => {
       </div>
     </section>
   </div>
-  <div class="logo"><img src="../../../public/logo_fabrica.png" alt=""></div>
+  <div class="logo"><img src="../../assets/logo_fabrica.png" alt=""></div>
 </div>
   </main>
 </template>

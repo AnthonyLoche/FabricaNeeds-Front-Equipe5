@@ -17,7 +17,7 @@ import store from '@/store/index.js'
         </nav>
         <div id="botoes">
             <router-link id="github" to="/">
-                <img src="../../public/github.svg" alt="">
+                <img src="../assets/github.svg" alt="">
             </router-link>
             <router-link id="singup" to="/singin">Sing Up / Log In</router-link>
             <button v-if="store.state.isLoged" @click="store.commit('logout')">Logout</button>
@@ -34,7 +34,7 @@ import store from '@/store/index.js'
             <div id="botoesDois">
                 <router-link id="singup" to="/singin">Sing Up / Log In</router-link>
                 <router-link id="github" to="/">
-                    <img src="../../public/github.svg" alt="">
+                    <img src="../assets/github.svg" alt="">
                 </router-link>
             </div>
         </span>
