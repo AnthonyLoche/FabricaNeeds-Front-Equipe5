@@ -20,7 +20,7 @@ import store from '@/store/index.js'
                 <img src="../assets/github.svg" alt="">
             </router-link>
             <router-link id="singup" to="/singin">Sing Up / Log In</router-link>
-            <button v-if="store.state.isLoged" @click="store.commit('logout')">Logout</button>
+            <button v-if="store.state.isLoged" @click="store.commit('logout')" id="btnLogout">Logout</button>
         </div>
         <button id="menu" @click="menu = !menu">&#9776;</button>
         <span id="navDois" v-if="menu == true">
@@ -104,7 +104,20 @@ nav {
     font-size: 20px;
     color: white;
 }
+#btnLogout{
+    color: white;
+    padding: 10px;
+    background-color: #8C52FF;
+    border: 2px solid rgb(46 46 46);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    justify-content: center;
+    cursor: pointer;
 
+}
 #botoes {
     display: flex;
     gap: 20px;
