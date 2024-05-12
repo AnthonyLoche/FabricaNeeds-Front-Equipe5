@@ -75,8 +75,8 @@ section {
     padding: 1rem;
 }
 section > button{
-    width: 20%;
-    padding: .5rem;
+    width: 50%;
+    padding: 0.5rem;
     border-radius: .5rem;
     border: 2px solid #8C52FF;
     background-color: #8C52FF;
@@ -201,6 +201,10 @@ form > button{
 @media screen and (max-width: 1025px){
     dialog{
         width: 80%;
+    }
+    .item{
+        flex-direction: column;
+        gap: 10px;
     }
 }
 </style>

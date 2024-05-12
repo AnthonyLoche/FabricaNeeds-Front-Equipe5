@@ -206,10 +206,10 @@ form > button{
 @media screen and (max-width: 1024px) {
     section{
         flex-direction: column;
-        width: 90%;
+        width: 95%;
     }
     .ladoForm{
-        width: 80%;
+        width: 100%;
         height: 120%;
         padding: 20px;
     }
@@ -220,6 +220,10 @@ form > button{
         width: 80%;
         height: 120%;
         margin: 20px auto;
+    }
+    form{
+        width: 100%;
+        height: 100%;   
     }
 }
 </style>
