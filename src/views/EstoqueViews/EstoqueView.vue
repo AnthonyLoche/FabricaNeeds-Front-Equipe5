@@ -19,20 +19,11 @@ const modalAddIten = ref(null)
     <main>
     <section>
         <h2>Estoque Atual:</h2>
-        <div class="estoque">
-            <div v-for="item in itens" :key="item.id" class="itensEstoque">
-                <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>Item</th>
-                        <th>Quantidade</th>
-                    </tr>
-                    <tr>
-                        <td>{{ item.id }}</td>
-                        <td>{{ item.item }}</td>
-                        <td>{{ item.quantidade }}</td>
-                    </tr>
-                </table>
+        <div id="estoque">
+            <div class="item" v-for="item in itens" :key="item.id">
+                <p>Id: {{ item.id }}</p>
+                <p>Item: {{ item.item }}</p>
+                <p>Quantidade: {{ item.quantidade }}</p>
             </div>
         </div>
         <button @click="modalAddIten.showModal()">Adicionar Item</button>
@@ -63,8 +54,18 @@ const modalAddIten = ref(null)
 * {
     color: white;
 }
+
+.item{
+    width: 100%;
+    display: flex;
+    border: 2px solid #8C52FF;
+    border-radius: 10px;
+    padding: 20px;
+    justify-content: space-around;
+    align-items: center;
+}
 section {
-    width: 60%;
+    width: 80%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -188,85 +189,18 @@ form > button{
     border-radius: 10px;
     cursor: pointer;
 }
-.estoque{
-    width: 100%;
+
+#estoque{
+    width: 90%;
+    margin: 10px auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    max-height: 400px;
-    overflow-y: scroll;
-    border-radius: .5rem;
-    margin-bottom: 2rem;
-}
-.estoque::-webkit-scrollbar{
-    width: 12px;
-    padding: .5rem;
-    border-radius: 10px;
-}
-.estoque::-webkit-scrollbar-thumb{
-    background-color: #8C52FF;
-    border: 2px solid rgb(35 35 35);
-    border-radius: 10px;
-    width: 10px;
-}
-.estoque::-webkit-scrollbar-track{
-    background-color: transparent;
-    border: 2px solid rgb(35 35 35);
-    border-radius: 10px;
-}
-.itensEstoque{
-    width: 80%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: .5rem;
-    border-radius: .5rem;
-    margin-bottom: 1.5rem;
-    border: 2px solid #8C52FF;
-}
-.itensEstoque > button{
-    width: 20%;
-    padding: .5rem;
-    border-radius: .5rem;
-    border: 2px solid #8C52FF;
-    background-color: #8C52FF;
-    font-size: 16px;
-    cursor: pointer;
-
-}
-table {
-    width: 100%;
-    color: white;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    border-radius: .5rem;
+    gap: 30px;
 }
 
-th {
-    font-size: 1.2rem;
-    padding: 1rem;
-    color: #8C52FF;
-}
-
-td {
-    font-size: 1rem;
-    padding: 1rem;
-    text-align: center;
-}
-
-@media screen and (max-width: 1024px) {
-    section {
-        width: 100%;
-    }
-    dialog {
-        width: 70%;
-    }
-    .estoque {
+@media screen and (max-width: 1025px){
+    dialog{
         width: 80%;
     }
-    .itensEstoque {
-        width: 80%;
-    }
-    
 }
 </style>
