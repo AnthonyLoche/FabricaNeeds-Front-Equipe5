@@ -12,8 +12,8 @@ import store from '@/store/index.js'
         <nav>
             <router-link to="/">Home</router-link>
             <router-link to="/about">Cofre</router-link>
-            <router-link to="/about">Estoque</router-link>
-            <router-link to="/about">Fábrica</router-link>
+            <router-link to="/estoque">Estoque</router-link>
+            <router-link to="/user">Usuário</router-link>
         </nav>
         <div id="botoes">
             <router-link id="github" to="/">
@@ -28,8 +28,8 @@ import store from '@/store/index.js'
             <router-link to="/">Home</router-link>
             <router-link to="/about">Cofre</router-link>
             <router-link to="/contribuir">Contribuir</router-link>
-            <router-link to="/about">Estoque</router-link>
-            <router-link to="/about">Fábrica</router-link>
+            <router-link to="/estoque">Estoque</router-link>
+            <router-link to="/user">Usuário</router-link>
             <button v-if="store.state.isLoged" @click="store.commit('logout')">Logout</button>
             <div id="botoesDois">
                 <router-link id="singup" to="/singin">Sing Up / Log In</router-link>
