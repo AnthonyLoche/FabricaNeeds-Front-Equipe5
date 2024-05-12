@@ -1,7 +1,7 @@
 <script setup>
 import store from '@/store/index.js'
 import HeaderVue from '@/components/HeaderVue.vue'
-
+import FooterVue from '@/components/FooterVue.vue'
 </script>
 
 <template>
@@ -93,6 +93,7 @@ import HeaderVue from '@/components/HeaderVue.vue'
             </div>
         </section>
     </main>
+    <FooterVue />
 </template>
 
 <style scoped>
@@ -180,5 +181,29 @@ td {
     font-size: 1rem;
     padding: 1rem;
     text-align: center;
+}
+
+@media screen and (max-width: 1024px) {
+    section {
+        width: 80%;
+    }
+    .contribuicoes {
+        width: 100%;
+    }
+    .contribuicao {
+        width: 80%;
+    }
+    table {
+        width: 100%;
+    }
+    th {
+        font-size: 1rem;
+        padding: 1rem;
+    }
+    td {
+        font-size: 1rem;
+        padding: 1rem;
+        text-align: center;
+    }
 }
 </style>

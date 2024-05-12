@@ -1,5 +1,6 @@
 <script setup>
 import HeaderVue from '@/components/HeaderVue.vue'
+import FooterVue from '@/components/FooterVue.vue';
 import { adicionar } from '@/api/api.js'
 import { reactive, ref } from 'vue'
 import axios from 'axios';
@@ -30,6 +31,8 @@ async function logar() {
         console.log(response.data)
         salvarDado(true)
         salvarUsuario(login.nome)
+        alert('Logado com sucesso!')
+        window.location.href = '/'
     } catch (error) {
         console.error(error)
     }
@@ -69,7 +72,7 @@ const giraCard2 = () => {
         <div id="signIn">
           <form action="" method="post" @submit.prevent>
             <h2>Cadastre-se:</h2>
-            <input type="text" v-model="usuario.nome" placeholder="Nome" class="input" />
+            <input type="text" v-model="usuario.nome" placeholder="Username" class="input" />
             <input type="email" v-model="usuario.email" placeholder="Email" class="input" />
             <input type="password" v-model="usuario.senha" placeholder="Senha" class="input" />
             <button @click="adicionar('contribuinte/', usuario)">Cadastrar</button>
@@ -78,7 +81,7 @@ const giraCard2 = () => {
         <div id="logIn">
           <form action="" method="post" @submit.prevent>
             <h2>Login:</h2>
-            <input type="text" v-model="login.nome" placeholder="Email"  class="input" />
+            <input type="text" v-model="login.nome" placeholder="Username"  class="input" />
             <input type="password" v-model="login.senha" placeholder="Senha"  class="input" />
             <button @click="logar">Login</button>
           </form>
@@ -89,6 +92,7 @@ const giraCard2 = () => {
   <div class="logo"><img src="../../assets/logo_fabrica.png" alt=""></div>
 </div>
   </main>
+  <FooterVue />
 </template>
 
 <style scoped>
@@ -117,7 +121,7 @@ margin-bottom: 0;
   width: 25%;
   font-size: 18px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  background-color: rgb(26 26 26);
+  background-color: rgb(35 35 35);
   color: white;
   border: none;
   cursor: pointer;
@@ -231,7 +235,9 @@ form > button{
   margin: auto;
   justify-content: center;
   width: 80%;
-  /* border: 2px solid #8C52FF; */
+  background-color: rgb(35 35 35);
+  padding: 15px;
+  border-radius: 10px;
 }
 .input {
   background-color: transparent;
@@ -305,4 +311,23 @@ form>button {
     height: 100%;
     width: 100%;
 } */
+
+@media screen and (max-width: 1024px) {
+  .container-cadastro-logoFabrica{
+    flex-direction: column;
+    margin: auto;
+    width: 80%;
+  }
+  .container{
+    width: 80%;
+    margin: auto;
+  }
+  .logo{
+    width: 50%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
 </style>

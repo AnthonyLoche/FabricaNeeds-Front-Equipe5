@@ -1,5 +1,6 @@
 <script setup>
 import HeaderVue from '@/components/HeaderVue.vue';
+import FooterVue from '@/components/FooterVue.vue';
 import CofreVue from '@/components/CofreVue.vue';
 
 </script>
@@ -9,6 +10,7 @@ import CofreVue from '@/components/CofreVue.vue';
   <CofreVue />
   <main>
   </main>
+  <FooterVue />
 </template>
 
 <style scoped>

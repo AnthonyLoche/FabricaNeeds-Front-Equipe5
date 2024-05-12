@@ -1,5 +1,6 @@
 <script setup>
 import HeaderVue from '../../components/HeaderVue.vue'
+import FooterVue from '../../components/FooterVue.vue'
 import { reactive, ref } from 'vue'
 import axios from 'axios';
 import store from '@/store/index.js'
@@ -65,9 +66,7 @@ async function testePagar(objeto) {
     <div class="cofreImg"><img src="../../assets/Cofre.png" alt=""></div>
     
 </div>
-</section>
-    <img v-if="isOpen == true" :src="'data:image/jpeg;base64,' + qrcode" alt="" width="40%">
-
+</section><FooterVue />
 </template>
 
 <style scoped>
@@ -203,6 +202,26 @@ form > button{
     }
     100%{
         transform: translateY(0);
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    section{
+        flex-direction: column;
+        width: 90%;
+    }
+    .ladoForm{
+        width: 80%;
+        height: 120%;
+        padding: 20px;
+    }
+    .ladoForm > button {
+        padding: 10px;
+    }
+    .ladoImg{
+        width: 80%;
+        height: 120%;
+        margin: 20px auto;
     }
 }
 </style>

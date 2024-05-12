@@ -20,7 +20,7 @@ import store from '@/store/index.js'
                 <img src="../assets/github.svg" alt="">
             </router-link>
             <router-link id="singup" to="/singin">Sing Up / Log In</router-link>
-            <button v-if="store.state.isLoged" @click="store.commit('logout')" id="btnLogout">Logout</button>
+            <button v-if="store.state.isLoged == 'true'" @click="store.commit('logout')" id="btnLogout">Logout</button>
         </div>
         <button id="menu" @click="menu = !menu">&#9776;</button>
         <span id="navDois" v-if="menu == true">
@@ -30,7 +30,7 @@ import store from '@/store/index.js'
             <router-link to="/contribuir">Contribuir</router-link>
             <router-link to="/estoque">Estoque</router-link>
             <router-link to="/user">Usuário</router-link>
-            <button v-if="store.state.isLoged" @click="store.commit('logout')">Logout</button>
+            <button v-if="store.state.isLoged == 'true'" @click="store.commit('logout')" id="btnLogout">Logout</button>
             <div id="botoesDois">
                 <router-link id="singup" to="/singin">Sing Up / Log In</router-link>
                 <router-link id="github" to="/">

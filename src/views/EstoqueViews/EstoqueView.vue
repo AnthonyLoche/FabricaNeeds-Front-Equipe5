@@ -1,5 +1,6 @@
 <script setup>
 import HeaderVue from '@/components/HeaderVue.vue';
+import FooterVue from '@/components/FooterVue.vue';
 import { carregar, adicionar } from '@/api/api.js'
 import { ref, reactive } from 'vue'
 
@@ -55,6 +56,7 @@ const modalAddIten = ref(null)
         </form>
     </div></dialog>
 </main>
+<FooterVue />
 </template>
 
 <style scoped>
@@ -250,5 +252,21 @@ td {
     font-size: 1rem;
     padding: 1rem;
     text-align: center;
+}
+
+@media screen and (max-width: 1024px) {
+    section {
+        width: 100%;
+    }
+    dialog {
+        width: 70%;
+    }
+    .estoque {
+        width: 80%;
+    }
+    .itensEstoque {
+        width: 80%;
+    }
+    
 }
 </style>
