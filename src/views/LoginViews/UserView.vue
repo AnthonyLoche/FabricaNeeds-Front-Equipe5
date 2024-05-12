@@ -2,6 +2,25 @@
 import store from '@/store/index.js'
 import HeaderVue from '@/components/HeaderVue.vue'
 import FooterVue from '@/components/FooterVue.vue'
+import axios from 'axios';import { ref } from 'vue'
+
+const pagamentos = ref([])
+const pagamentosAprovados = ref([])
+const pagamentosPendentes = ref([])
+
+async function carregarPagamentos() {
+    try {
+        const response = await axios.get('https://webhook.peraza.live/obterPagamentos')
+        pagamentos.value = response.data
+        pagamentosAprovados.value = pagamentos.value.filter(pagamento => pagamento.status === 'Aprovado')
+        pagamentosPendentes.value = pagamentos.value.filter(pagamento => pagamento.status === 'Pendente')
+        console.log(pagamentosPendentes.value.length    ) 
+    } catch (error) {
+        console.error('Erro ao carregar os pagamentos:', error)
+    }
+}
+
+carregarPagamentos()
 </script>
 
 <template>
@@ -9,86 +28,31 @@ import FooterVue from '@/components/FooterVue.vue'
     <main>
         <section>
             <div class="helloUser">
-                <h2>Olá {{ store.state.usuario }}, Seja bem vindo</h2>
+                <h2>Olá {{ store.state.usuario }}, Seja Bem Vindo</h2>
                 <h2>Veja aqui suas contribuições:</h2>
             </div>
-            <div class="contribuicoes">
-                <div class="contribuicao">
-                    <table>
-                        <tr>
-                            <th>Status</th>
-                            <th>Descrição</th>
-                            <th>Valor</th>
-                            <th>Data</th>
-                        </tr>
-                        <tr>
-                            <td>Aprovado</td>
-                            <td>Compra de café</td>
-                            <td>R$20,00</td>
-                            <td>02/05/2024</td>
-                        </tr>
-                    </table>
+            <div id="contribuicoes">
+                <h2>Pagamentos Aprovados</h2>
+                <div class="pagamento" v-for="item in pagamentosAprovados" :key="item.id">
+                    <p>Valor: R${{ item.valor }}</p>
+                    <p>Status: {{ item.status }}</p>
+                    <p>Data do Pagamento: {{ item.data_pagamento }}</p>
+                    <p>Descrição: {{ item.descricao }}</p>
+                    <p>Data de Aprovação: {{ item.data_aprovacao }}</p>
+                    <p>CPF: {{ item.cpf }}</p>
+                    <p>Email: {{ item.email }}</p>
                 </div>
-                <div class="contribuicao">
-                    <table>
-                        <tr>
-                            <th>Status</th>
-                            <th>Descrição</th>
-                            <th>Valor</th>
-                            <th>Data</th>
-                        </tr>
-                        <tr>
-                            <td>Aprovado</td>
-                            <td>Compra de café</td>
-                            <td>R$20,00</td>
-                            <td>02/05/2024</td>
-                        </tr>
-                    </table>
-                </div><div class="contribuicao">
-                    <table>
-                        <tr>
-                            <th>Status</th>
-                            <th>Descrição</th>
-                            <th>Valor</th>
-                            <th>Data</th>
-                        </tr>
-                        <tr>
-                            <td>Aprovado</td>
-                            <td>Compra de café</td>
-                            <td>R$20,00</td>
-                            <td>02/05/2024</td>
-                        </tr>
-                    </table>
-                </div><div class="contribuicao">
-                    <table>
-                        <tr>
-                            <th>Status</th>
-                            <th>Descrição</th>
-                            <th>Valor</th>
-                            <th>Data</th>
-                        </tr>
-                        <tr>
-                            <td>Aprovado</td>
-                            <td>Compra de café</td>
-                            <td>R$20,00</td>
-                            <td>02/05/2024</td>
-                        </tr>
-                    </table>
-                </div><div class="contribuicao">
-                    <table>
-                        <tr>
-                            <th>Status</th>
-                            <th>Descrição</th>
-                            <th>Valor</th>
-                            <th>Data</th>
-                        </tr>
-                        <tr>
-                            <td>Aprovado</td>
-                            <td>Compra de café</td>
-                            <td>R$20,00</td>
-                            <td>02/05/2024</td>
-                        </tr>
-                    </table>
+                <h2>Pagamentos Pendentes:</h2>
+                <div class="pagamento" v-for="item in pagamentosPendentes" :key="item.id" >
+                <div>
+                    <p>Valor: R${{ item.valor }}</p>
+                    <p>Status: {{ item.status }}</p>
+                    <p>Data do Pagamento: {{ item.data_pagamento }}</p>
+                    <p>Descrição: {{ item.descricao }}</p>
+                    <p>Data de Aprovação: {{ item.data_aprovacao }}</p>
+                    <p>CPF: {{ item.cpf }}</p>
+                    <p>Email: {{ item.email }}</p>
+                </div>
                 </div>
             </div>
         </section>
@@ -98,7 +62,7 @@ import FooterVue from '@/components/FooterVue.vue'
 
 <style scoped>
 section {
-    width: 60%;
+    width: 90%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -125,85 +89,29 @@ section {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.contribuicoes {
+#contribuicoes {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem;
-    max-height: 400px;
-    overflow-y: scroll;
-    border-radius: .5rem;
-    margin-bottom: 2rem;
-}
-.contribuicoes::-webkit-scrollbar{
-    width: 12px;
-    padding: .5rem;
-    border-radius: 10px;
-}
-.contribuicoes::-webkit-scrollbar-thumb{
-    background-color: #8C52FF;
-    border: 2px solid rgb(35 35 35);
-    border-radius: 10px;
-    width: 10px;
-}
-.contribuicoes::-webkit-scrollbar-track{
-    background-color: transparent;
-    border: 2px solid rgb(35 35 35);
-    border-radius: 10px;
-}
-
-.contribuicao {
-    width: 80%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 1rem;
-    border-radius: .5rem;
-    margin-bottom: 1rem;
-}
-
-table {
-    width: 100%;
+    gap: 1rem;
+    margin: 10px auto;
     color: white;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.pagamento{
+    width: 100%;
     border: 2px solid #8C52FF;
-    border-radius: .5rem;
+    border-radius: 10px ;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;   
+    gap: 15px;
 }
 
-th {
-    font-size: 1.2rem;
-    padding: 1rem;
-    color: #8C52FF;
+.pagamento>p{
+    width: 50%;
 }
 
-td {
-    font-size: 1rem;
-    padding: 1rem;
-    text-align: center;
-}
-
-@media screen and (max-width: 1024px) {
-    section {
-        width: 80%;
-    }
-    .contribuicoes {
-        width: 100%;
-    }
-    .contribuicao {
-        width: 80%;
-    }
-    table {
-        width: 100%;
-    }
-    th {
-        font-size: 1rem;
-        padding: 1rem;
-    }
-    td {
-        font-size: 1rem;
-        padding: 1rem;
-        text-align: center;
-    }
-}
 </style>

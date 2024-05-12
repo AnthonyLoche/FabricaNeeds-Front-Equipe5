@@ -43,7 +43,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && store.state.isLoggedIn) {
+  if (to.meta.requiresAuth && store.state.isLogged) {
     next('/')
   } else {
     next()

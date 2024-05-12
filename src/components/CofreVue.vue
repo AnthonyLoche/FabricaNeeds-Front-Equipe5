@@ -5,11 +5,9 @@ const total = ref(0)
 
 async function getValor() {
     const { data } = await axios.get('https://fabricaneeds-back-equipe5-3edw.onrender.com/total')
-    console.log(data[0].total)
     total.value = data[0].total
 }
 getValor()
-
 </script>
 
 <template>
@@ -32,7 +30,7 @@ getValor()
                 
             </div>
             <p>Contribua Você Também com o Nosso Amigo</p>
-            <router-link id="contribuir" to="/contribuir">Contribuir</router-link>
+            <router-link id="contribuir"  to="/contribuir">Contribuir</router-link>
         </div>
     </section>
 </template>

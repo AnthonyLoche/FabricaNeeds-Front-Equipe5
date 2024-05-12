@@ -14,7 +14,14 @@ async function fetchPessoas() {
         }
     }
 
+    for(const item of pessoas.value){
+        const user = store.state.usuario
+        if(user == item.nome){
+            store.commit('setEmail', item.email)
+        }
+    }
 }
+
 fetchPessoas()
 
 export { pessoas, fetchPessoas }

@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 let menu = ref(false)
 import store from '@/store/index.js'
+
 </script>
 
 <template>
@@ -27,7 +28,6 @@ import store from '@/store/index.js'
             <button id="fechar" @click="menu = !menu">X</button>
             <router-link to="/">Home</router-link>
             <router-link to="/about">Cofre</router-link>
-            <router-link to="/contribuir">Contribuir</router-link>
             <router-link to="/estoque">Estoque</router-link>
             <router-link to="/user">Usuário</router-link>
             <button v-if="store.state.isLoged == 'true'" @click="store.commit('logout')" id="btnLogout">Logout</button>

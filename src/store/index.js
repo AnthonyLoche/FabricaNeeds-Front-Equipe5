@@ -5,25 +5,27 @@ const store = createStore({
     state: {
         isLoged: localStorage.getItem('isLoged'),
         usuario: localStorage.getItem('usuario') || '',
-        id: localStorage.getItem('id') || ''
+        id: localStorage.getItem('id') || '',
+        email: localStorage.getItem('email') || '',
     },
     mutations: {
         setisLoged(state, novoDado) {
             state.isLoged = localStorage.setItem('isLoged', novoDado)
-            console.log(novoDado)
         },
         setUsuario(state, novoDado) {
             state.usuario = localStorage.setItem('usuario', novoDado)
-            console.log(novoDado)
         },
         setId(state, novoDado) {
             state.id = localStorage.setItem('id', novoDado)
-            console.log(novoDado)
+        },
+        setEmail(state, novoDado) {
+            state.email = localStorage.setItem('email', novoDado)
         },
         logout(state) {
             state.isLoged = localStorage.setItem('isLoged', false)
             state.usuario = localStorage.setItem('usuario', '')
             state.id = localStorage.setItem('id', '')
+            state.email = localStorage.setItem('email', '')
         }
     },
     getters: {
@@ -35,6 +37,9 @@ const store = createStore({
         },
         getId() {
             return localStorage.getItem('id') || ''
+        },
+        getEmail() {
+            return localStorage.getItem('email') || ''
         }
     }
 })

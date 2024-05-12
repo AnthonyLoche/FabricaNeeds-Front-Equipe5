@@ -6,14 +6,14 @@ import axios from 'axios';
 import store from '@/store/index.js'
 
 const isOpen = ref(false)
-
+const email = store.state.email
 
 const pagamento = reactive({
     paymentData: {
         transaction_amount: 0,
         description: "",
         paymentMethodId: "pix",
-        email: "",
+        email: email,
         identificationType: "CPF",
         number: 0
     }
@@ -26,20 +26,21 @@ async function testePagar(objeto) {
     const teste = reactive({
         id: data.result.id,
         cliente: store.state.usuario,
-        email: pagamento.paymentData.email,
+        email: email,
         cpf: pagamento.paymentData.number,
         valor: pagamento.paymentData.transaction_amount,
-        status: "pendent",
+        status: "Pendente",
+        data_pagamento: new Date(),
+        data_aprovacao: "",
+        descricao: pagamento.paymentData.description
     })
     const { teste2 } = await axios.post("https://webhook.peraza.live/cadastrarPagamento/", teste)
     console.log(teste2)
     isOpen.value = true
     window.open(data.result.point_of_interaction.transaction_data.ticket_url)
 }
-
-
+console.log(store.state.email)
 </script>
-
 <template>
     <HeaderVue />
     <section>
@@ -49,9 +50,6 @@ async function testePagar(objeto) {
         <div class="input-label">
             <label for="valor">Valor:</label>
             <input type="number" v-model="pagamento.paymentData.transaction_amount" placeholder="Valor" required class="input"></div>
-            <div class="input-label">
-            <label for="">Email:</label>
-            <input type="email" v-model="pagamento.paymentData.email" required class="input"></div>
             <div class="input-label">
             <label for="">CPF:</label>
             <input type="text" v-model="pagamento.paymentData.number" required class="input"></div>
