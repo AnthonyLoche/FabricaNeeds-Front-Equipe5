@@ -4,6 +4,7 @@ import HeaderVue from '@/components/HeaderVue.vue'
 import FooterVue from '@/components/FooterVue.vue'
 import axios from 'axios';import { ref } from 'vue'
 
+const email = store.state.email
 const pagamentos = ref([])
 const pagamentosAprovados = ref([])
 const pagamentosPendentes = ref([])
@@ -12,9 +13,8 @@ async function carregarPagamentos() {
     try {
         const response = await axios.get('https://webhook.peraza.live/obterPagamentos')
         pagamentos.value = response.data
-        pagamentosAprovados.value = pagamentos.value.filter(pagamento => pagamento.status === 'Aprovado')
-        pagamentosPendentes.value = pagamentos.value.filter(pagamento => pagamento.status === 'Pendente')
-        console.log(pagamentosPendentes.value.length    ) 
+        pagamentosAprovados.value = pagamentos.value.filter(pagamento => pagamento.status === 'Aprovado' && pagamento.email === email)
+        pagamentosPendentes.value = pagamentos.value.filter(pagamento => pagamento.status === 'Pendente' && pagamento.email === email) 
     } catch (error) {
         console.error('Erro ao carregar os pagamentos:', error)
     }

@@ -11,7 +11,7 @@ getValor()
 </script>
 
 <template>
-    <section>
+<section>
         <div id="cofre">
             <img src="../assets/Cofre.png" alt="" id="cofrinho">
         </div>
@@ -26,6 +26,7 @@ getValor()
                 <span></span>
                 <div>
                     <p>Maior Contribuidor:</p>
+                    
                 </div>
                 
             </div>
