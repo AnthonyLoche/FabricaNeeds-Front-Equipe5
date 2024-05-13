@@ -19,17 +19,6 @@ getValor()
             <h2>Porquinho Fabricador</h2>
             <p>Dinheiro Contido No Porquinho:</p>
             <h3 id="valor">R$: {{ total.toFixed(2).replace(".",",") }}</h3>
-            <div id="detalhes">
-                <div>
-                    <p>Valor Contribuido No dia:</p>
-                </div>
-                <span></span>
-                <div>
-                    <p>Maior Contribuidor:</p>
-                    
-                </div>
-                
-            </div>
             <p>Contribua Você Também com o Nosso Amigo</p>
             <router-link id="contribuir"  to="/contribuir">Contribuir</router-link>
         </div>

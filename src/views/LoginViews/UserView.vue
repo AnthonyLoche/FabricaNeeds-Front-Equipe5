@@ -3,6 +3,13 @@ import store from '@/store/index.js'
 import HeaderVue from '@/components/HeaderVue.vue'
 import FooterVue from '@/components/FooterVue.vue'
 import axios from 'axios';import { ref } from 'vue'
+import router from '@/router'
+
+if(store.state.email == ""){
+    alert("Você precisa estar logado para acessar essa página")
+    router.push("/singin")
+}
+
 
 const email = store.state.email
 const pagamentos = ref([])
@@ -12,19 +19,31 @@ const pagamentosPendentes = ref([])
 async function carregarPagamentos() {
     try {
         const response = await axios.get('https://webhook.peraza.live/obterPagamentos')
+        
         pagamentos.value = response.data
+        
         pagamentosAprovados.value = pagamentos.value.filter(pagamento => pagamento.status === 'Aprovado' && pagamento.email === email)
+        
         pagamentosPendentes.value = pagamentos.value.filter(pagamento => pagamento.status === 'Pendente' && pagamento.email === email) 
+
     } catch (error) {
         console.error('Erro ao carregar os pagamentos:', error)
     }
 }
 
 carregarPagamentos()
+
+function copyPixCode(text) {
+    navigator.clipboard.writeText(text)
+        .then(() => alert('Código do PIX copiado!'))
+        .catch(err => console.error('Erro ao copiar o código do PIX:', err))
+}
+
 </script>
 
 <template>
     <HeaderVue />
+
     <main>
         <section>
             <div class="helloUser">
@@ -35,24 +54,26 @@ carregarPagamentos()
                 <h2>Pagamentos Aprovados</h2>
                 <div class="pagamento" v-for="item in pagamentosAprovados" :key="item.id">
                     <p>Valor: R${{ item.valor }}</p>
-                    <p>Status: {{ item.status }}</p>
+                    <p>Status: <strong style="color: green;">{{ item.status }}</strong></p>
                     <p>Data do Pagamento: {{ item.data_pagamento }}</p>
                     <p>Descrição: {{ item.descricao }}</p>
                     <p>Data de Aprovação: {{ item.data_aprovacao }}</p>
-                    <p>CPF: {{ item.cpf }}</p>
                     <p>Email: {{ item.email }}</p>
                 </div>
                 <h2>Pagamentos Pendentes:</h2>
                 <div class="pagamento" v-for="item in pagamentosPendentes" :key="item.id" >
-                <div>
+                
                     <p>Valor: R${{ item.valor }}</p>
-                    <p>Status: {{ item.status }}</p>
+                    <p>Status: <strong style="color: red;">{{ item.status }}</strong></p>
                     <p>Data do Pagamento: {{ item.data_pagamento }}</p>
                     <p>Descrição: {{ item.descricao }}</p>
                     <p>Data de Aprovação: {{ item.data_aprovacao }}</p>
-                    <p>CPF: {{ item.cpf }}</p>
                     <p>Email: {{ item.email }}</p>
-                </div>
+                    <p>Pix Copia e Cola: 
+                        <button @click="copyPixCode(item.pix_copiacola)" class="">Copiar PIX Copia e Cola</button>
+
+                    </p>
+                    
                 </div>
             </div>
         </section>
@@ -112,6 +133,19 @@ section {
 
 .pagamento>p{
     width: 50%;
+}
+
+button{
+padding: 10px;
+  font-size: 18px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: #8C52FF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: .5rem;
+  z-index: 2;
+
 }
 
 </style>

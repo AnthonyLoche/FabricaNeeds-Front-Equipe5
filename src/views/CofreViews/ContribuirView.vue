@@ -4,6 +4,12 @@ import FooterVue from '../../components/FooterVue.vue'
 import { reactive, ref } from 'vue'
 import axios from 'axios';
 import store from '@/store/index.js'
+import router from '@/router'
+
+if(store.state.email == ""){
+    alert("Você precisa estar logado para acessar essa página")
+    router.push("/singin")
+}
 
 const isOpen = ref(false)
 const email = store.state.email
@@ -22,6 +28,7 @@ const pagamento = reactive({
 
 
 async function testePagar(objeto) {
+    console.log(objeto)
     const { data } = await axios.post("https://webhook.peraza.live/pagamento/", objeto)
     const teste = reactive({
         id: data.result.id,
@@ -32,10 +39,12 @@ async function testePagar(objeto) {
         status: "Pendente",
         data_pagamento: new Date(),
         data_aprovacao: "",
-        descricao: pagamento.paymentData.description
+        descricao: pagamento.paymentData.description,
+        pix_copiacola: data.result.point_of_interaction.transaction_data.qr_code
     })
     const { teste2 } = await axios.post("https://webhook.peraza.live/cadastrarPagamento/", teste)
     console.log(teste2)
+    console.log(data)
     isOpen.value = true
     window.open(data.result.point_of_interaction.transaction_data.ticket_url)
 }
