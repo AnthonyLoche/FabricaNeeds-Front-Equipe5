@@ -5,7 +5,13 @@ import EntradasView from '@/components/Estoque/EntradasView.vue';
 import HeaderVue from '@/components/HeaderVue.vue';
 import FooterVue from '@/components/FooterVue.vue';
 import { ref } from 'vue';
+import store from '@/store/index.js';
+import router from '@/router';
 
+if(store.state.email == ""){
+    alert("Você precisa estar logado para acessar essa página")
+    router.push("/singin")
+}
 
 const estoqueDiv = ref(true)
 const demandasDiv = ref(false)
