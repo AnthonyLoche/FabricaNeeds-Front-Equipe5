@@ -17,13 +17,18 @@ const modalAddIten = ref(null)
     <main>
     <section>
         <h2>Estoque Atual:</h2>
+        <div class="rolagemItens">
         <div id="estoque">
             <div class="item" v-for="item in itens" :key="item.id">
-                <p>Id: {{ item.id }}</p>
-                <p>Item: {{ item.item }}</p>
-                <p>Quantidade: {{ item.quantidade }}</p>
+                <div class="headerItem"><p>ID:</p>
+                <p>ITEM:</p>
+                <p>QUANTIDADE:</p></div>
+                <div class="bodyItem"><p>{{ item.id }}</p>
+                <p>{{ item.item }}</p>
+                <p>{{ item.quantidade }}</p></div>
             </div>
         </div>
+    </div>
         <button @click="modalAddIten.showModal()">Adicionar Item</button>
     </section>
     <dialog id="modalAddIten" ref="modalAddIten">
@@ -57,13 +62,43 @@ const modalAddIten = ref(null)
     width: 100%;
     display: flex;
     border: 2px solid #8C52FF;
+    flex-direction: column;
     border-radius: 10px;
     padding: 20px;
     justify-content: space-around;
     align-items: center;
 }
+.headerItem{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    flex-wrap: nowrap;
+}
+.headerItem > p{
+    font-size: 1.2rem;
+    margin-bottom: .5rem;
+    margin-top: .5rem;
+    text-align: start;
+    color: #8C52FF;
+    width: 20%;
+}
+.bodyItem{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    flex-wrap: nowrap;
+}
+.bodyItem > p{
+    font-size: 1.2rem;
+    margin-bottom: .5rem;
+    margin-top: .5rem;
+    text-align: start;
+    width: 20%;
+}
 section {
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -189,11 +224,23 @@ form > button{
 }
 
 #estoque{
-    width: 90%;
-    margin: 10px auto;
+    width: 80%;
+    margin: 2rem auto;
     display: flex;
     flex-direction: column;
     gap: 30px;
+}
+.rolagemItens{
+    width: 100%;
+    max-height: 450px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+    padding: 1rem;
+    border: 2px solid #8C52FF;
+    border-radius: 10px;
 }
 
 @media screen and (max-width: 1025px){

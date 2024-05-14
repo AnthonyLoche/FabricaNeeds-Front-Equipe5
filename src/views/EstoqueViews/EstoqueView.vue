@@ -80,6 +80,7 @@ const entradasFuncao = () => {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
     flex-direction: column;
 }
 </style>
