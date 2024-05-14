@@ -15,16 +15,28 @@ async function adicionar(url, objeto) {
     }
 }
 
-async function atualizar(id, objeto, url) {
+async function atualizar(objeto, url) {
     try{
-        const { data } = await axios.patch(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${id}`, objeto);
+        console.log(objeto);
+        const { data } = await axios.put(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`, objeto);
         console.log(data);
-        window.location.reload();
+        alert('Atualizado com sucesso!');
     }catch(error){
+        console.log(error);
+    }
+}
+
+async function deletar(objeto, url) {
+    try{
+        const { data } = await axios.delete(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`);
+        console.log(data);
+        alert('Deletado com sucesso!');
+    }
+    catch(error){
         console.log(error);
     }
 }
 
 
 
-export { carregar, adicionar, atualizar };
+export { carregar, adicionar, atualizar, deletar };

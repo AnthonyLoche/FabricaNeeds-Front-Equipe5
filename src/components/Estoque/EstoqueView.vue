@@ -1,5 +1,5 @@
 <script setup>
-import { carregar, adicionar } from '@/api/api.js'
+import { carregar, adicionar, atualizar, deletar } from '@/api/api.js'
 import { ref, reactive } from 'vue'
 
 const itens = ref([])
@@ -10,6 +10,8 @@ const item = reactive({
     quantidade: 0
 })
 const modalAddIten = ref(null)
+
+
 </script>
 
 <template>
@@ -25,8 +27,13 @@ const modalAddIten = ref(null)
                 <p>QUANTIDADE:</p></div>
                 <div class="bodyItem"><p>{{ item.id }}</p>
                 <p>{{ item.item }}</p>
-                <p>{{ item.quantidade }}</p></div>
+                <input type="number" v-model="item.quantidade" placeholder="Quantidade" class="inputAtualizar">
+                <button @click="atualizar(item, 'estoque')">Atualizar</button>
+                <button @click="deletar(item, 'estoque')">EXCLUIR ITEM</button>
             </div>
+            
+            </div>
+            
         </div>
     </div>
         <button @click="modalAddIten.showModal()">Adicionar Item</button>
@@ -45,17 +52,22 @@ const modalAddIten = ref(null)
         </div>
         <div class="input-label">
             <label for="">Quantidade:</label>
-            <input type="number" v-model="item.quantidade" placeholder="Quantidade"></div>
+            <input type="number" v-model="item.quantidade" placeholder="Quantidade" >
             <button @click="adicionar('estoque/', item)">Adicionar</button>
+        </div>
         </form>
-    </div></dialog>
-</main>
+    </div></dialog></main>
 
 </template>
 
 <style scoped>
 * {
     color: white;
+}
+
+input.inputAtualizar{
+    width: 10%;
+    border: 0;
 }
 
 .item{
