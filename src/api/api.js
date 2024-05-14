@@ -9,7 +9,7 @@ async function adicionar(url, objeto) {
     try {
         const { data } = await axios.post(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}`, objeto);
         console.log(data);
-        window.location.reload();
+        alert('Adicionado com sucesso!');
     } catch (error) {
         console.log(error);
     }
