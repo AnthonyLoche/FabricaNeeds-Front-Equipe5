@@ -10,7 +10,12 @@ const item = reactive({
     quantidade: 0
 })
 const modalAddIten = ref(null)
-
+const inputPesquisa = ref("")
+function filteredList() {
+    return itens.value.filter((itemf) =>
+        itemf.item.toLowerCase().includes(inputPesquisa.value.toLowerCase())
+    );
+}
 
 </script>
 
@@ -19,20 +24,25 @@ const modalAddIten = ref(null)
     <main>
     <section>
         <h2>Estoque Atual:</h2>
+        <input class="input-pesquisa" type="text" v-model="inputPesquisa" placeholder="Procurar itens..." />
         <div class="rolagemItens">
         <div id="estoque">
-            <div class="item" v-for="item in itens" :key="item.id">
+            <div class="item" v-for="item in filteredList()" :key="item.id">
                 <div class="headerItem"><p>ID:</p>
-                <p>ITEM:</p>
-                <p>QUANTIDADE:</p></div>
+                <p class="center">ITEM:</p>
+                <p>QUANTIDADE:</p>
+                <p>Ações:</p></div>
                 <div class="bodyItem"><p>{{ item.id }}</p>
                 <p>{{ item.item }}</p>
                 <input type="number" v-model="item.quantidade" placeholder="Quantidade" class="inputAtualizar">
-                <button @click="atualizar(item, 'estoque')">Atualizar</button>
-                <button @click="deletar(item, 'estoque')">EXCLUIR ITEM</button>
+                <span><button @click="atualizar(item, 'estoque')">Atualizar</button>
+                <button @click="deletar(item, 'estoque')">EXCLUIR ITEM</button></span>
             </div>
-            
             </div>
+            <div class="item error" v-if="inputPesquisa && !filteredList().length">
+                                <p>No results found!</p>
+            </div>
+
             
         </div>
     </div>
@@ -83,7 +93,7 @@ input.inputAtualizar{
 .headerItem{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     width: 100%;
     flex-wrap: nowrap;
 }
@@ -102,12 +112,27 @@ input.inputAtualizar{
     width: 100%;
     flex-wrap: nowrap;
 }
-.bodyItem > p{
+.bodyItem > p, span{
     font-size: 1.2rem;
     margin-bottom: .5rem;
     margin-top: .5rem;
     text-align: start;
     width: 20%;
+}
+p.center{
+    text-align: center;
+}
+
+span > button{
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: .5rem;
+    border: 2px solid #8C52FF;
+    background-color: #8C52FF;
+    margin-top: .25rem;
+    font-size: 16px;
+    cursor: pointer;
+
 }
 section {
     width: 70%;
@@ -254,7 +279,9 @@ form > button{
     border: 2px solid #8C52FF;
     border-radius: 10px;
 }
-
+.input-pesquisa{
+    margin: 1rem auto;
+}
 @media screen and (max-width: 1025px){
     dialog{
         width: 80%;
