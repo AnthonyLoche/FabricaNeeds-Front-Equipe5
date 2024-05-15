@@ -34,13 +34,29 @@ async function logar() {
         alert('Logado com sucesso!')
         window.location.href = '/'
     } catch (error) {
-        console.error(error)
+        if (error.response.status === 401) {
+            alert('Usuário ou senha incorretos!')
+        }
+        else if (error.response.status === 500) {
+            alert('Erro no servidor!')
+        }
+        else if(error.response.status === 404){
+            alert('Usuário não encontrado!')
+        }
+        else {
+            alert('Erro desconhecido!')
+        }
     }
 }
 
-
-
-
+function verificarCadastro(){
+    if(usuario.nome == '' || usuario.email == '' || usuario.senha == ''){
+        alert('Preencha todos os campos!')
+    }
+    else{
+        adicionar('contribuinte/', usuario)
+    }
+}
 
 const card = ref(null);
 const btnSign = ref(null);
@@ -75,7 +91,7 @@ const giraCard2 = () => {
             <input type="text" v-model="usuario.nome" placeholder="Username" class="input" />
             <input type="email" v-model="usuario.email" placeholder="Email" class="input" />
             <input type="password" v-model="usuario.senha" placeholder="Senha" class="input" />
-            <button @click="adicionar('contribuinte/', usuario)">Cadastrar</button>
+            <button @click="verificarCadastro">Cadastrar</button>
           </form>
         </div>
         <div id="logIn">
