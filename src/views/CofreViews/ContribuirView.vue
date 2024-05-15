@@ -5,6 +5,7 @@ import { reactive, ref } from 'vue'
 import axios from 'axios';
 import store from '@/store/index.js'
 import router from '@/router'
+
 if(store.state.isLoged == 'false'){
     alert("Você precisa estar logado para acessar essa página")
     router.push("/singin")
@@ -17,7 +18,7 @@ const pagamento = reactive({
         transaction_amount: 0,
         description: "",
         paymentMethodId: "pix",
-        email: store.state.email,
+        email: '',
         identificationType: "CPF",
         number: 0
     }
@@ -64,6 +65,10 @@ console.log(store.state.email)
             <div class="input-label">
             <label for="">Descrição:</label>
             <input type="text" v-model="pagamento.paymentData.description" required class="input"></div>
+            <div class="input-label">
+            <label for="">Email</label>
+            <input type="email" v-model="pagamento.paymentData.email" required class="input">
+        </div>
             <button @click="testePagar(pagamento)">Pagar</button>
     </form>
 </div>
