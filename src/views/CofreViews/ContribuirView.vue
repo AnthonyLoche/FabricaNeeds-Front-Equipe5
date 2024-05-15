@@ -23,9 +23,6 @@ const pagamento = reactive({
         number: 0
     }
 })
-const email = store.state.email
-
-
 
 async function testePagar(objeto) {
     console.log(objeto)
@@ -33,7 +30,7 @@ async function testePagar(objeto) {
     const teste = reactive({
         id: data.result.id,
         cliente: store.state.usuario,
-        email: email,
+        email: pagamento.paymentData.email,
         cpf: pagamento.paymentData.number,
         valor: pagamento.paymentData.transaction_amount,
         status: "Pendente",
