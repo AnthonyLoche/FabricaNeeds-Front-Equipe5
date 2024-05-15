@@ -5,7 +5,7 @@ import FooterVue from '@/components/FooterVue.vue'
 import axios from 'axios';import { ref } from 'vue'
 import router from '@/router'
 
-if(store.state.email == ""){
+if(store.state.isLoged == 'false'){
     alert("Você precisa estar logado para acessar essa página")
     router.push("/singin")
 }

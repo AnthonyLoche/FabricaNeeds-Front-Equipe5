@@ -6,7 +6,7 @@ import axios from 'axios';
 import store from '@/store/index.js'
 import router from '@/router'
 
-if(store.state.email == ""){
+if(store.state.isLoged == 'false'){
     alert("Você precisa estar logado para acessar essa página")
     router.push("/singin")
 }

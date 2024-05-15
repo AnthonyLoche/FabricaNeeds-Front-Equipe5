@@ -30,6 +30,7 @@ const modalAddIten = ref(null)
         <p>{{ demanda.produto }}</p>
         <p>{{ demanda.quantidade }}</p>
         <p>{{ demanda.data }}</p>
+        {{ demanda }}
     </div>
     </div>
 </div>

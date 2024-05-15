@@ -4,7 +4,7 @@ import axios from 'axios'
 const total = ref(0)
 
 async function getValor() {
-    const { data } = await axios.get('https://fabricaneeds-back-equipe5-3edw.onrender.com/total')
+    const { data } = await axios.get('https://fabricaneeds-back-equipe5-3edw.onrender.com/total/')
     total.value = data[0].total
 }
 getValor()
