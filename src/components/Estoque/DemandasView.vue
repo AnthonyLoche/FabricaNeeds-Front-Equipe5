@@ -2,8 +2,7 @@
 import { reactive, ref } from 'vue';
 const demandas = ref([])
 const estoque = ref([])
-import { carregar } from '@/api/api';
-import { adicionar } from '@/api/api';
+import { carregar, adicionar } from '@/api/api';
 carregar('demandas/', demandas)
 carregar('estoque/', estoque)
 
@@ -14,15 +13,25 @@ const demanda = reactive({
 
 
 const modalAddIten = ref(null)
+
+const inputPesquisa = ref("")
+
+function filteredList() {
+    return demandas.value.filter((demanda) =>
+        demanda.nome_produto.toLowerCase().includes(inputPesquisa.value.toLowerCase())
+    );
+}
+
 </script>
 
 <template>
     <main>
         <section>
+            <input class="input-pesquisa" type="text" v-model="inputPesquisa" placeholder="Procurar itens..." />
             <h2>Demandas Atuais:</h2>
             
             <div class="rolagemItens">
-                <div class="item" v-for="demanda in demandas" :key="demanda.id">
+                <div class="item" v-for="demanda in filteredList()" :key="demanda.id">
                     <div class="headerItem">
                         <p>ID:</p>
                         <p>PRODUTO:</p>
@@ -293,5 +302,8 @@ form>button {
     padding: 1rem;
     border: 2px solid #8C52FF;
     border-radius: 10px;
+}
+.input-pesquisa{
+    margin: 1rem auto;
 }
 </style>

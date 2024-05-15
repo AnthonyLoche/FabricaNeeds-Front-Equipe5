@@ -26,6 +26,7 @@ const store = createStore({
             state.usuario = localStorage.setItem('usuario', '')
             state.id = localStorage.setItem('id', '')
             state.email = localStorage.setItem('email', '')
+            window.location.href = '/'
         }
     },
     getters: {

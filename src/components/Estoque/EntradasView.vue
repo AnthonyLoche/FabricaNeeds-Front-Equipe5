@@ -45,7 +45,7 @@ const modalAddIten = ref(null)
                         <label for="">Demanda:</label>
                         <select name="" id="" v-model="entrada.demanda">
                             <option v-for="item in demandas" :key="item.id" :value="item.id">
-                                {{ item.produto }}
+                                {{ item.nome_produto }}
                             </option>
                         </select>
                     </div>
