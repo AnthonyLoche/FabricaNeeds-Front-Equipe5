@@ -10,8 +10,6 @@ if(store.state.isLoged == 'false'){
     router.push("/singin")
 }
 
-
-const email = store.state.email
 const pagamentos = ref([])
 const pagamentosAprovados = ref([])
 const pagamentosPendentes = ref([])
@@ -22,9 +20,9 @@ async function carregarPagamentos() {
         
         pagamentos.value = response.data
         
-        pagamentosAprovados.value = pagamentos.value.filter(pagamento => pagamento.status === 'Aprovado' && pagamento.email === email)
+        pagamentosAprovados.value = pagamentos.value.filter(pagamento => pagamento.status === 'Aprovado' && pagamento.cliente === store.state.usuario)
         
-        pagamentosPendentes.value = pagamentos.value.filter(pagamento => pagamento.status === 'Pendente' && pagamento.email === email) 
+        pagamentosPendentes.value = pagamentos.value.filter(pagamento => pagamento.status === 'Pendente' && pagamento.cliente === store.state.usuario) 
 
     } catch (error) {
         console.error('Erro ao carregar os pagamentos:', error)
@@ -35,10 +33,9 @@ carregarPagamentos()
 
 function copyPixCode(text) {
     navigator.clipboard.writeText(text)
-        .then(() => alert('Código do PIX copiado!'))
-        .catch(err => console.error('Erro ao copiar o código do PIX:', err))
+    .then(() => alert('Código do PIX copiado!'))
+    .catch(err => console.error('Erro ao copiar o código do PIX:', err))
 }
-
 </script>
 
 <template>

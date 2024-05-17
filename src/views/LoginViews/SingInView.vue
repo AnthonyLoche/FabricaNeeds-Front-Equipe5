@@ -29,10 +29,12 @@ async function logar() {
     try {
         const response = await axios.post('https://fabricaneeds-back-equipe5-3edw.onrender.com/login', login)
         console.log(response.data)
+        console.log(response)
         salvarDado(true)
         salvarUsuario(login.nome)
+
         alert('Logado com sucesso!')
-        window.location.href = '/'
+        // window.location.href = '/'
     } catch (error) {
         if (error.response.status === 401) {
             alert('Usuário ou senha incorretos!')
