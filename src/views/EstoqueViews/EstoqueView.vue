@@ -89,4 +89,20 @@ const entradasFuncao = () => {
     cursor: pointer;
     flex-direction: column;
 }
+
+@media screen and (max-width: 1025px) {
+    #botoes{
+        flex-direction: column;
+        gap: 20px;
+        margin: 10px auto;
+        width: 80%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #botoes > div {
+        padding: 20px;
+    }
+    
+}
 </style>
