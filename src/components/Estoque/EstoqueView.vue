@@ -9,7 +9,7 @@ const item = reactive({
     item: '',
     quantidade: 0
 })
-const modalAddIten = ref(null)
+const modalAddIten = ref(false)
 const inputPesquisa = ref("")
 function filteredList() {
     return itens.value.filter((itemf) =>
@@ -20,53 +20,59 @@ function filteredList() {
 </script>
 
 <template>
-   
-    <main>
-    <section>
-        <h2>Estoque Atual:</h2>
-        <input class="input-pesquisa" type="text" v-model="inputPesquisa" placeholder="Procurar itens..." />
-        <div class="rolagemItens">
-        <div id="estoque">
-            <div class="item" v-for="item in filteredList()" :key="item.id">
-                <div class="headerItem"><p>ID:</p>
-                <p class="center">ITEM:</p>
-                <p>QUANTIDADE:</p>
-                <p>Ações:</p></div>
-                <div class="bodyItem"><p>{{ item.id }}</p>
-                <p>{{ item.item }}</p>
-                <input type="number" v-model="item.quantidade" placeholder="Quantidade" class="inputAtualizar">
-                <span><button @click="atualizar(item, 'estoque')">Atualizar</button>
-                <button @click="deletar(item, 'estoque')">EXCLUIR ITEM</button></span>
-            </div>
-            </div>
-            <div class="item error" v-if="inputPesquisa && !filteredList().length">
-                                <p>No results found!</p>
-            </div>
 
-            
-        </div>
-    </div>
-        <button @click="modalAddIten.showModal()">Adicionar Item</button>
-    </section>
-    <dialog id="modalAddIten" ref="modalAddIten">
-        <div class="modalBody">
-        <div class="modalHeader"><h2>
-            Adicionar Item
-        </h2>
-        <button @click="modalAddIten.close()">X</button>
-    </div>
-        <form action="" method="post" @submit.prevent>
-        <div class="input-label">
-            <label for="">Item:</label>
-            <input type="text" v-model="item.item">
-        </div>
-        <div class="input-label">
-            <label for="">Quantidade:</label>
-            <input type="number" v-model="item.quantidade" placeholder="Quantidade" >
-            <button @click="adicionar('estoque/', item)">Adicionar</button>
-        </div>
-        </form>
-    </div></dialog></main>
+    <main>
+        <section>
+            <h2>Estoque Atual:</h2>
+            <input class="input-pesquisa" type="text" v-model="inputPesquisa" placeholder="Procurar itens..." />
+            <div class="rolagemItens">
+                <div id="estoque">
+                    <div class="item" v-for="item in filteredList()" :key="item.id">
+                        
+                        <div>
+                            <p class="headerItem">ITEM:</p>
+                            <p>{{ item.item }}</p>
+                        </div>
+                        <div class="teste">
+                            <p class="headerItem">QUANTIDADE:</p>
+                            <input type="number" v-model="item.quantidade" placeholder="Quantidade"
+                                class="inputAtualizar">
+                        </div>
+                        <div class="acoes teste">
+                            <p>Ações:</p>
+                            <button @click="atualizar(item, 'estoque')" class="acao">Atualizar</button>
+                                <button @click="deletar(item, 'estoque')" class="acao">EXCLUIR ITEM</button>
+                        </div>
+                    </div>
+                    <div class="item error" v-if="inputPesquisa && !filteredList().length">
+                        <p>No results found!</p>
+                    </div>
+                </div>
+            </div>
+            <button @click="modalAddIten = true">Adicionar Item</button>
+        </section>
+        <dialog id="modalAddIten" ref="modalAddIten" v-if="modalAddIten">
+            <div class="modalBody">
+                <div class="modalHeader">
+                    <h2>
+                        Adicionar Item
+                    </h2>
+                    <button @click="modalAddIten = !modalAddIten">X</button>
+                </div>
+                <form action="" method="post" @submit.prevent>
+                    <div class="input-label">
+                        <label for="">Item:</label>
+                        <input type="text" v-model="item.item">
+                    </div>
+                    <div class="input-label2">
+                        <label for="">Quantidade:</label>
+                        <input type="number" v-model="item.quantidade" placeholder="Quantidade">
+                        <button @click="adicionar('estoque/', item)" class="acao">Adicionar</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+    </main>
 
 </template>
 
@@ -75,55 +81,65 @@ function filteredList() {
     color: white;
 }
 
-input.inputAtualizar{
-    width: 10%;
+input.inputAtualizar {
+    width: 80%;
     border: 0;
 }
 
-.item{
+.item {
     width: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     border: 2px solid #8C52FF;
-    flex-direction: column;
     border-radius: 10px;
     padding: 20px;
+    gap: 20px;
+}
+
+.item > div {
+    display: flex;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
 }
-.headerItem{
+
+.headerItem {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     width: 100%;
     flex-wrap: nowrap;
 }
-.headerItem > p{
+
+p.headerItem {
     font-size: 1.2rem;
-    margin-bottom: .5rem;
-    margin-top: .5rem;
-    text-align: start;
+    text-align: center;
     color: #8C52FF;
-    width: 20%;
+    
 }
-.bodyItem{
+
+.bodyItem {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     width: 100%;
     flex-wrap: nowrap;
 }
-.bodyItem > p, span{
+
+.bodyItem>p,
+span {
     font-size: 1.2rem;
     margin-bottom: .5rem;
     margin-top: .5rem;
     text-align: start;
     width: 20%;
 }
-p.center{
+
+p.center {
     text-align: center;
 }
 
-span > button{
+button.acao {
     width: 100%;
     padding: 0.5rem;
     border-radius: .5rem;
@@ -134,8 +150,9 @@ span > button{
     cursor: pointer;
 
 }
+
 section {
-    width: 70%;
+    width: 80%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -144,7 +161,8 @@ section {
     border-radius: .5rem;
     padding: 1rem;
 }
-section > button{
+
+section>button {
     width: 50%;
     padding: 0.5rem;
     border-radius: .5rem;
@@ -154,18 +172,20 @@ section > button{
     font-size: 16px;
     cursor: pointer;
 }
-section > button:hover{
+
+section>button:hover {
     background-color: transparent;
     color: #8C52FF;
     transition: 1s;
 }
+
 h2 {
     color: white;
     font-size: 1.8rem;
-    margin-bottom: 1.5rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-dialog{
+
+dialog {
     width: 40%;
     margin: auto;
     /* display: flex; */
@@ -176,13 +196,15 @@ dialog{
     border: 2px solid #8C52FF;
     padding: 1rem;
 }
-.modalBody{
+
+.modalBody {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
 }
-form{
+
+form {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -190,7 +212,8 @@ form{
     padding: 1rem;
     height: 250px;
 }
-.input-label{
+
+.input-label {
     display: flex;
     margin-top: 5%;
     margin-bottom: 5%;
@@ -198,32 +221,45 @@ form{
     flex-wrap: nowrap;
     justify-content: space-between;
 }
-.input-label > label{
+.input-label2 {
+    display: flex;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.input-label>label {
     font-size: 1.2rem;
     margin-bottom: .5rem;
     margin-top: .5rem;
 }
 
 input {
-  background-color: transparent;
-  color: white;
-  width: 60%;
-  height: 40px;
-  padding: 10px;
-  /* text-align: center; */
-  border: 2px solid #8C52FF;
-  border-radius: 1rem; 
-  /* box-shadow: 3px 3px 2px rgb(249, 255, 85); */
+    background-color: transparent;
+    color: white;
+    width: 60%;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+    border: 2px solid #8C52FF;
+    border-radius: 1rem;
+    /* box-shadow: 3px 3px 2px rgb(249, 255, 85); */
 }
+
 input:focus {
-  color:  white;
-  background-color: transparent;
-  outline-color: #8C52FF;
-  box-shadow: -3px -3px 15px #8C52FF;
-  transition: .1s;
-  transition-property: box-shadow;
+    color: white;
+    background-color: transparent;
+    outline-color: #8C52FF;
+    box-shadow: -3px -3px 15px #8C52FF;
+    transition: .1s;
+    transition-property: box-shadow;
 }
-form > button{
+
+form>button {
     width: 50%;
     margin: auto;
     font-size: 16px;
@@ -235,21 +271,25 @@ form > button{
     border-radius: 1rem;
     margin-top: 1rem;
 }
-.modalHeader{
+
+.modalHeader {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
+    
     width: 100%;
     padding: 1rem;
     margin-bottom: 2rem;
 }
-.modalHeader > h2{
+
+.modalHeader>h2 {
     color: white;
     font-size: 1.8rem;
     margin-top: 2%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-.modalHeader > button{
+
+.modalHeader>button {
     background-color: transparent;
     color: #8C52FF;
     width: 50px;
@@ -260,35 +300,89 @@ form > button{
     cursor: pointer;
 }
 
-#estoque{
+#estoque {
     width: 80%;
-    margin: 2rem auto;
+    margin: 20px;
+    
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
     gap: 30px;
 }
-.rolagemItens{
+
+.rolagemItens {
     width: 100%;
     max-height: 450px;
     overflow-y: scroll;
+    scrollbar-width: none;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 2rem;
-    padding: 1rem;
+    ;
     border: 2px solid #8C52FF;
     border-radius: 10px;
 }
-.input-pesquisa{
+
+.input-pesquisa {
     margin: 1rem auto;
 }
-@media screen and (max-width: 1025px){
-    dialog{
+
+@media screen and (max-width: 1025px) {
+    dialog {
         width: 80%;
+        scrollbar-width: none;
+        display: flex;
+        margin: auto;
+        position: fixed;
+        top: 20%;
     }
-    .item{
+
+    .item {
+        display: flex;
         flex-direction: column;
+        width: 100%;
+        margin: auto;
+    gap: 20px;
+    }
+
+    
+
+
+    .item > .teste {
+        border-top: 2px solid #8C52FF;
+        padding-top: 15px;
         gap: 10px;
     }
+    section{
+        width: 95%;
+    }
+    
+    .modalBody > form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .modalBody > .modalHeader {
+        display: flex;
+        font-size: 10pt;
+    }
+
+    .modalBody > form > .input-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .modalBody > form > .input-label > label, input {
+        width: 80%;
+        text-align: center;
+    }
+
 }
 </style>
