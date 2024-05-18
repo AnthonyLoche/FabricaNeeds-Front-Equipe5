@@ -9,7 +9,7 @@ const item = reactive({
     item: '',
     quantidade: 0
 })
-const modalAddIten = ref(false)
+const modalAddIten = ref(null)
 const inputPesquisa = ref("")
 function filteredList() {
     return itens.value.filter((itemf) =>
@@ -49,26 +49,26 @@ function filteredList() {
                     </div>
                 </div>
             </div>
-            <button @click="modalAddIten = true">Adicionar Item</button>
+            <button @click="modalAddIten.showModal()">Adicionar Item</button>
         </section>
-        <dialog id="modalAddIten" ref="modalAddIten" v-if="modalAddIten">
+        <dialog id="modalAddIten" ref="modalAddIten">
             <div class="modalBody">
                 <div class="modalHeader">
                     <h2>
                         Adicionar Item
                     </h2>
-                    <button @click="modalAddIten = !modalAddIten">X</button>
+                    <button @click="modalAddIten.close()">X</button>
                 </div>
                 <form action="" method="post" @submit.prevent>
                     <div class="input-label">
                         <label for="">Item:</label>
                         <input type="text" v-model="item.item">
                     </div>
-                    <div class="input-label2">
+                    <div class="input-label">
                         <label for="">Quantidade:</label>
                         <input type="number" v-model="item.quantidade" placeholder="Quantidade">
-                        <button @click="adicionar('estoque/', item)" class="acao">Adicionar</button>
                     </div>
+                    <button @click="adicionar('estoque/', item)" class="acao">Adicionar</button>
                 </form>
             </div>
         </dialog>
@@ -203,6 +203,9 @@ dialog {
     align-items: center;
     width: 100%;
 }
+.showModal{
+    display: flex;
+}
 
 form {
     display: flex;
@@ -276,7 +279,6 @@ form>button {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    
     width: 100%;
     padding: 1rem;
     margin-bottom: 2rem;
