@@ -24,7 +24,11 @@ function salvarDado(dado) {
 function salvarUsuario(dado) {
     store.commit('setUsuario', dado)
 }
-
+let userOrPasswordLoginErroMensage = ref(null);
+let serverErrorMensage = ref(null);
+let userNotfoundErrorMensage = ref(null);
+let unknownErrorMensage = ref(null);
+let successMensage = ref(null)
 async function logar() {
     try {
         const response = await axios.post('https://fabricaneeds-back-equipe5-3edw.onrender.com/login', login)
@@ -33,29 +37,58 @@ async function logar() {
         salvarDado(true)
         salvarUsuario(login.nome)
 
-        alert('Logado com sucesso!')
+        successMensage.value.classList.add('showSuccessMensage')
         // window.location.href = '/'
     } catch (error) {
         if (error.response.status === 401) {
-            alert('Usuário ou senha incorretos!')
+          serverErrorMensage.value.classList.remove('showErroInputs')
+          userNotfoundErrorMensage.value.classList.remove('showErroInputs')
+          unknownErrorMensage.value.classList.remove('showErroInputs')
+          userOrPasswordLoginErroMensage.value.classList.add('showErroInputs')
         }
         else if (error.response.status === 500) {
-            alert('Erro no servidor!')
+          userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
+          userNotfoundErrorMensage.value.classList.remove('showErroInputs')
+          unknownErrorMensage.value.classList.remove('showErroInputs')
+          serverErrorMensage.value.classList.add('showErroInputs')
         }
-        else if(error.response.status === 404){
-            alert('Usuário não encontrado!')
+        else if (error.response.status === 404) {
+          userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
+          serverErrorMensage.value.classList.remove('showErroInputs')
+          unknownErrorMensage.value.classList.remove('showErroInputs')
+          userNotfoundErrorMensage.value.classList.add('showErroInputs')
         }
         else {
-            alert('Erro desconhecido!')
+          userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
+          serverErrorMensage.value.classList.remove('showErroInputs')
+          userNotfoundErrorMensage.value.classList.remove('showErroInputs')
+          unknownErrorMensage.value.classList.add('showErroInputs')
         }
     }
 }
-
+let usuarioSignInErroMensage = ref(null);
+let emailSignInErroMensage = ref(null);
+let senhaSignInErroMensage = ref(null);
 function verificarCadastro(){
-    if(usuario.nome == '' || usuario.email == '' || usuario.senha == ''){
-        alert('Preencha todos os campos!')
+    if(usuario.nome == ''){
+        emailSignInErroMensage.value.classList.remove('showErroInputs')
+        senhaSignInErroMensage.value.classList.remove('showErroInputs')
+        usuarioSignInErroMensage.value.classList.add('showErroInputs')
+    }
+    else if(usuario.email == ''){
+        usuarioSignInErroMensage.value.classList.remove('showErroInputs')
+        senhaSignInErroMensage.value.classList.remove('showErroInputs')
+        emailSignInErroMensage.value.classList.add('showErroInputs')
+    }
+    else if(usuario.senha == ''){
+        usuarioSignInErroMensage.value.classList.remove('showErroInputs')
+        emailSignInErroMensage.value.classList.remove('showErroInputs')
+        senhaSignInErroMensage.value.classList.add('showErroInputs')
     }
     else{
+      usuarioSignInErroMensage.value.classList.remove('showErroInputs')
+      emailSignInErroMensage.value.classList.remove('showErroInputs')
+      senhaSignInErroMensage.value.classList.remove('showErroInputs')
         adicionar('contribuinte/', usuario)
     }
 }
@@ -91,16 +124,40 @@ const giraCard2 = () => {
           <form action="" method="post" @submit.prevent>
             <h2>Cadastre-se:</h2>
             <input type="text" v-model="usuario.nome" placeholder="Username" class="input" />
+            <div class="erroInputs" ref="usuarioSignInErroMensage">
+              <p>Insira um nome de usuário válido!</p>
+            </div>
             <input type="email" v-model="usuario.email" placeholder="Email" class="input" />
+            <div class="erroInputs" ref="emailSignInErroMensage">
+              <p>Insira um email válido!</p>
+            </div>
             <input type="password" v-model="usuario.senha" placeholder="Senha" class="input" />
+            <div class="erroInputs" ref="senhaSignInErroMensage">
+              <p>Insira uma senha válida!</p>
+            </div>
             <button @click="verificarCadastro">Cadastrar</button>
           </form>
         </div>
         <div id="logIn">
+          <div class="successMensage" ref="successMensage">
+            <p>Logado com sucesso!</p>
+          </div>
           <form action="" method="post" @submit.prevent>
             <h2>Login:</h2>
             <input type="text" v-model="login.nome" placeholder="Username"  class="input" />
             <input type="password" v-model="login.senha" placeholder="Senha"  class="input" />
+            <div class="erroInputs" ref="userOrPasswordLoginErroMensage">
+              <p>Usuário ou senha incorretos!</p>
+            </div>
+            <div class="erroInputs" ref="serverErrorMensage">
+              <p>Erro no servidor, sentimos muito por isso :(</p>
+            </div>
+            <div class="erroInputs" ref="userNotfoundErrorMensage">
+              <p>Usuário não encontrado!</p>
+            </div>
+            <div class="erroInputs" ref="unknownErrorMensage">
+              <p>Erro desconhecido, sentimos muito por isso :(</p>
+            </div>
             <button @click="logar">Login</button>
           </form>
         </div>
@@ -122,7 +179,7 @@ section {
   justify-content: center;
   width: 100%;
   margin: auto;
-  height: 400px;
+  height: 450px;
 }
 .buttons-login-sigin{
 height: 50px;
@@ -148,7 +205,7 @@ margin-bottom: 0;
 
 }
 .border-selection{
-  height: 105% !important;
+  height: 107% !important;
   border-top: 2px solid #8C52FF !important;
   border-left: 2px solid #8C52FF !important;
   border-bottom: none !important;
@@ -276,6 +333,35 @@ form > button{
   box-shadow: -3px -3px 15px #8C52FF;
   transition: .1s;
   transition-property: box-shadow;
+}
+.erroInputs{
+  display: none;
+  height: 60px;
+  background-color: transparent;
+  border: 2px solid red;
+  border-radius: 1rem;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.showErroInputs{
+  display: flex ;
+}
+.successMensage{
+  display: none;
+  height: 60px;
+  background-color: transparent;
+  border: 2px solid green;
+  border-radius: 1rem;
+  width: 80%;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.showSuccessMensage{
+  display: flex ;
 }
 /* section>form>h2 {
     color: white;

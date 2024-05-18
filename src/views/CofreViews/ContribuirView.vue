@@ -7,12 +7,11 @@ import store from '@/store/index.js'
 import router from '@/router'
 
 if(store.state.isLoged == 'false'){
-    alert("Você precisa estar logado para acessar essa página")
+    document.write('<body style= "background-color: rgb(26 26 26)"><div style= "width: 30%;display: flex;justify-content: center;align-items: center;color: white;margin: 5% auto;height: 110px;background-color: rgb(26 26 26);border: 2px solid red;border-radius: 1rem;font-size: 1.2rem;z-index: 5;"><p>Você precisa estar logado para acessar essa página</p></div><div style="margin: auto;width: 30%;display: flex;justify-content:center "><button style="width: 30%;margin: auto;font-size: 16px;height: 40px;background-color: #8C52FF;color: white;border: none;cursor: pointer;border-radius: 1rem;margin-top: .5rem;z-index: 4;" onclick="window.location.reload(true)">Login</button></div></body>')
     router.push("/singin")
 }
 
 const isOpen = ref(false)
-
 const pagamento = reactive({
     paymentData: {
         transaction_amount: 0,
@@ -23,8 +22,40 @@ const pagamento = reactive({
         number: 0
     }
 })
-
+let valueErrorMensage = ref(null);
+let cpfErrorMensage = ref(null);
+let descriptionErrorMensage = ref(null);
+let emailErrorMensage = ref(null);
 async function testePagar(objeto) {
+    if(pagamento.paymentData.transaction_amount <= 0 || pagamento.paymentData.transaction_amount == ""){
+        cpfErrorMensage.value.classList.remove('showErroInputs');
+        descriptionErrorMensage.value.classList.remove('showErroInputs');
+        emailErrorMensage.value.classList.remove('showErroInputs');
+        valueErrorMensage.value.classList.add('showErroInputs');
+    }
+    else if(pagamento.paymentData.number == "" || pagamento.paymentData.number.length != 11){
+        valueErrorMensage.value.classList.remove('showErroInputs');
+        descriptionErrorMensage.value.classList.remove('showErroInputs');
+        emailErrorMensage.value.classList.remove('showErroInputs');
+        cpfErrorMensage.value.classList.add('showErroInputs');
+    }
+    else if(pagamento.paymentData.description == ""){
+        valueErrorMensage.value.classList.remove('showErroInputs');
+        cpfErrorMensage.value.classList.remove('showErroInputs');
+        emailErrorMensage.value.classList.remove('showErroInputs');
+        descriptionErrorMensage.value.classList.add('showErroInputs');
+    }
+    else if(pagamento.paymentData.email == ""){
+        valueErrorMensage.value.classList.remove('showErroInputs');
+        cpfErrorMensage.value.classList.remove('showErroInputs');
+        descriptionErrorMensage.value.classList.remove('showErroInputs');
+        emailErrorMensage.value.classList.add('showErroInputs');
+    }
+    else{
+    valueErrorMensage.value.classList.remove('showErroInputs');
+    cpfErrorMensage.value.classList.remove('showErroInputs');
+    descriptionErrorMensage.value.classList.remove('showErroInputs');
+    emailErrorMensage.value.classList.remove('showErroInputs');
     console.log(objeto)
     const { data } = await axios.post("https://webhook.peraza.live/pagamento/", objeto)
     const teste = reactive({
@@ -45,6 +76,7 @@ async function testePagar(objeto) {
     isOpen.value = true
     window.open(data.result.point_of_interaction.transaction_data.ticket_url)
 }
+}
 console.log(store.state.email)
 </script>
 <template>
@@ -55,16 +87,27 @@ console.log(store.state.email)
     <form action="" method="post" @submit.prevent> 
         <div class="input-label">
             <label for="valor">Valor:</label>
-            <input type="number" v-model="pagamento.paymentData.transaction_amount" placeholder="Valor" required class="input"></div>
+            <input type="number" v-model="pagamento.paymentData.transaction_amount" placeholder="Valor" required class="input">
+        </div>
+        <div class="erroInputs" ref="valueErrorMensage">
+                <p>O valor não pode ser 0 ou negativo</p>
+        </div>
             <div class="input-label">
             <label for="">CPF:</label>
             <input type="text" v-model="pagamento.paymentData.number" required class="input"></div>
+            <div class="erroInputs" ref="cpfErrorMensage">
+                    <p>Insira um CPF Válido!</p>
+            </div>
             <div class="input-label">
             <label for="">Descrição:</label>
-            <input type="text" v-model="pagamento.paymentData.description" required class="input"></div>
+            <input type="text" v-model="pagamento.paymentData.description" class="input"></div>
+            <div class="erroInputs" ref="descriptionErrorMensage"><p>Por Favor, Insira uma descrição</p></div>
             <div class="input-label">
             <label for="">Email</label>
-            <input type="email" v-model="pagamento.paymentData.email" required class="input">
+            <input type="email" v-model="pagamento.paymentData.email" class="input">
+        </div>
+        <div class="erroInputs" ref="emailErrorMensage">
+                <p>Insira um Email Válido!</p>
         </div>
             <button @click="testePagar(pagamento)">Pagar</button>
     </form>
@@ -115,7 +158,7 @@ form{
     /* align-items: center; */
     width: 80%;
     padding: 1rem;
-    height: 400px;
+    height: 440px;
 }
 .input-label > label{
 /* font-size: 1.5rem; */
@@ -200,6 +243,21 @@ form > button{
     width: 80%;
     height: 80%;
     animation: animationPorco 1s infinite;
+}
+.erroInputs{
+  display: none;
+  height: 60px;
+  background-color: transparent;
+  border: 2px solid red;
+  border-radius: 1rem;
+  width: 80%;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.showErroInputs{
+  display: flex ;
 }
 @keyframes animationPorco {
     0%{
