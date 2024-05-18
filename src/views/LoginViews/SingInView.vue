@@ -28,6 +28,7 @@ let userOrPasswordLoginErroMensage = ref(null);
 let serverErrorMensage = ref(null);
 let userNotfoundErrorMensage = ref(null);
 let unknownErrorMensage = ref(null);
+let successMensage = ref(null)
 async function logar() {
     try {
         const response = await axios.post('https://fabricaneeds-back-equipe5-3edw.onrender.com/login', login)
@@ -36,7 +37,7 @@ async function logar() {
         salvarDado(true)
         salvarUsuario(login.nome)
 
-        alert('Logado com sucesso!')
+        successMensage.value.classList.add('showSuccessMensage')
         // window.location.href = '/'
     } catch (error) {
         if (error.response.status === 401) {
@@ -138,6 +139,9 @@ const giraCard2 = () => {
           </form>
         </div>
         <div id="logIn">
+          <div class="successMensage" ref="successMensage">
+            <p>Logado com sucesso!</p>
+          </div>
           <form action="" method="post" @submit.prevent>
             <h2>Login:</h2>
             <input type="text" v-model="login.nome" placeholder="Username"  class="input" />
@@ -175,7 +179,7 @@ section {
   justify-content: center;
   width: 100%;
   margin: auto;
-  height: 400px;
+  height: 450px;
 }
 .buttons-login-sigin{
 height: 50px;
@@ -342,6 +346,21 @@ form > button{
   padding: 1rem;
 }
 .showErroInputs{
+  display: flex ;
+}
+.successMensage{
+  display: none;
+  height: 60px;
+  background-color: transparent;
+  border: 2px solid green;
+  border-radius: 1rem;
+  width: 80%;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.showSuccessMensage{
   display: flex ;
 }
 /* section>form>h2 {
