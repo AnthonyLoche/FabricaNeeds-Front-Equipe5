@@ -89,7 +89,7 @@ input.inputAtualizar {
 .item {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     border: 2px solid #8C52FF;
     border-radius: 10px;
     padding: 20px;
