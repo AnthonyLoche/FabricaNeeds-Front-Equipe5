@@ -37,6 +37,10 @@ async function logar() {
         salvarDado(true)
         salvarUsuario(login.nome)
 
+        serverErrorMensage.value.classList.remove('showErroInputs')
+        userNotfoundErrorMensage.value.classList.remove('showErroInputs')
+        unknownErrorMensage.value.classList.remove('showErroInputs')
+        userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
         successMensage.value.classList.add('showSuccessMensage')
         // window.location.href = '/'
     } catch (error) {

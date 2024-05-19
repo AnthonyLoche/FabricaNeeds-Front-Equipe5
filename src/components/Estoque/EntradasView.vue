@@ -6,7 +6,7 @@ import { carregar, adicionar } from '@/api/api';
 
 const entrada = reactive({
     quantidade: 0,
-    demanda: 0,
+    demanda: "",
 })
 
 carregar('entradasEstoque/', entradas)
@@ -18,7 +18,9 @@ const modalAddIten = ref(null)
     <main>
         <section> <h2>Entradas Atuais:</h2>
             <div class="rolagemItens">
-           
+                <div class="LoadingDiv" v-if="entradas.length <= 0">
+                <img src="../../assets/gif_carregando.gif" alt="">
+                </div>
             <div class="item" v-for="entrada in entradas" :key="entrada.id">
                 <div class="headerItem">
                     <p>ID:</p>
@@ -263,5 +265,17 @@ form > button{
     padding: 1rem;
     border: 2px solid #8C52FF;
     border-radius: 10px;
+}
+.LoadingDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-top: 4%;
+    width: 100%;
+}
+.LoadingDiv > img{
+    width: 100px;
+    height: 100px;
 }
 </style>

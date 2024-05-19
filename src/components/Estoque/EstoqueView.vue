@@ -33,6 +33,9 @@ function closeModal() {
             <h2>Estoque Atual:</h2>
             <input class="input-pesquisa" type="text" v-model="inputPesquisa" placeholder="Procurar itens..." />
             <div class="rolagemItens">
+                <div class="LoadingDiv" v-if="filteredList().length <= 0">
+                <img src="../../assets/gif_carregando.gif" alt="">
+                </div>
                 <div id="estoque">
                     <div class="item" v-for="item in filteredList()" :key="item.id">
                         <div>
@@ -335,6 +338,18 @@ form>button {
 
 .input-pesquisa {
     margin: 1rem auto;
+}
+.LoadingDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-top: 4%;
+    width: 100%;
+}
+.LoadingDiv > img{
+    width: 100px;
+    height: 100px;
 }
 
 @media screen and (max-width: 1025px) {
