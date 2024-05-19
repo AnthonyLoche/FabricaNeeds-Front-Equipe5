@@ -31,6 +31,7 @@ async function deletar(objeto, url) {
         const { data } = await axios.delete(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`);
         console.log(data);
         alert('Deletado com sucesso!');
+        window.location.reload();
     }
     catch(error){
         console.log(error);

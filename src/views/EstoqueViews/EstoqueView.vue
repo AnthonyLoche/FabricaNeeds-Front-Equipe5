@@ -42,12 +42,15 @@ const entradasFuncao = () => {
 
     <div id="botoes">
         <div class="botao" @click="estoqueFuncao">
+            <img src="../../assets/estoque.png" alt="" class="icon">
             <h1>ESTOQUE</h1>
         </div>
         <div class="botao" @click="demandasFuncao">
+            <img src="../../assets/ponto.png" alt="" class="icon">
             <h1>DEMANDAS</h1>
         </div>
         <div class="botao" @click="entradasFuncao">
+            <img src="../../assets/mais.png" alt="" class="icon">
             <h1>ENTRADAS</h1>
         </div>
     </div>
@@ -88,6 +91,12 @@ const entradasFuncao = () => {
     align-items: center;
     cursor: pointer;
     flex-direction: column;
+    gap: 20px;
+}
+
+.icon{
+    filter: invert(1);
+    width: 30%;
 }
 
 @media screen and (max-width: 1025px) {

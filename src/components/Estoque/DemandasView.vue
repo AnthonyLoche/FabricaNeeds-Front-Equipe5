@@ -2,7 +2,7 @@
 import { reactive, ref } from 'vue';
 const demandas = ref([])
 const estoque = ref([])
-import { carregar, adicionar } from '@/api/api';
+import { carregar, adicionar, atualizar, deletar } from '@/api/api';
 carregar('demandas/', demandas)
 carregar('estoque/', estoque)
 
@@ -51,8 +51,8 @@ function closeModal() {
                         </div>
                         <div class="acoes teste">
                             <p>Ações:</p>
-                            <button @click="atualizar(item, 'estoque')" class="acao">Atualizar</button>
-                            <button @click="deletar(item, 'estoque')" class="acao">EXCLUIR ITEM</button>
+                            <button @click="atualizar(item, 'demandas')" class="acao">Atualizar</button>
+                            <button @click="deletar(item, 'demandas')" class="acao">EXCLUIR ITEM</button>
                         </div>
                     </div>
                     <div class="item error" v-if="inputPesquisa && !filteredList().length">
@@ -68,7 +68,7 @@ function closeModal() {
                     <h2>Adicionar Demanda</h2>
                     <button @click="closeModal">X</button>
                 </div>
-                <form @submit.prevent="adicionar('estoque/', item)">
+                <form @submit.prevent="adicionar('demandas/', demanda)">
                     <div class="input-label">
                         <label for="produto">Item:</label>
                         <select name="produto" id="produto" v-model="demanda.produto">
