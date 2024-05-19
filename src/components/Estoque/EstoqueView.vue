@@ -9,18 +9,25 @@ const item = reactive({
     item: '',
     quantidade: 0
 })
-const modalAddIten = ref(null)
+const modalAddIten = ref(false)
 const inputPesquisa = ref("")
+
 function filteredList() {
     return itens.value.filter((itemf) =>
         itemf.item.toLowerCase().includes(inputPesquisa.value.toLowerCase())
     );
 }
 
+function openModal() {
+    modalAddIten.value = true;
+}
+
+function closeModal() {
+    modalAddIten.value = false;
+}
 </script>
 
 <template>
-
     <main>
         <section>
             <h2>Estoque Atual:</h2>
@@ -28,20 +35,18 @@ function filteredList() {
             <div class="rolagemItens">
                 <div id="estoque">
                     <div class="item" v-for="item in filteredList()" :key="item.id">
-                        
                         <div>
                             <p class="headerItem">ITEM:</p>
                             <p>{{ item.item }}</p>
                         </div>
                         <div class="teste">
                             <p class="headerItem">QUANTIDADE:</p>
-                            <input type="number" v-model="item.quantidade" placeholder="Quantidade"
-                                class="inputAtualizar">
+                            <input type="number" v-model="item.quantidade" placeholder="Quantidade" class="inputAtualizar">
                         </div>
                         <div class="acoes teste">
                             <p>Ações:</p>
                             <button @click="atualizar(item, 'estoque')" class="acao">Atualizar</button>
-                                <button @click="deletar(item, 'estoque')" class="acao">EXCLUIR ITEM</button>
+                            <button @click="deletar(item, 'estoque')" class="acao">EXCLUIR ITEM</button>
                         </div>
                     </div>
                     <div class="item error" v-if="inputPesquisa && !filteredList().length">
@@ -49,17 +54,15 @@ function filteredList() {
                     </div>
                 </div>
             </div>
-            <button @click="modalAddIten.showModal()">Adicionar Item</button>
+            <button @click="openModal">Adicionar Item</button>
         </section>
-        <dialog id="modalAddIten" ref="modalAddIten">
+        <dialog id="modalAddIten" :open="modalAddIten" v-if="modalAddIten">
             <div class="modalBody">
                 <div class="modalHeader">
-                    <h2>
-                        Adicionar Item
-                    </h2>
-                    <button @click="modalAddIten.close()">X</button>
+                    <h2>Adicionar Item</h2>
+                    <button @click="closeModal">X</button>
                 </div>
-                <form action="" method="post" @submit.prevent>
+                <form @submit.prevent="adicionar('estoque/', item)">
                     <div class="input-label">
                         <label for="">Item:</label>
                         <input type="text" v-model="item.item">
@@ -68,12 +71,11 @@ function filteredList() {
                         <label for="">Quantidade:</label>
                         <input type="number" v-model="item.quantidade" placeholder="Quantidade">
                     </div>
-                    <button @click="adicionar('estoque/', item)" class="acao">Adicionar</button>
+                    <button type="submit" class="acao">Adicionar</button>
                 </form>
             </div>
         </dialog>
     </main>
-
 </template>
 
 <style scoped>
@@ -84,6 +86,7 @@ function filteredList() {
 input.inputAtualizar {
     width: 80%;
     border: 0;
+    font-size: 12pt;
 }
 
 .item {
@@ -101,6 +104,7 @@ input.inputAtualizar {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    font-size: 12pt;
 }
 
 .headerItem {
@@ -195,6 +199,8 @@ dialog {
     border-radius: .5rem;
     border: 2px solid #8C52FF;
     padding: 1rem;
+    position: absolute;
+    top: 60%;
 }
 
 .modalBody {
@@ -202,6 +208,7 @@ dialog {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    height: 400px;
 }
 .showModal{
     display: flex;
@@ -281,7 +288,6 @@ form>button {
     justify-content: space-around;
     width: 100%;
     padding: 1rem;
-    margin-bottom: 2rem;
 }
 
 .modalHeader>h2 {
@@ -315,7 +321,7 @@ form>button {
 
 .rolagemItens {
     width: 100%;
-    max-height: 450px;
+    max-height: 500px;
     overflow-y: scroll;
     scrollbar-width: none;
     display: flex;
