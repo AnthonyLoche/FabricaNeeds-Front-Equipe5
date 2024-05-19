@@ -22,45 +22,56 @@ function filteredList() {
     );
 }
 
+function openModal() {
+    modalAddIten.value = true;
+}
+
+function closeModal() {
+    modalAddIten.value = false;
+}
+
 </script>
+
 
 <template>
     <main>
         <section>
-            <input class="input-pesquisa" type="text" v-model="inputPesquisa" placeholder="Procurar itens..." />
             <h2>Demandas Atuais:</h2>
-            
+            <input class="input-pesquisa" type="text" v-model="inputPesquisa" placeholder="Procurar Demandas..." />
             <div class="rolagemItens">
-                <div class="item" v-for="demanda in filteredList()" :key="demanda.id">
-                    <div class="headerItem">
-                        <p>ID:</p>
-                        <p>PRODUTO:</p>
-                        <p>QUANTIDADE:</p>
-                        <p>DATA:</p>
+                <div id="estoque">
+                    <div class="item" v-for="item in filteredList()" :key="item.id">
+                        <div>
+                            <p class="headerItem">ITEM:</p>
+                            <p>{{ item.nome_produto }}</p>
+                        </div>
+                        <div class="teste">
+                            <p class="headerItem">QUANTIDADE:</p>
+                            <input type="number" v-model="item.quantidade" placeholder="Quantidade" class="inputAtualizar">
+                        </div>
+                        <div class="acoes teste">
+                            <p>Ações:</p>
+                            <button @click="atualizar(item, 'estoque')" class="acao">Atualizar</button>
+                            <button @click="deletar(item, 'estoque')" class="acao">EXCLUIR ITEM</button>
+                        </div>
                     </div>
-                    <div class="bodyItem">
-                        <p>{{ demanda.id }}</p>
-                        <p>{{ demanda.nome_produto }}</p>
-                        <p>{{ demanda.quantidade }}</p>
-                        <p>{{ demanda.data }}</p>
+                    <div class="item error" v-if="inputPesquisa && !filteredList().length">
+                        <p>No results found!</p>
                     </div>
                 </div>
-                
             </div>
-            <button @click="modalAddIten.showModal()">Adicionar Demanda</button>
+            <button @click="openModal">Adicionar Demanda</button>
         </section>
-        <dialog id="modalAddIten" ref="modalAddIten">
+        <dialog id="modalAddIten" :open="modalAddIten" v-if="modalAddIten">
             <div class="modalBody">
                 <div class="modalHeader">
-                    <h2>
-                        Adicionar Demanda
-                    </h2>
-                    <button @click="modalAddIten.close()">X</button>
+                    <h2>Adicionar Demanda</h2>
+                    <button @click="closeModal">X</button>
                 </div>
-                <form action="" method="post" @submit.prevent>
+                <form @submit.prevent="adicionar('estoque/', item)">
                     <div class="input-label">
-                        <label for="">Item:</label>
-                        <select name="" id="" v-model="demanda.produto">
+                        <label for="produto">Item:</label>
+                        <select name="produto" id="produto" v-model="demanda.produto">
                             <option v-for="item in estoque" :key="item.id" :value="item.id">
                                 {{ item.item }}
                             </option>
@@ -68,9 +79,9 @@ function filteredList() {
                     </div>
                     <div class="input-label">
                         <label for="">Quantidade:</label>
-                        <input type="number" placeholder="quantidade" v-model="demanda.quantidade">
+                        <input type="number" v-model="demanda.quantidade" placeholder="Quantidade">
                     </div>
-                    <button @click="adicionar('demandas/', demanda)">Enviar</button>
+                    <button type="submit" class="acao">Adicionar</button>
                 </form>
             </div>
         </dialog>
@@ -82,34 +93,43 @@ function filteredList() {
     color: white;
 }
 
-.item {
+input.inputAtualizar {
     width: 80%;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    display: flex;
+    border: 0;
+    font-size: 12pt;
+}
+
+.item {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     border: 2px solid #8C52FF;
-    flex-direction: column;
     border-radius: 10px;
     padding: 20px;
+    gap: 20px;
+}
+
+.item > div {
+    display: flex;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    font-size: 12pt;
 }
 
 .headerItem {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     width: 100%;
     flex-wrap: nowrap;
 }
 
-.headerItem>p {
+p.headerItem {
     font-size: 1.2rem;
-    margin-bottom: .5rem;
-    margin-top: .5rem;
-    text-align: start;
+    text-align: center;
     color: #8C52FF;
-    width: 20%;
+    
 }
 
 .bodyItem {
@@ -120,7 +140,8 @@ function filteredList() {
     flex-wrap: nowrap;
 }
 
-.bodyItem>p {
+.bodyItem>p,
+span {
     font-size: 1.2rem;
     margin-bottom: .5rem;
     margin-top: .5rem;
@@ -128,8 +149,24 @@ function filteredList() {
     width: 20%;
 }
 
+p.center {
+    text-align: center;
+}
+
+button.acao {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: .5rem;
+    border: 2px solid #8C52FF;
+    background-color: #8C52FF;
+    margin-top: .25rem;
+    font-size: 16px;
+    cursor: pointer;
+
+}
+
 section {
-    width: 70%;
+    width: 80%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -159,7 +196,6 @@ section>button:hover {
 h2 {
     color: white;
     font-size: 1.8rem;
-    margin-bottom: 1.5rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -173,6 +209,8 @@ dialog {
     border-radius: .5rem;
     border: 2px solid #8C52FF;
     padding: 1rem;
+    position: absolute;
+    top: 60%;
 }
 
 .modalBody {
@@ -180,6 +218,10 @@ dialog {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    height: 300px;
+}
+.showModal{
+    display: flex;
 }
 
 form {
@@ -193,41 +235,23 @@ form {
 
 .input-label {
     display: flex;
-    margin-top: 5%;
-    margin-bottom: 5%;
+    margin-top: 3%;
+    margin-bottom: 3%;
     width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+.input-label2 {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
     flex-wrap: nowrap;
     justify-content: space-between;
 }
 
 .input-label>label {
     font-size: 1.2rem;
-    margin-bottom: .5rem;
-    margin-top: .5rem;
-}
-
-.input-label>select {
-    background-color: transparent;
-    color: white;
-    width: 60%;
-    height: 40px;
-    padding: 10px;
-    /* text-align: center; */
-    border: 2px solid #8C52FF;
-    border-radius: 1rem;
-    /* box-shadow: 3px 3px 2px rgb(249, 255, 85); */
-}
-
-select>option {
-    background-color: transparent;
-    color: black;
-    width: 60%;
-    height: 40px;
-    padding: 10px;
-    /* text-align: center; */
-    border: 2px solid #8C52FF;
-    border-radius: 1rem;
-    /* box-shadow: 3px 3px 2px rgb(249, 255, 85); */
 }
 
 input {
@@ -236,7 +260,7 @@ input {
     width: 60%;
     height: 40px;
     padding: 10px;
-    /* text-align: center; */
+    text-align: center;
     border: 2px solid #8C52FF;
     border-radius: 1rem;
     /* box-shadow: 3px 3px 2px rgb(249, 255, 85); */
@@ -267,10 +291,9 @@ form>button {
 .modalHeader {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
     padding: 1rem;
-    margin-bottom: 2rem;
 }
 
 .modalHeader>h2 {
@@ -291,19 +314,114 @@ form>button {
     cursor: pointer;
 }
 
+#estoque {
+    width: 80%;
+    margin: 20px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+}
+
 .rolagemItens {
     width: 100%;
-    max-height: 450px;
+    max-height: 500px;
     overflow-y: scroll;
+    scrollbar-width: none;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 2rem;
-    padding: 1rem;
+    ;
     border: 2px solid #8C52FF;
     border-radius: 10px;
 }
-.input-pesquisa{
+
+.input-pesquisa {
     margin: 1rem auto;
+}
+
+.input-label > select{
+    background-color: transparent;
+    color: white;
+    width: 60%;
+    height: 40px;
+    padding: 10px;
+    /* text-align: center; */
+    border: 2px solid #8C52FF;
+    border-radius: 1rem; 
+    /* box-shadow: 3px 3px 2px rgb(249, 255, 85); */
+}
+select > option{
+    background-color: transparent;
+    color: black;
+    width: 60%;
+    height: 40px;
+    padding: 10px;
+    /* text-align: center; */
+    border: 2px solid #8C52FF;
+    border-radius: 1rem; 
+    /* box-shadow: 3px 3px 2px rgb(249, 255, 85); */
+}
+
+@media screen and (max-width: 1025px) {
+    dialog {
+        width: 80%;
+        scrollbar-width: none;
+        display: flex;
+        margin: auto;
+        position: fixed;
+        top: 20%;
+    }
+
+    .item {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: auto;
+    gap: 20px;
+    }
+
+    
+    .modalBody {
+        height: 350px;
+    }
+
+    .item > .teste {
+        border-top: 2px solid #8C52FF;
+        padding-top: 15px;
+        gap: 10px;
+    }
+    section{
+        width: 95%;
+    }
+    
+    .modalBody > form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .modalBody > .modalHeader {
+        display: flex;
+        font-size: 10pt;
+    }
+
+    .modalBody > form > .input-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .modalBody > form > .input-label > label, input {
+        width: 80%;
+        text-align: center;
+    }
+
 }
 </style>
