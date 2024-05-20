@@ -20,7 +20,7 @@ async function carregarPagamentos() {
         
         pagamentos.value = response.data
         
-        pagamentosAprovados.value = pagamentos.value.filter(pagamento => pagamento.status === 'Aprovado' && pagamento.cliente === store.state.usuario)
+        pagamentosAprovados.value = pagamentos.value.filter(pagamento => pagamento.status === 'aproved' && pagamento.cliente === store.state.usuario)
         
         pagamentosPendentes.value = pagamentos.value.filter(pagamento => pagamento.status === 'Pendente' && pagamento.cliente === store.state.usuario) 
 
@@ -51,7 +51,7 @@ function copyPixCode(text) {
                 <h2>Pagamentos Aprovados</h2>
                 <div class="pagamento" v-for="item in pagamentosAprovados" :key="item.id">
                     <p>Valor: R${{ item.valor }}</p>
-                    <p>Status: <strong style="color: green;">{{ item.status }}</strong></p>
+                    <p>Status: <strong style="color: green;">Aprovado</strong></p>
                     <p>Data do Pagamento: {{ item.data_pagamento }}</p>
                     <p>Descrição: {{ item.descricao }}</p>
                     <p>Data de Aprovação: {{ item.data_aprovacao }}</p>
@@ -61,7 +61,7 @@ function copyPixCode(text) {
                 <div class="pagamento" v-for="item in pagamentosPendentes" :key="item.id" >
                 
                     <p>Valor: R${{ item.valor }}</p>
-                    <p>Status: <strong style="color: red;">{{ item.status }}</strong></p>
+                    <p>Status: <strong style="color: red;">Pendente</strong></p>
                     <p>Data do Pagamento: {{ item.data_pagamento }}</p>
                     <p>Descrição: {{ item.descricao }}</p>
                     <p>Data de Aprovação: {{ item.data_aprovacao }}</p>
