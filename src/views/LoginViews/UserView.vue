@@ -20,7 +20,7 @@ async function carregarPagamentos() {
         
         pagamentos.value = response.data
         
-        pagamentosAprovados.value = pagamentos.value.filter(pagamento => pagamento.status === 'aproved' && pagamento.cliente === store.state.usuario)
+        pagamentosAprovados.value = pagamentos.value.filter(pagamento => pagamento.status === 'approved' && pagamento.cliente === store.state.usuario)
         
         pagamentosPendentes.value = pagamentos.value.filter(pagamento => pagamento.status === 'Pendente' && pagamento.cliente === store.state.usuario) 
 
