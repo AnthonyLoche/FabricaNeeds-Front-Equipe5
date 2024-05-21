@@ -86,6 +86,7 @@ h3#valor {
 
 img#cofrinho {
     width: 70%;
+    animation: animationPorco 1.5s infinite;
 }
 
 #detalhes {
@@ -112,7 +113,17 @@ img#cofrinho {
     height: 140px ;
     border: 1px solid white;
 }
-
+@keyframes animationPorco {
+    0%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(-15px);
+    }
+    100%{
+        transform: translateY(0);
+    }
+}
 @media screen and (max-width: 1024px){
     section{
         flex-direction: column;
