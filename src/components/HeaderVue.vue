@@ -12,7 +12,6 @@ import store from '@/store/index.js'
         </div>
         <nav>
             <router-link to="/">Home</router-link>
-            <router-link to="/about">Cofre</router-link>
             <router-link to="/estoque">Estoque</router-link>
             <router-link v-if="store.state.isLoged == 'true'" to="/user">Usuário</router-link>
         </nav>
@@ -27,7 +26,6 @@ import store from '@/store/index.js'
         <span id="navDois" v-if="menu == true">
             <button id="fechar" @click="menu = !menu">X</button>
             <router-link to="/">Home</router-link>
-            <router-link to="/about">Cofre</router-link>
             <router-link to="/estoque">Estoque</router-link>
             <router-link v-if="store.state.isLoged == 'true'" to="/user">Usuário</router-link>
             <button v-if="store.state.isLoged == 'true'" @click="store.commit('logout')" id="btnLogout">Logout</button>

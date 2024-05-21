@@ -16,10 +16,10 @@ getValor()
             <img src="../assets/Cofre.png" alt="" id="cofrinho">
         </div>
         <div id="cofreInfo">
-            <h2>Porquinho Fabricador</h2>
+            <h2 style="text-align: center;">Porquinho Fabricador</h2>
             <p>Dinheiro Contido No Porquinho:</p>
             <h3 id="valor">R$: {{ total.toFixed(2).replace(".",",") }}</h3>
-            <p>Contribua Você Também com o Nosso Amigo</p>
+            <p style="text-align: center;">Contribua Você Também com o Nosso Amigo</p>
             <router-link id="contribuir"  to="/contribuir">Contribuir</router-link>
         </div>
     </section>
@@ -116,6 +116,15 @@ img#cofrinho {
 @media screen and (max-width: 1024px){
     section{
         flex-direction: column;
+        width: 100%;
+    }
+    #cofreInfo{
+        width: 90%;
+    }
+    h3#valor{
+        font-size: 40pt;
+    }
+    #cofre > img {
         width: 100%;
     }
 }
