@@ -28,8 +28,13 @@ let userOrPasswordLoginErroMensage = ref(null);
 let serverErrorMensage = ref(null);
 let userNotfoundErrorMensage = ref(null);
 let unknownErrorMensage = ref(null);
-let successMensage = ref(null)
+let successMensage = ref(null);
+let loadingDiv = ref(null);
 async function logar() {
+  loadingDiv.value.classList.add('showLoadingDiv')
+  setTimeout(() => {
+        loadingDiv.value.classList.remove('showLoadingDiv') 
+  }, 2000);
     try {
         const response = await axios.post('https://fabricaneeds-back-equipe5-3edw.onrender.com/login', login)
         console.log(response.data)
@@ -38,12 +43,13 @@ async function logar() {
         salvarUsuario(login.nome)
 
         serverErrorMensage.value.classList.remove('showErroInputs')
-        userNotfoundErrorMensage.value.classList.remove('showErroInputs')
+        userNotfoundErrorMensage.value.classList.remove('showErroInputs') 
         unknownErrorMensage.value.classList.remove('showErroInputs')
         userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
         successMensage.value.classList.add('showSuccessMensage')
         // window.location.href = '/'
-    } catch (error) {
+      }
+       catch (error) {
         if (error.response.status === 401) {
           serverErrorMensage.value.classList.remove('showErroInputs')
           userNotfoundErrorMensage.value.classList.remove('showErroInputs')
@@ -143,6 +149,9 @@ const giraCard2 = () => {
           </form>
         </div>
         <div id="logIn">
+          <div class="loadingDiv" ref="loadingDiv">
+            <img src="../../assets/gif_carregando.gif" alt="">
+          </div>
           <div class="successMensage" ref="successMensage">
             <p>Logado com sucesso!</p>
           </div>
@@ -350,6 +359,25 @@ form > button{
   padding: 1rem;
 }
 .showErroInputs{
+  display: flex ;
+}
+.loadingDiv{
+  display: none;
+  height: 60px;
+  margin: auto;
+  background-color: transparent;
+  border: 2px solid #8C52FF;
+  border-radius: 1rem;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.loadingDiv > img{
+  width: 50px;
+  height: 50px;
+}
+.showLoadingDiv{
   display: flex ;
 }
 .successMensage{
