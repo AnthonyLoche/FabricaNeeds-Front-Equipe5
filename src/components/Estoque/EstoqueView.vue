@@ -159,7 +159,7 @@ button.acao {
 }
 
 section {
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -367,12 +367,8 @@ form>button {
         flex-direction: column;
         width: 100%;
         margin: auto;
-    gap: 20px;
+        gap: 20px;
     }
-
-    
-
-
     .item > .teste {
         border-top: 2px solid #8C52FF;
         padding-top: 15px;

@@ -169,7 +169,7 @@ button.acao {
 }
 
 section {
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;

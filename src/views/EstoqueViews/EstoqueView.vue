@@ -96,7 +96,7 @@ const entradasFuncao = () => {
 
 .icon{
     filter: invert(1);
-    width: 30%;
+    width: 20%;
 }
 
 @media screen and (max-width: 1025px) {
