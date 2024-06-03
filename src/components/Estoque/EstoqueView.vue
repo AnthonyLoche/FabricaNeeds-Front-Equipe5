@@ -122,7 +122,6 @@ p.headerItem {
     font-size: 1.2rem;
     text-align: center;
     color: #8C52FF;
-    
 }
 
 .bodyItem {
@@ -155,7 +154,6 @@ button.acao {
     margin-top: .25rem;
     font-size: 16px;
     cursor: pointer;
-
 }
 
 section {

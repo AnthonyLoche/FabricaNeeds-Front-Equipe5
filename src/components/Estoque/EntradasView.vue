@@ -22,7 +22,19 @@ const modalAddIten = ref(null)
                 <img src="../../assets/gif_carregando.gif" alt="">
                 </div>
             <div class="item" v-for="entrada in entradas" :key="entrada.id">
-                <div class="headerItem">
+                        <div>
+                            <p class="headerItem">ID:</p>
+                            <p>{{ entrada.id }}</p>
+                        </div>
+                        <div class="teste">
+                            <p class="headerItem">DEMANDA:</p>
+                            <p>{{ entrada.demanda }}</p>
+                        </div>
+                        <div class="acoes teste">
+                            <p class="headerItem">QUANTIDADE:</p>
+                            <p>{{ entrada.quantidade }}</p>
+                        </div>
+                <!-- <div class="headerItem">
                     <p>ID:</p>
                     <p>DEMANDA:</p>
                     <p>QUANTIDADE:</p>
@@ -30,8 +42,8 @@ const modalAddIten = ref(null)
                 <div class="bodyItem">
                     <p>{{ entrada.id }}</p>
                     <p>{{ entrada.demanda }}</p>
-                    <p>{{ entrada.quantidade }}</p>
-                </div>
+                    
+                </div> -->
             </div>
         </div>
             <button @click="modalAddIten.showModal()">Adicionar Entrada</button>
@@ -55,7 +67,7 @@ const modalAddIten = ref(null)
                         <label for="">Quantidade:</label>
                         <input type="number" placeholder="quantidade" v-model="entrada.quantidade">
                     </div>
-                    <button @click="adicionar('entradasEstoque/', entrada)">Enviar</button>
+                    <button class="acao" @click="adicionar('entradasEstoque/', entrada)">Enviar</button>
                 </form>
             </div>
         </dialog>
@@ -66,17 +78,21 @@ const modalAddIten = ref(null)
 * {
     color: white;
 }
-.item{
-    width: 80%;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    display: flex;
+.item {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     border: 2px solid #8C52FF;
-    flex-direction: column;
     border-radius: 10px;
     padding: 20px;
+    gap: 20px;
+}
+.item > div {
+    display: flex;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    font-size: 12pt;
 }
 .headerItem{
     display: flex;
@@ -85,13 +101,11 @@ const modalAddIten = ref(null)
     width: 100%;
     flex-wrap: nowrap;
 }
-.headerItem > p{
-    font-size: 1.2rem;
+p.headerItem {
     margin-bottom: .5rem;
-    margin-top: .5rem;
-    text-align: start;
+    font-size: 1.2rem;
+    text-align: center;
     color: #8C52FF;
-    width: 20%;
 }
 .bodyItem{
     display: flex;
@@ -149,12 +163,25 @@ dialog{
     border-radius: .5rem;
     border: 2px solid #8C52FF;
     padding: 1rem;
+    position: absolute;
+    top: 60%;
 }
 .modalBody{
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+}
+button.acao {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: .5rem;
+    border: 2px solid #8C52FF;
+    background-color: #8C52FF;
+    margin-top: .25rem;
+    margin-bottom: 1rem;
+    font-size: 16px;
+    cursor: pointer;
 }
 form{
     display: flex;
@@ -277,5 +304,57 @@ form > button{
 .LoadingDiv > img{
     width: 100px;
     height: 100px;
+}
+@media screen and (max-width: 1025px) {
+    dialog {
+        width: 80%;
+        scrollbar-width: none;
+        /* display: flex; */
+        margin: auto;
+        position: fixed;
+        height: 55%;
+        top: 2%;
+    }
+
+    .item {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: auto;
+        gap: 20px;
+    }
+    .item > .teste {
+        border-top: 2px solid #8C52FF;
+        padding-top: 15px;
+        gap: 10px;
+    }
+    section{
+        width: 95%;
+    }
+    
+    .modalBody > form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .modalBody > .modalHeader {
+        display: flex;
+        font-size: 10pt;
+    }
+
+    .modalBody > form > .input-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .modalBody > form > .input-label > label, input {
+        width: 80%;
+        text-align: center;
+    }
+
 }
 </style>
