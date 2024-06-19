@@ -34,16 +34,6 @@ const modalAddIten = ref(null)
                             <p class="headerItem">QUANTIDADE:</p>
                             <p>{{ entrada.quantidade }}</p>
                         </div>
-                <!-- <div class="headerItem">
-                    <p>ID:</p>
-                    <p>DEMANDA:</p>
-                    <p>QUANTIDADE:</p>
-                </div>
-                <div class="bodyItem">
-                    <p>{{ entrada.id }}</p>
-                    <p>{{ entrada.demanda }}</p>
-                    
-                </div> -->
             </div>
         </div>
             <button @click="modalAddIten.showModal()">Adicionar Entrada</button>
@@ -81,6 +71,7 @@ const modalAddIten = ref(null)
 .item {
     width: 100%;
     display: grid;
+    margin: 1rem auto;
     grid-template-columns: 1fr 1fr 1fr;
     border: 2px solid #8C52FF;
     border-radius: 10px;
