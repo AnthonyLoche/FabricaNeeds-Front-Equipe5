@@ -14,6 +14,7 @@ if(store.isLogged == false){
     router.push("/singin")
 }
 
+
 const estoqueDiv = ref(true)
 const demandasDiv = ref(false)
 const entradasDiv = ref(false)
