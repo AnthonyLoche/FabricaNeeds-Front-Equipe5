@@ -62,7 +62,7 @@ function verificarCadastro(){
       erroVisivel.value = 'Insira um nome de usuário válido!'
       cor.value = 'red'
     }
-    else if(usuario.email == ''){
+    else if(usuario.email == '' || !usuario.email.includes('@')){
       erroVisivel.value = 'Insira um email válido!'
       cor.value = 'red'
     }
