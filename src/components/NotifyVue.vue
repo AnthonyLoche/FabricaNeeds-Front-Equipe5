@@ -29,6 +29,7 @@ main {
     text-align: center;
     color: white;
     z-index: 10;
+    border-radius: 15px;
 }
 
 @media screen and (max-width: 1024px) {
