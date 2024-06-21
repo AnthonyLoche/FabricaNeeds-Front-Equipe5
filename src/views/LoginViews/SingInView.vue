@@ -1,15 +1,13 @@
 <script setup>
 import HeaderVue from '@/components/HeaderVue.vue'
 import FooterVue from '@/components/FooterVue.vue';
-import NotifyVue from '@/components/NotifyVue.vue';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 import { adicionar } from '@/api/api.js'
 import { reactive, ref } from 'vue'
 import axios from 'axios';
 import store from '@/store/index.js'
 import router from '@/router'
-
-const erroVisivel = ref('')
-const cor = ref('')
 
 const usuario = reactive({
   nome: '',
@@ -38,8 +36,7 @@ async function logar() {
         salvarDado(true)
         salvarUsuario(login.nome)
 
-        cor.value = 'green'
-        erroVisivel.value = 'Logado com sucesso!'
+        toast.success("Logado com sucesso", {autoClose: 1500, position: 'top-center'})
         
         setTimeout(() => {
             router.push('/')
@@ -47,44 +44,36 @@ async function logar() {
       }
        catch (error) {
         if (error.response.status === 401) {
-          erroVisivel.value = 'Usuário ou senha incorretos!'
-          cor.value = 'red'
+          toast.error("Usuário ou senha incorretos!", {autoClose: 1500, position: 'top-center'});
         }
         else if (error.response.status === 500) {
-          erroVisivel.value = 'Erro no servidor, sentimos muito por isso :('
-          cor.value = 'red'
+          toast.error("Erro no servidor, sentimos muito por isso :(", {autoClose: 1500, position:'top-center'});
         }
         else if (error.response.status === 404) {
-          erroVisivel.value = 'Usuário não encontrado!'
-          cor.value = 'red'
+          toast.error("Usuário não encontrado!", {autoClose: 1500, position: 'top-center'});
         }
         else if(login.nome == ''){
-          erroVisivel.value = 'Preecha o campo de usuario por favor!'
-          cor.value = 'red'
+          toast.warning("Preecha o campo de usuario por favor!", {autoClose: 1500, position: 'top-center'
+          });
         }
         else if(login.senha == ''){
-          erroVisivel.value = 'Preecha o campo de senha por favor!'
-          cor.value = 'red'
+          toast.warning("Preecha o campo de senha por favor!", {autoClose: 1500, position: 'top-center'});
         }
     }
 }
 function verificarCadastro(){
     if(usuario.nome == ''){
-      erroVisivel.value = 'Insira um nome de usuário válido!'
-      cor.value = 'red'
+      toast.error("Insira um nome de usuário válido!", {autoClose: 1500, position: 'top-center'});
     }
     else if(usuario.email == '' || !usuario.email.includes('@')){
-      erroVisivel.value = 'Insira um email válido!'
-      cor.value = 'red'
+      toast.error("Insira um email válido!", {autoClose: 1500, position: 'top-center'});
     }
     else if(usuario.senha == ''){
-      cor.value = 'red'
-      erroVisivel.value = 'Insira uma senha válida!'
+      toast.error("Insira uma senha válida!", {autoClose: 1500, position: 'top-center'});
     }
     else{
       adicionar('contribuinte/', usuario)
-      cor.value = 'green'
-      erroVisivel.value = 'Usuário Cadastrado Com Sucesso!'
+      toast.success("Usuário Cadastrado Com Sucesso!", {autoClose: 1500, position: 'top-center'});
     }
 }
 
@@ -145,9 +134,6 @@ const giraCard2 = () => {
 </div>
   </main>
   <FooterVue />
-  <div v-if="erroVisivel != ''">
-  <NotifyVue :erro="erroVisivel" :cor="cor" />
-</div>
 </template>
 
 <style scoped>

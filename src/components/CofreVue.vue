@@ -1,12 +1,11 @@
 <script setup>
 import { ref } from 'vue'
-import NotifyVue from './NotifyVue.vue';
 import axios from 'axios'
 import store from '@/store';
 import router from '@/router';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 const total = ref(0)
-const erroVisivel = ref('')
-const cor = ref('')
 
 async function getValor() {
     const { data } = await axios.get('https://fabricaneeds-back-equipe5-3edw.onrender.com/total/')
@@ -18,9 +17,7 @@ function verLogado() {
         router.push('/contribuir')
     }
     else {
-
-        erroVisivel.value = 'Você Precisa Estar Logado Para Contribuir'
-        cor.value = 'red'
+        toast.warning("Você Precisa Estar Logado Para contribuir", {autoClose: 1500, position: 'top-center'})
         setTimeout(() => {
             router.push('/singin')
         }, 2000)
@@ -45,9 +42,6 @@ getValor()
             <button id="contribuir" @click="verLogado">Contribuir</button>
         </div>
     </section>
-    <div v-if="erroVisivel != ''">
-        <NotifyVue :erro="erroVisivel" :cor="cor" />
-    </div>
 </template>
 
 <style scoped>

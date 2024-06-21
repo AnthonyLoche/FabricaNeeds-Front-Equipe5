@@ -2,6 +2,8 @@
 import store from '@/store/index.js'
 import HeaderVue from '@/components/HeaderVue.vue'
 import FooterVue from '@/components/FooterVue.vue'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 import axios from 'axios';import { ref } from 'vue'
 import router from '@/router'
 
@@ -25,7 +27,7 @@ async function carregarPagamentos() {
         pagamentosPendentes.value = pagamentos.value.filter(pagamento => pagamento.status === 'Pendente' && pagamento.cliente === store.state.usuario) 
 
     } catch (error) {
-        console.error('Erro ao carregar os pagamentos:', error)
+        toast.error(`'Erro ao carregar os pagamentos:', ${error}`, {autoClose: 1500, position: 'top-center'});
     }
 }
 
@@ -33,7 +35,7 @@ carregarPagamentos()
 
 function copyPixCode(text) {
     navigator.clipboard.writeText(text)
-    .then(() => alert('Código do PIX copiado!'))
+    .then(() => toast.success("Código do PIX copiado!", {autoClose: 800, position: 'top-center'}))
     .catch(err => console.error('Erro ao copiar o código do PIX:', err))
 }
 </script>

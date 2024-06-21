@@ -3,18 +3,15 @@ import { ref } from 'vue'
 let menu = ref(false)
 import store from '@/store/index.js'
 import router from '@/router/index.js'
-import NotifyVue from './NotifyVue.vue';
-const erroVisivel = ref('')
-const cor = ref('')
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 function verLogado() {
     if (store.state.isLoged == 'true') {
         router.push('/contribuir')
     }
     else {
-
-        erroVisivel.value = 'Você Precisa Estar Logado Para Acessar a Página de Estoque'
-        cor.value = 'red'
+        toast.warning("Você Precisa Estar Logado Para Acessar a Página de Estoque", {autoClose: 1500, position: 'top-center'})
         setTimeout(() => {
             router.push('/singin')
         }, 2000)
@@ -56,9 +53,6 @@ function verLogado() {
             </div>
         </span>
     </header>
-    <div v-if="erroVisivel != ''">
-  <NotifyVue :erro="erroVisivel" :cor="cor" />
-</div>
 </template>
 
 <style scoped>

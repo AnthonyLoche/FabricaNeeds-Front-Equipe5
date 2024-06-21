@@ -4,12 +4,14 @@ import DemandasView from '@/components/Estoque/DemandasView.vue';
 import EntradasView from '@/components/Estoque/EntradasView.vue';
 import HeaderVue from '@/components/HeaderVue.vue';
 import FooterVue from '@/components/FooterVue.vue';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 import { ref } from 'vue';
 import store from '@/store/index.js';
 import router from '@/router';
 
 if(store.state.isLoged == 'false'){
-    alert("Você precisa estar logado para acessar essa página")
+    toast.warning("Você precisa estar logado para acessar essa página", {autoClose:1500, position:'top-center'})
     router.push("/singin")
 }
 

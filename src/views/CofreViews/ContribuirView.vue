@@ -1,17 +1,15 @@
 <script setup>
 import HeaderVue from '../../components/HeaderVue.vue'
 import FooterVue from '../../components/FooterVue.vue'
-import NotifyVue from '../../components/NotifyVue.vue'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 import { reactive, ref } from 'vue'
 import axios from 'axios';
 import store from '@/store/index.js'
 import router from '@/router'
 
-const erroVisivel = ref('')
-const cor = ref('')
-
 if(store.state.isLoged == 'false'){
-    alert("Você precisa estar logado para acessar essa página")
+    toast.warning("Você precisa estar logado para acessar essa página", {autoClose: 1500, position: 'top-center'})
     router.push("/singin")
 }
 
@@ -28,20 +26,16 @@ const pagamento = reactive({
 })
 async function testePagar(objeto) {
     if(pagamento.paymentData.transaction_amount <= 0 || pagamento.paymentData.transaction_amount == ""){
-        erroVisivel.value = "O valor não pode ser 0 ou negativo"
-        cor.value = 'red'
+        toast.error("O valor não pode ser 0 ou negativo", {autoClose: 1500, position: 'top-center'})
     }
     else if(pagamento.paymentData.number == "" || pagamento.paymentData.number.length != 11){
-        erroVisivel.value = "Insira um CPF Válido!"
-        cor.value = 'red'
+        toast.error("Insira um CPF Válido!", {autoClose: 1500, position: 'top-center'})
     }
     else if(pagamento.paymentData.description == ""){
-        erroVisivel.value = "Por Favor, Insira uma descrição"
-        cor.value = 'red'
+        toast.error("Por Favor, Insira uma descrição", {autoClose: 1500, position: 'top-center'})
     }
     else if(pagamento.paymentData.email == ""){
-        erroVisivel.value = "Insira um Email Válido!"
-        cor.value = 'red'
+        toast.error("Por Favor, Insira um Email", {autoClose: 1500, position: 'top-center'})
     }
     else{
     console.log(objeto)
@@ -62,8 +56,7 @@ async function testePagar(objeto) {
     console.log(teste2)
     console.log(data)
     isOpen.value = true
-    erroVisivel.value = "Pagamento Criado com Sucesso!"
-    cor.value = 'green'
+    toast.success("Pagamento Realizado com Sucesso!", {autoClose: 1500, position: 'top-center'})
     window.open(data.result.point_of_interaction.transaction_data.ticket_url)
 }
 }
@@ -99,9 +92,6 @@ console.log(store.state.email)
 </div>
 </section>
 <FooterVue />
-<div v-if="erroVisivel != ''">
-  <NotifyVue :erro="erroVisivel" :cor="cor" />
-</div>
 </template>
 
 <style scoped>
