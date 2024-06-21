@@ -2,6 +2,25 @@
 import { ref } from 'vue'
 let menu = ref(false)
 import store from '@/store/index.js'
+import router from '@/router/index.js'
+import NotifyVue from './NotifyVue.vue';
+const erroVisivel = ref('')
+const cor = ref('')
+
+function verLogado() {
+    if (store.state.isLoged == 'true') {
+        router.push('/contribuir')
+    }
+    else {
+
+        erroVisivel.value = 'Você Precisa Estar Logado Para Acessar a Página de Estoque'
+        cor.value = 'red'
+        setTimeout(() => {
+            router.push('/singin')
+        }, 2000)
+    }
+
+}
 
 </script>
 
@@ -12,7 +31,7 @@ import store from '@/store/index.js'
         </div>
         <nav>
             <router-link to="/">Home</router-link>
-            <router-link to="/estoque">Estoque</router-link>
+            <button @click="verLogado" class="estoque">Estoque</button>
             <router-link v-if="store.state.isLoged == 'true'" to="/user">Usuário</router-link>
         </nav>
         <div id="botoes">
@@ -26,7 +45,7 @@ import store from '@/store/index.js'
         <span id="navDois" v-if="menu == true">
             <button id="fechar" @click="menu = !menu">X</button>
             <router-link to="/">Home</router-link>
-            <router-link to="/estoque">Estoque</router-link>
+            <button @click="verLogado">Estoque</button>
             <router-link v-if="store.state.isLoged == 'true'" to="/user">Usuário</router-link>
             <button v-if="store.state.isLoged == 'true'" @click="store.commit('logout')" id="btnLogout">Logout</button>
             <div id="botoesDois">
@@ -37,6 +56,9 @@ import store from '@/store/index.js'
             </div>
         </span>
     </header>
+    <div v-if="erroVisivel != ''">
+  <NotifyVue :erro="erroVisivel" :cor="cor" />
+</div>
 </template>
 
 <style scoped>
@@ -75,6 +97,7 @@ button#menu {
     width: 150px;
     background-color: #8C52FF;
     height: 100%;
+    z-index: 15;
 }
 
 #titulo {
@@ -85,11 +108,26 @@ button#menu {
 a {
     color: white;
     text-decoration: none;
-    border-bottom: 2px solid white;
     opacity: 1;
+    font-size: 12pt;
 }
 
 a:hover {
+    opacity: 1;
+    border-bottom: 2px solid #8C52FF;
+    transition: 0.5s;
+}
+
+button.estoque {
+    color: white;
+    text-decoration: none;
+    opacity: 1;
+    border: 0;
+    background-color: transparent;
+    font-size: 12pt;
+}
+
+button.estoque:hover {
     opacity: 1;
     border-bottom: 2px solid #8C52FF;
     transition: 0.5s;

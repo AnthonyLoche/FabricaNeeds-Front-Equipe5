@@ -48,12 +48,23 @@ async function logar() {
        catch (error) {
         if (error.response.status === 401) {
           erroVisivel.value = 'Usuário ou senha incorretos!'
+          cor.value = 'red'
         }
         else if (error.response.status === 500) {
           erroVisivel.value = 'Erro no servidor, sentimos muito por isso :('
+          cor.value = 'red'
         }
         else if (error.response.status === 404) {
           erroVisivel.value = 'Usuário não encontrado!'
+          cor.value = 'red'
+        }
+        else if(login.nome == ''){
+          erroVisivel.value = 'Preecha o campo de usuario por favor!'
+          cor.value = 'red'
+        }
+        else if(login.senha == ''){
+          erroVisivel.value = 'Preecha o campo de senha por favor!'
+          cor.value = 'red'
         }
     }
 }

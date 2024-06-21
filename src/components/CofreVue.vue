@@ -1,32 +1,58 @@
 <script setup>
 import { ref } from 'vue'
+import NotifyVue from './NotifyVue.vue';
 import axios from 'axios'
+import store from '@/store';
+import router from '@/router';
 const total = ref(0)
+const erroVisivel = ref('')
+const cor = ref('')
 
 async function getValor() {
     const { data } = await axios.get('https://fabricaneeds-back-equipe5-3edw.onrender.com/total/')
     total.value = data[0].total
 }
+
+function verLogado() {
+    if (store.state.isLoged == 'true') {
+        router.push('/contribuir')
+    }
+    else {
+
+        erroVisivel.value = 'Você Precisa Estar Logado Para Contribuir'
+        cor.value = 'red'
+        setTimeout(() => {
+            router.push('/singin')
+        }, 2000)
+    }
+
+}
+
+
 getValor()
 </script>
 
 <template>
-<section>
+    <section>
         <div id="cofre">
             <img src="../assets/Cofre.png" alt="" id="cofrinho">
         </div>
         <div id="cofreInfo">
             <h2 style="text-align: center;">Porquinho Fabricador</h2>
             <p>Dinheiro Contido No Porquinho:</p>
-            <h3 id="valor">R$: {{ total.toFixed(2).replace(".",",") }}</h3>
+            <h3 id="valor">R$: {{ total.toFixed(2).replace(".", ",") }}</h3>
             <p style="text-align: center;">Contribua Você Também com o Nosso Amigo</p>
-            <router-link id="contribuir" to="/contribuir">Contribuir</router-link>
+            <button id="contribuir" @click="verLogado">Contribuir</button>
         </div>
     </section>
+    <div v-if="erroVisivel != ''">
+        <NotifyVue :erro="erroVisivel" :cor="cor" />
+    </div>
 </template>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Jersey+20+Charted&family=Oswald:wght@200..700&display=swap');
+
 section {
     display: flex;
     align-items: center;
@@ -36,7 +62,7 @@ section {
     margin: 10px auto;
 }
 
-a#contribuir {
+button#contribuir {
     color: white;
     padding: 10px;
     background-color: #8C52FF;
@@ -78,7 +104,8 @@ h3#valor {
     flex-direction: column;
     gap: 30px;
 }
-#cofreInfo  > h2{
+
+#cofreInfo>h2 {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 30px;
 }
@@ -108,34 +135,42 @@ img#cofrinho {
     padding: 10px;
     text-align: center;
 }
-#detalhes > span{
+
+#detalhes>span {
     width: 2px;
-    height: 140px ;
+    height: 140px;
     border: 1px solid white;
 }
+
 @keyframes animationPorco {
-    0%{
+    0% {
         transform: translateY(0);
     }
-    50%{
+
+    50% {
         transform: translateY(-15px);
     }
-    100%{
+
+    100% {
         transform: translateY(0);
     }
 }
-@media screen and (max-width: 1024px){
-    section{
+
+@media screen and (max-width: 1024px) {
+    section {
         flex-direction: column;
         width: 100%;
     }
-    #cofreInfo{
+
+    #cofreInfo {
         width: 90%;
     }
-    h3#valor{
+
+    h3#valor {
         font-size: 40pt;
     }
-    #cofre > img {
+
+    #cofre>img {
         width: 100%;
     }
 }
