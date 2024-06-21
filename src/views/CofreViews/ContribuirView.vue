@@ -1,13 +1,17 @@
 <script setup>
 import HeaderVue from '../../components/HeaderVue.vue'
 import FooterVue from '../../components/FooterVue.vue'
+import NotifyVue from '../../components/NotifyVue.vue'
 import { reactive, ref } from 'vue'
 import axios from 'axios';
 import store from '@/store/index.js'
 import router from '@/router'
 
+const erroVisivel = ref('')
+const cor = ref('')
+
 if(store.state.isLoged == 'false'){
-    document.write('<body style= "background-color: rgb(26 26 26)"><div style= "width: 30%;display: flex;justify-content: center;align-items: center;color: white;margin: 5% auto;height: 110px;background-color: rgb(26 26 26);border: 2px solid red;border-radius: 1rem;font-size: 1.2rem;z-index: 5;"><p>Você precisa estar logado para acessar essa página</p></div><div style="margin: auto;width: 30%;display: flex;justify-content:center "><button style="width: 30%;margin: auto;font-size: 16px;height: 40px;background-color: #8C52FF;color: white;border: none;cursor: pointer;border-radius: 1rem;margin-top: .5rem;z-index: 4;" onclick="window.location.reload(true)">Login</button></div></body>')
+    alert("Você precisa estar logado para acessar essa página")
     router.push("/singin")
 }
 
@@ -22,40 +26,24 @@ const pagamento = reactive({
         number: 0
     }
 })
-let valueErrorMensage = ref(null);
-let cpfErrorMensage = ref(null);
-let descriptionErrorMensage = ref(null);
-let emailErrorMensage = ref(null);
 async function testePagar(objeto) {
     if(pagamento.paymentData.transaction_amount <= 0 || pagamento.paymentData.transaction_amount == ""){
-        cpfErrorMensage.value.classList.remove('showErroInputs');
-        descriptionErrorMensage.value.classList.remove('showErroInputs');
-        emailErrorMensage.value.classList.remove('showErroInputs');
-        valueErrorMensage.value.classList.add('showErroInputs');
+        erroVisivel.value = "O valor não pode ser 0 ou negativo"
+        cor.value = 'red'
     }
     else if(pagamento.paymentData.number == "" || pagamento.paymentData.number.length != 11){
-        valueErrorMensage.value.classList.remove('showErroInputs');
-        descriptionErrorMensage.value.classList.remove('showErroInputs');
-        emailErrorMensage.value.classList.remove('showErroInputs');
-        cpfErrorMensage.value.classList.add('showErroInputs');
+        erroVisivel.value = "Insira um CPF Válido!"
+        cor.value = 'red'
     }
     else if(pagamento.paymentData.description == ""){
-        valueErrorMensage.value.classList.remove('showErroInputs');
-        cpfErrorMensage.value.classList.remove('showErroInputs');
-        emailErrorMensage.value.classList.remove('showErroInputs');
-        descriptionErrorMensage.value.classList.add('showErroInputs');
+        erroVisivel.value = "Por Favor, Insira uma descrição"
+        cor.value = 'red'
     }
     else if(pagamento.paymentData.email == ""){
-        valueErrorMensage.value.classList.remove('showErroInputs');
-        cpfErrorMensage.value.classList.remove('showErroInputs');
-        descriptionErrorMensage.value.classList.remove('showErroInputs');
-        emailErrorMensage.value.classList.add('showErroInputs');
+        erroVisivel.value = "Insira um Email Válido!"
+        cor.value = 'red'
     }
     else{
-    valueErrorMensage.value.classList.remove('showErroInputs');
-    cpfErrorMensage.value.classList.remove('showErroInputs');
-    descriptionErrorMensage.value.classList.remove('showErroInputs');
-    emailErrorMensage.value.classList.remove('showErroInputs');
     console.log(objeto)
     const { data } = await axios.post("https://webhook.peraza.live/pagamento/", objeto)
     const teste = reactive({
@@ -74,6 +62,8 @@ async function testePagar(objeto) {
     console.log(teste2)
     console.log(data)
     isOpen.value = true
+    erroVisivel.value = "Pagamento Criado com Sucesso!"
+    cor.value = 'green'
     window.open(data.result.point_of_interaction.transaction_data.ticket_url)
 }
 }
@@ -89,25 +79,15 @@ console.log(store.state.email)
             <label for="valor">Valor:</label>
             <input type="number" v-model="pagamento.paymentData.transaction_amount" placeholder="Valor" required class="input">
         </div>
-        <div class="erroInputs" ref="valueErrorMensage">
-                <p>O valor não pode ser 0 ou negativo</p>
-        </div>
             <div class="input-label">
             <label for="">CPF:</label>
             <input type="text" v-model="pagamento.paymentData.number" required class="input"></div>
-            <div class="erroInputs" ref="cpfErrorMensage">
-                    <p>Insira um CPF Válido!</p>
-            </div>
             <div class="input-label">
             <label for="">Descrição:</label>
             <input type="text" v-model="pagamento.paymentData.description" class="input"></div>
-            <div class="erroInputs" ref="descriptionErrorMensage"><p>Por Favor, Insira uma descrição</p></div>
             <div class="input-label">
             <label for="">Email</label>
             <input type="email" v-model="pagamento.paymentData.email" class="input">
-        </div>
-        <div class="erroInputs" ref="emailErrorMensage">
-                <p>Insira um Email Válido!</p>
         </div>
             <button @click="testePagar(pagamento)">Pagar</button>
     </form>
@@ -117,7 +97,11 @@ console.log(store.state.email)
     <div class="cofreImg"><img src="../../assets/Cofre.png" alt=""></div>
     
 </div>
-</section><FooterVue />
+</section>
+<FooterVue />
+<div v-if="erroVisivel != ''">
+  <NotifyVue :erro="erroVisivel" :cor="cor" />
+</div>
 </template>
 
 <style scoped>

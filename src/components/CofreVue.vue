@@ -20,7 +20,7 @@ getValor()
             <p>Dinheiro Contido No Porquinho:</p>
             <h3 id="valor">R$: {{ total.toFixed(2).replace(".",",") }}</h3>
             <p style="text-align: center;">Contribua Você Também com o Nosso Amigo</p>
-            <router-link id="contribuir"  to="/contribuir">Contribuir</router-link>
+            <router-link id="contribuir" to="/contribuir">Contribuir</router-link>
         </div>
     </section>
 </template>

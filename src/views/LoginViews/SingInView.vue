@@ -1,10 +1,15 @@
 <script setup>
 import HeaderVue from '@/components/HeaderVue.vue'
 import FooterVue from '@/components/FooterVue.vue';
+import NotifyVue from '@/components/NotifyVue.vue';
 import { adicionar } from '@/api/api.js'
 import { reactive, ref } from 'vue'
 import axios from 'axios';
 import store from '@/store/index.js'
+import router from '@/router'
+
+const erroVisivel = ref('')
+const cor = ref('')
 
 const usuario = reactive({
   nome: '',
@@ -24,17 +29,8 @@ function salvarDado(dado) {
 function salvarUsuario(dado) {
     store.commit('setUsuario', dado)
 }
-let userOrPasswordLoginErroMensage = ref(null);
-let serverErrorMensage = ref(null);
-let userNotfoundErrorMensage = ref(null);
-let unknownErrorMensage = ref(null);
-let successMensage = ref(null);
-let loadingDiv = ref(null);
+
 async function logar() {
-  loadingDiv.value.classList.add('showLoadingDiv')
-  setTimeout(() => {
-        loadingDiv.value.classList.remove('showLoadingDiv') 
-  }, 2000);
     try {
         const response = await axios.post('https://fabricaneeds-back-equipe5-3edw.onrender.com/login', login)
         console.log(response.data)
@@ -42,64 +38,42 @@ async function logar() {
         salvarDado(true)
         salvarUsuario(login.nome)
 
-        serverErrorMensage.value.classList.remove('showErroInputs')
-        userNotfoundErrorMensage.value.classList.remove('showErroInputs') 
-        unknownErrorMensage.value.classList.remove('showErroInputs')
-        userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
-        successMensage.value.classList.add('showSuccessMensage')
-        // window.location.href = '/'
+        cor.value = 'green'
+        erroVisivel.value = 'Logado com sucesso!'
+        
+        setTimeout(() => {
+            router.push('/')
+        }, 2000)
       }
        catch (error) {
         if (error.response.status === 401) {
-          serverErrorMensage.value.classList.remove('showErroInputs')
-          userNotfoundErrorMensage.value.classList.remove('showErroInputs')
-          unknownErrorMensage.value.classList.remove('showErroInputs')
-          userOrPasswordLoginErroMensage.value.classList.add('showErroInputs')
+          erroVisivel.value = 'Usuário ou senha incorretos!'
         }
         else if (error.response.status === 500) {
-          userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
-          userNotfoundErrorMensage.value.classList.remove('showErroInputs')
-          unknownErrorMensage.value.classList.remove('showErroInputs')
-          serverErrorMensage.value.classList.add('showErroInputs')
+          erroVisivel.value = 'Erro no servidor, sentimos muito por isso :('
         }
         else if (error.response.status === 404) {
-          userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
-          serverErrorMensage.value.classList.remove('showErroInputs')
-          unknownErrorMensage.value.classList.remove('showErroInputs')
-          userNotfoundErrorMensage.value.classList.add('showErroInputs')
-        }
-        else {
-          userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
-          serverErrorMensage.value.classList.remove('showErroInputs')
-          userNotfoundErrorMensage.value.classList.remove('showErroInputs')
-          unknownErrorMensage.value.classList.add('showErroInputs')
+          erroVisivel.value = 'Usuário não encontrado!'
         }
     }
 }
-let usuarioSignInErroMensage = ref(null);
-let emailSignInErroMensage = ref(null);
-let senhaSignInErroMensage = ref(null);
 function verificarCadastro(){
     if(usuario.nome == ''){
-        emailSignInErroMensage.value.classList.remove('showErroInputs')
-        senhaSignInErroMensage.value.classList.remove('showErroInputs')
-        usuarioSignInErroMensage.value.classList.add('showErroInputs')
+      erroVisivel.value = 'Insira um nome de usuário válido!'
+      cor.value = 'red'
     }
     else if(usuario.email == ''){
-        usuarioSignInErroMensage.value.classList.remove('showErroInputs')
-        senhaSignInErroMensage.value.classList.remove('showErroInputs')
-        emailSignInErroMensage.value.classList.add('showErroInputs')
+      erroVisivel.value = 'Insira um email válido!'
+      cor.value = 'red'
     }
     else if(usuario.senha == ''){
-        usuarioSignInErroMensage.value.classList.remove('showErroInputs')
-        emailSignInErroMensage.value.classList.remove('showErroInputs')
-        senhaSignInErroMensage.value.classList.add('showErroInputs')
+      cor.value = 'red'
+      erroVisivel.value = 'Insira uma senha válida!'
     }
     else{
-      usuarioSignInErroMensage.value.classList.remove('showErroInputs')
-      emailSignInErroMensage.value.classList.remove('showErroInputs')
-      senhaSignInErroMensage.value.classList.remove('showErroInputs')
-        adicionar('contribuinte/', usuario)
+      adicionar('contribuinte/', usuario)
+      cor.value = 'green'
+      erroVisivel.value = 'Usuário Cadastrado Com Sucesso!'
     }
 }
 
@@ -134,17 +108,8 @@ const giraCard2 = () => {
           <form action="" method="post" @submit.prevent>
             <h2>Cadastre-se:</h2>
             <input type="text" v-model="usuario.nome" placeholder="Username" class="input" />
-            <div class="erroInputs" ref="usuarioSignInErroMensage">
-              <p>Insira um nome de usuário válido!</p>
-            </div>
             <input type="email" v-model="usuario.email" placeholder="Email" class="input" />
-            <div class="erroInputs" ref="emailSignInErroMensage">
-              <p>Insira um email válido!</p>
-            </div>
             <input type="password" v-model="usuario.senha" placeholder="Senha" class="input" />
-            <div class="erroInputs" ref="senhaSignInErroMensage">
-              <p>Insira uma senha válida!</p>
-            </div>
             <button @click="verificarCadastro">Cadastrar</button>
           </form>
         </div>
@@ -159,18 +124,6 @@ const giraCard2 = () => {
             <h2>Login:</h2>
             <input type="text" v-model="login.nome" placeholder="Username"  class="input" />
             <input type="password" v-model="login.senha" placeholder="Senha"  class="input" />
-            <div class="erroInputs" ref="userOrPasswordLoginErroMensage">
-              <p>Usuário ou senha incorretos!</p>
-            </div>
-            <div class="erroInputs" ref="serverErrorMensage">
-              <p>Erro no servidor, sentimos muito por isso :(</p>
-            </div>
-            <div class="erroInputs" ref="userNotfoundErrorMensage">
-              <p>Usuário não encontrado!</p>
-            </div>
-            <div class="erroInputs" ref="unknownErrorMensage">
-              <p>Erro desconhecido, sentimos muito por isso :(</p>
-            </div>
             <button @click="logar">Login</button>
           </form>
         </div>
@@ -181,6 +134,9 @@ const giraCard2 = () => {
 </div>
   </main>
   <FooterVue />
+  <div v-if="erroVisivel != ''">
+  <NotifyVue :erro="erroVisivel" :cor="cor" />
+</div>
 </template>
 
 <style scoped>

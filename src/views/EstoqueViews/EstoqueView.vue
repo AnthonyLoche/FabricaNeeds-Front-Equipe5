@@ -9,7 +9,7 @@ import store from '@/store/index.js';
 import router from '@/router';
 
 if(store.state.isLoged == 'false'){
-    document.write('<body style= "background-color: rgb(26 26 26)"><div style= "width: 30%;display: flex;justify-content: center;align-items: center;color: white;margin: 5% auto;height: 110px;background-color: rgb(26 26 26);border: 2px solid red;border-radius: 1rem;font-size: 1.2rem;z-index: 5;"><p>Você precisa estar logado para acessar essa página</p></div><div style="margin: auto;width: 30%;display: flex;justify-content:center "><button style="width: 30%;margin: auto;font-size: 16px;height: 40px;background-color: #8C52FF;color: white;border: none;cursor: pointer;border-radius: 1rem;margin-top: .5rem;z-index: 4;" onclick="window.location.reload(true)">Login</button></div></body>')
+    alert("Você precisa estar logado para acessar essa página")
     router.push("/singin")
 }
 
@@ -68,6 +68,7 @@ const entradasFuncao = () => {
     </div>
 
     <FooterVue />
+    
 </template>
 
 <style scoped>
