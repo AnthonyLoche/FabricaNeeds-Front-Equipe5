@@ -1,7 +1,9 @@
 <script setup>
 import { ref } from 'vue'
 let menu = ref(false)
-import store from '@/store/index.js'
+
+import { useCounterStore } from '@/store';
+const store = useCounterStore()
 
 </script>
 
@@ -13,22 +15,22 @@ import store from '@/store/index.js'
         <nav>
             <router-link to="/">Home</router-link>
             <router-link to="/estoque">Estoque</router-link>
-            <router-link v-if="store.state.isLoged == 'true'" to="/user">Usuário</router-link>
+            <router-link v-if="store.isLogged == 'true'" to="/user">Usuário</router-link>
         </nav>
         <div id="botoes">
             <router-link id="github" to="/">
                 <img src="../assets/github.svg" alt="">
             </router-link>
             <router-link id="singup" to="/singin">Sing Up / Log In</router-link>
-            <button v-if="store.state.isLoged == 'true'" @click="store.commit('logout')" id="btnLogout">Logout</button>
+            <button v-if="store.isLogged == 'true'" @click="store.commit('logout')" id="btnLogout">Logout</button>
         </div>
         <button id="menu" @click="menu = !menu">&#9776;</button>
         <span id="navDois" v-if="menu == true">
             <button id="fechar" @click="menu = !menu">X</button>
             <router-link to="/">Home</router-link>
             <router-link to="/estoque">Estoque</router-link>
-            <router-link v-if="store.state.isLoged == 'true'" to="/user">Usuário</router-link>
-            <button v-if="store.state.isLoged == 'true'" @click="store.commit('logout')" id="btnLogout">Logout</button>
+            <router-link v-if="store.isLogged == true" to="/user">Usuário</router-link>
+            <button v-if="store.isLogged == true" @click="store.logout()" id="btnLogout">Logout</button>
             <div id="botoesDois">
                 <router-link id="singup" to="/singin">Sing Up / Log In</router-link>
                 <router-link id="github" to="/">

@@ -1,5 +1,10 @@
 <script setup>
-import store from '@/store/index.js'
+
+
+import { useCounterStore } from '@/store';
+const store = useCounterStore()
+
+
 import HeaderVue from '@/components/HeaderVue.vue'
 import FooterVue from '@/components/FooterVue.vue'
 import axios from 'axios';import { ref } from 'vue'

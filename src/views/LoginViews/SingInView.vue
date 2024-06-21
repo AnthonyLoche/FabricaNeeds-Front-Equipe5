@@ -4,7 +4,10 @@ import FooterVue from '@/components/FooterVue.vue';
 import { adicionar } from '@/api/api.js'
 import { reactive, ref } from 'vue'
 import axios from 'axios';
-import store from '@/store/index.js'
+import { useCounterStore } from '@/store';
+
+const store = useCounterStore()
+
 
 const usuario = reactive({
   nome: '',
@@ -12,95 +15,47 @@ const usuario = reactive({
   senha: ''
 })
 
-const login = reactive({
-  nome: '',
-  senha: ''
-})
+const nomeInput = ref('')
+const senhaInput = ref('')
 
-function salvarDado(dado) {
-    store.commit('setisLoged', dado)
+const loginView = (name, password) => {
+  console.log(name, password)
+  store.loginStore({ name, password })
 }
 
-function salvarUsuario(dado) {
-    store.commit('setUsuario', dado)
-}
 let userOrPasswordLoginErroMensage = ref(null);
 let serverErrorMensage = ref(null);
 let userNotfoundErrorMensage = ref(null);
 let unknownErrorMensage = ref(null);
 let successMensage = ref(null);
 let loadingDiv = ref(null);
-async function logar() {
-  loadingDiv.value.classList.add('showLoadingDiv')
-  setTimeout(() => {
-        loadingDiv.value.classList.remove('showLoadingDiv') 
-  }, 2000);
-    try {
-        const response = await axios.post('https://fabricaneeds-back-equipe5-3edw.onrender.com/login', login)
-        console.log(response.data)
-        console.log(response)
-        salvarDado(true)
-        salvarUsuario(login.nome)
 
-        serverErrorMensage.value.classList.remove('showErroInputs')
-        userNotfoundErrorMensage.value.classList.remove('showErroInputs') 
-        unknownErrorMensage.value.classList.remove('showErroInputs')
-        userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
-        successMensage.value.classList.add('showSuccessMensage')
-        // window.location.href = '/'
-      }
-       catch (error) {
-        if (error.response.status === 401) {
-          serverErrorMensage.value.classList.remove('showErroInputs')
-          userNotfoundErrorMensage.value.classList.remove('showErroInputs')
-          unknownErrorMensage.value.classList.remove('showErroInputs')
-          userOrPasswordLoginErroMensage.value.classList.add('showErroInputs')
-        }
-        else if (error.response.status === 500) {
-          userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
-          userNotfoundErrorMensage.value.classList.remove('showErroInputs')
-          unknownErrorMensage.value.classList.remove('showErroInputs')
-          serverErrorMensage.value.classList.add('showErroInputs')
-        }
-        else if (error.response.status === 404) {
-          userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
-          serverErrorMensage.value.classList.remove('showErroInputs')
-          unknownErrorMensage.value.classList.remove('showErroInputs')
-          userNotfoundErrorMensage.value.classList.add('showErroInputs')
-        }
-        else {
-          userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
-          serverErrorMensage.value.classList.remove('showErroInputs')
-          userNotfoundErrorMensage.value.classList.remove('showErroInputs')
-          unknownErrorMensage.value.classList.add('showErroInputs')
-        }
-    }
-}
+
 let usuarioSignInErroMensage = ref(null);
 let emailSignInErroMensage = ref(null);
 let senhaSignInErroMensage = ref(null);
-function verificarCadastro(){
-    if(usuario.nome == ''){
-        emailSignInErroMensage.value.classList.remove('showErroInputs')
-        senhaSignInErroMensage.value.classList.remove('showErroInputs')
-        usuarioSignInErroMensage.value.classList.add('showErroInputs')
-    }
-    else if(usuario.email == ''){
-        usuarioSignInErroMensage.value.classList.remove('showErroInputs')
-        senhaSignInErroMensage.value.classList.remove('showErroInputs')
-        emailSignInErroMensage.value.classList.add('showErroInputs')
-    }
-    else if(usuario.senha == ''){
-        usuarioSignInErroMensage.value.classList.remove('showErroInputs')
-        emailSignInErroMensage.value.classList.remove('showErroInputs')
-        senhaSignInErroMensage.value.classList.add('showErroInputs')
-    }
-    else{
-      usuarioSignInErroMensage.value.classList.remove('showErroInputs')
-      emailSignInErroMensage.value.classList.remove('showErroInputs')
-      senhaSignInErroMensage.value.classList.remove('showErroInputs')
-        adicionar('contribuinte/', usuario)
-    }
+function verificarCadastro() {
+  if (usuario.nome == '') {
+    emailSignInErroMensage.value.classList.remove('showErroInputs')
+    senhaSignInErroMensage.value.classList.remove('showErroInputs')
+    usuarioSignInErroMensage.value.classList.add('showErroInputs')
+  }
+  else if (usuario.email == '') {
+    usuarioSignInErroMensage.value.classList.remove('showErroInputs')
+    senhaSignInErroMensage.value.classList.remove('showErroInputs')
+    emailSignInErroMensage.value.classList.add('showErroInputs')
+  }
+  else if (usuario.senha == '') {
+    usuarioSignInErroMensage.value.classList.remove('showErroInputs')
+    emailSignInErroMensage.value.classList.remove('showErroInputs')
+    senhaSignInErroMensage.value.classList.add('showErroInputs')
+  }
+  else {
+    usuarioSignInErroMensage.value.classList.remove('showErroInputs')
+    emailSignInErroMensage.value.classList.remove('showErroInputs')
+    senhaSignInErroMensage.value.classList.remove('showErroInputs')
+    adicionar('contribuinte/', usuario)
+  }
 }
 
 const card = ref(null);
@@ -124,61 +79,62 @@ const giraCard2 = () => {
   <HeaderVue />
   <main>
     <div class="container-cadastro-logoFabrica">
-    <div class="container">
-    <div class="buttons-login-sigin">
-        <button @click="giraCard2" ref="btnSign" class="border-selection">Sign In</button><button @click="giraCard1" ref="btnLogin">Login</button>
-      </div>
-    <section>
-      <div id="card" ref="card">
-        <div id="signIn">
-          <form action="" method="post" @submit.prevent>
-            <h2>Cadastre-se:</h2>
-            <input type="text" v-model="usuario.nome" placeholder="Username" class="input" />
-            <div class="erroInputs" ref="usuarioSignInErroMensage">
-              <p>Insira um nome de usuário válido!</p>
-            </div>
-            <input type="email" v-model="usuario.email" placeholder="Email" class="input" />
-            <div class="erroInputs" ref="emailSignInErroMensage">
-              <p>Insira um email válido!</p>
-            </div>
-            <input type="password" v-model="usuario.senha" placeholder="Senha" class="input" />
-            <div class="erroInputs" ref="senhaSignInErroMensage">
-              <p>Insira uma senha válida!</p>
-            </div>
-            <button @click="verificarCadastro">Cadastrar</button>
-          </form>
+      <div class="container">
+        <div class="buttons-login-sigin">
+          <button @click="giraCard2" ref="btnSign" class="border-selection">Sign In</button><button @click="giraCard1"
+            ref="btnLogin">Login</button>
         </div>
-        <div id="logIn">
-          <div class="loadingDiv" ref="loadingDiv">
-            <img src="../../assets/gif_carregando.gif" alt="">
+        <section>
+          <div id="card" ref="card">
+            <div id="signIn">
+              <form action="" method="post" @submit.prevent>
+                <h2>Cadastre-se:</h2>
+                <input type="text" v-model="usuario.nome" placeholder="Username" class="input" />
+                <div class="erroInputs" ref="usuarioSignInErroMensage">
+                  <p>Insira um nome de usuário válido!</p>
+                </div>
+                <input type="email" v-model="usuario.email" placeholder="Email" class="input" />
+                <div class="erroInputs" ref="emailSignInErroMensage">
+                  <p>Insira um email válido!</p>
+                </div>
+                <input type="password" v-model="usuario.senha" placeholder="Senha" class="input" />
+                <div class="erroInputs" ref="senhaSignInErroMensage">
+                  <p>Insira uma senha válida!</p>
+                </div>
+                <button @click="verificarCadastro">Cadastrar</button>
+              </form>
+            </div>
+            <div id="logIn">
+              <div class="loadingDiv" ref="loadingDiv">
+                <img src="../../assets/gif_carregando.gif" alt="">
+              </div>
+              <div class="successMensage" ref="successMensage">
+                <p>Logado com sucesso!</p>
+              </div>
+              <form action="" method="post" @submit.prevent>
+                <h2>Login:</h2>
+                <input type="text" v-model="nomeInput" placeholder="Username" class="input" />
+                <input type="password" v-model="senhaInput" placeholder="Senha" class="input" />
+                <div class="erroInputs" ref="userOrPasswordLoginErroMensage">
+                  <p>Usuário ou senha incorretos!</p>
+                </div>
+                <div class="erroInputs" ref="serverErrorMensage">
+                  <p>Erro no servidor, sentimos muito por isso :(</p>
+                </div>
+                <div class="erroInputs" ref="userNotfoundErrorMensage">
+                  <p>Usuário não encontrado!</p>
+                </div>
+                <div class="erroInputs" ref="unknownErrorMensage">
+                  <p>Erro desconhecido, sentimos muito por isso :(</p>
+                </div>
+                <button @click="loginView(nomeInput, senhaInput)">Login</button>
+              </form>
+            </div>
           </div>
-          <div class="successMensage" ref="successMensage">
-            <p>Logado com sucesso!</p>
-          </div>
-          <form action="" method="post" @submit.prevent>
-            <h2>Login:</h2>
-            <input type="text" v-model="login.nome" placeholder="Username"  class="input" />
-            <input type="password" v-model="login.senha" placeholder="Senha"  class="input" />
-            <div class="erroInputs" ref="userOrPasswordLoginErroMensage">
-              <p>Usuário ou senha incorretos!</p>
-            </div>
-            <div class="erroInputs" ref="serverErrorMensage">
-              <p>Erro no servidor, sentimos muito por isso :(</p>
-            </div>
-            <div class="erroInputs" ref="userNotfoundErrorMensage">
-              <p>Usuário não encontrado!</p>
-            </div>
-            <div class="erroInputs" ref="unknownErrorMensage">
-              <p>Erro desconhecido, sentimos muito por isso :(</p>
-            </div>
-            <button @click="logar">Login</button>
-          </form>
-        </div>
+        </section>
       </div>
-    </section>
-  </div>
-  <div class="logo"><img src="../../assets/logo_fabrica.png" alt=""></div>
-</div>
+      <div class="logo"><img src="../../assets/logo_fabrica.png" alt=""></div>
+    </div>
   </main>
   <FooterVue />
 </template>
@@ -194,17 +150,19 @@ section {
   margin: auto;
   height: 450px;
 }
-.buttons-login-sigin{
-height: 50px;
-background-color: transparent;
-margin: auto;
-display: flex;
-justify-content: space-around;
-align-items: center;
-width: 100%;
-margin-bottom: 0;
+
+.buttons-login-sigin {
+  height: 50px;
+  background-color: transparent;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0;
 }
-.buttons-login-sigin > button{
+
+.buttons-login-sigin>button {
   height: 50px;
   width: 25%;
   font-size: 18px;
@@ -217,7 +175,8 @@ margin-bottom: 0;
   z-index: 2;
 
 }
-.border-selection{
+
+.border-selection {
   height: 107% !important;
   border-top: 2px solid #8C52FF !important;
   border-left: 2px solid #8C52FF !important;
@@ -245,12 +204,13 @@ margin-bottom: 0;
   backface-visibility: hidden;
   background: transparent;
   color: white;
-  border-top: 2px solid  #8C52FF;
+  border-top: 2px solid #8C52FF;
   border-right: none;
   border-bottom: none;
   border-left: none;
 }
-form{
+
+form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -259,13 +219,15 @@ form{
   width: 90%;
   margin: auto;
 }
-form > h2{
+
+form>h2 {
   color: white;
   font-size: 24px;
   text-align: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-form > button{
+
+form>button {
   width: 80%;
   height: 40px;
   margin: 10px;
@@ -279,6 +241,7 @@ form > button{
   font-weight: bold;
   cursor: pointer;
 }
+
 #logIn {
   position: absolute;
   width: 100%;
@@ -287,7 +250,7 @@ form > button{
   backface-visibility: hidden;
   background: transparent;
   color: #fff;
-  border-top: 2px solid  #8C52FF;
+  border-top: 2px solid #8C52FF;
   border-right: none;
   border-bottom: none;
   border-left: none;
@@ -297,28 +260,34 @@ form > button{
 .rotate {
   transform: rotateY(180deg);
 }
-.rotate2{
+
+.rotate2 {
   transform: rotateY(0deg);
-}.container{
+}
+
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 30%;
 }
-.logo{
+
+.logo {
   width: 30%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.logo > img{
+
+.logo>img {
   height: 100%;
   width: 100%;
   margin-top: 10%;
 }
-.container-cadastro-logoFabrica{
+
+.container-cadastro-logoFabrica {
   display: flex;
   margin: auto;
   justify-content: center;
@@ -327,6 +296,7 @@ form > button{
   padding: 15px;
   border-radius: 10px;
 }
+
 .input {
   background-color: transparent;
   color: white;
@@ -335,19 +305,20 @@ form > button{
   padding: 10px;
   /* text-align: center; */
   border: 2px solid #8C52FF;
-  border-radius: 1rem; 
+  border-radius: 1rem;
   /* box-shadow: 3px 3px 2px rgb(249, 255, 85); */
 }
 
 .input:focus {
-  color:  white;
+  color: white;
   background-color: transparent;
   outline-color: #8C52FF;
   box-shadow: -3px -3px 15px #8C52FF;
   transition: .1s;
   transition-property: box-shadow;
 }
-.erroInputs{
+
+.erroInputs {
   display: none;
   height: 60px;
   background-color: transparent;
@@ -358,10 +329,12 @@ form > button{
   align-items: center;
   padding: 1rem;
 }
-.showErroInputs{
-  display: flex ;
+
+.showErroInputs {
+  display: flex;
 }
-.loadingDiv{
+
+.loadingDiv {
   display: none;
   height: 60px;
   margin: auto;
@@ -373,14 +346,17 @@ form > button{
   align-items: center;
   padding: 1rem;
 }
-.loadingDiv > img{
+
+.loadingDiv>img {
   width: 50px;
   height: 50px;
 }
-.showLoadingDiv{
-  display: flex ;
+
+.showLoadingDiv {
+  display: flex;
 }
-.successMensage{
+
+.successMensage {
   display: none;
   height: 60px;
   background-color: transparent;
@@ -392,9 +368,11 @@ form > button{
   align-items: center;
   padding: 1rem;
 }
-.showSuccessMensage{
-  display: flex ;
+
+.showSuccessMensage {
+  display: flex;
 }
+
 /* section>form>h2 {
     color: white;
     font-size: 24px;
@@ -449,16 +427,18 @@ form>button {
 } */
 
 @media screen and (max-width: 1024px) {
-  .container-cadastro-logoFabrica{
+  .container-cadastro-logoFabrica {
     flex-direction: column;
     margin: auto;
     width: 80%;
   }
-  .container{
+
+  .container {
     width: 80%;
     margin: auto;
   }
-  .logo{
+
+  .logo {
     width: 50%;
     margin: auto;
     display: flex;

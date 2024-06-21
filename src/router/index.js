@@ -5,7 +5,6 @@ import UserView from '../views/LoginViews/UserView.vue'
 import ContribuirView from '../views/CofreViews/ContribuirView.vue'
 import EstoqueView from '../views/EstoqueViews/EstoqueView.vue'
 
-import store from '../store/index.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,12 +41,12 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && store.state.isLogged) {
-    next('/')
-  } else {
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   if (to.meta.requiresAuth && store.state.isLogged) {
+//     next('/')
+//   } else {
+//     next()
+//   }
+// })
 
 export default router

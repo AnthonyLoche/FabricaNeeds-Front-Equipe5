@@ -3,7 +3,11 @@ import HeaderVue from '../../components/HeaderVue.vue'
 import FooterVue from '../../components/FooterVue.vue'
 import { reactive, ref } from 'vue'
 import axios from 'axios';
-import store from '@/store/index.js'
+
+import { useCounterStore } from '@/store';
+const store = useCounterStore()
+
+
 import router from '@/router'
 
 if(store.state.isLoged == 'false'){

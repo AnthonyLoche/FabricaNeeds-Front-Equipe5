@@ -5,7 +5,12 @@ import EntradasView from '@/components/Estoque/EntradasView.vue';
 import HeaderVue from '@/components/HeaderVue.vue';
 import FooterVue from '@/components/FooterVue.vue';
 import { ref } from 'vue';
-import store from '@/store/index.js';
+
+
+import { useCounterStore } from '@/store';
+const store = useCounterStore()
+
+
 import router from '@/router';
 
 if(store.state.isLoged == 'false'){

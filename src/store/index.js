@@ -1,50 +1,66 @@
-import { createStore } from "vuex";
-import { fetchPessoas } from "./id";
+import { defineStore } from 'pinia'
+import { computed } from 'vue'
+import { useStorage } from '@vueuse/core'
+import { loginService } from '@/services/login.js'
 
-const store = createStore({
-    state: {
-        isLoged: localStorage.getItem('isLoged'),
-        usuario: localStorage.getItem('usuario') || '',
-        id: localStorage.getItem('id') || '',
-        email: localStorage.getItem('email') || '',
-    },
-    mutations: {
-        setisLoged(state, novoDado) {
-            state.isLoged = localStorage.setItem('isLoged', novoDado)
-        },
-        setUsuario(state, novoDado) {
-            state.usuario = localStorage.setItem('usuario', novoDado)
-        },
-        setId(state, novoDado) {
-            state.id = localStorage.setItem('id', novoDado)
-        },
-        setEmail(state, novoDado) {
-            state.email = localStorage.setItem('email', novoDado)
-        },
-        logout(state) {
-            state.isLoged = localStorage.setItem('isLoged', false)
-            state.usuario = localStorage.setItem('usuario', '')
-            state.id = localStorage.setItem('id', '')
-            state.email = localStorage.setItem('email', '')
-            window.location.href = '/'
-        }
-    },
-    getters: {
-        getisLoged() {
-            return localStorage.getItem('isLoged') || false
-        },
-        getUsuario() {
-            return localStorage.getItem('usuario') || ''
-        },
-        getId() {
-            return localStorage.getItem('id') || ''
-        },
-        getEmail() {
-            return localStorage.getItem('email') || ''
+export const useCounterStore = defineStore('counter', () => {
+    //State
+    const user = {
+        isLogged: false,
+        usuario: '',
+        id: '',
+        email: ''
+    }
+
+    //Localstorage 
+    const userStorage = useStorage('user', user)
+
+    //Getters
+    const isLogged = computed(() => userStorage.value.isLogged)
+    const usuario = computed(() => userStorage.value.usuario)
+    const id = computed(() => userStorage.value.id)
+    const email = computed(() => userStorage.value.email)
+
+    //Actions
+    function setisLogged(novoDado) {
+        isLogged.value = novoDado
+    }
+    function setUsuario(novoDado) {
+        usuario.value = novoDado
+    }
+    function setId(novoDado) {
+        id.value = novoDado
+    }
+    function setEmail(novoDado) {
+        email.value = novoDado
+    }
+
+    const loginStore = async ({ name, password }) => {
+        console.log('login', name, password)
+        try {
+            const response = await loginService({ name, password })
+
+            console.log('response pinia', response)
+
+             userStorage.value = {
+                 isLogged: true,
+                 usuario: response.usuario,
+                 id: response.id,
+                 email: response.email
+             }
+            
+
+        } catch (error) {
+            console.log(error)
         }
     }
+
+    const logout = () => (userStorage.value = {
+        isLogged: false,
+        usuario: '',
+        id: '',
+        email: ''
+    })
+
+    return { isLogged, usuario, id, email, setisLogged, setUsuario, setId, setEmail, logout, loginStore }
 })
-
-fetchPessoas()
-
-export default store;

@@ -1,0 +1,46 @@
+async function logar() {
+  loadingDiv.value.classList.add('showLoadingDiv')
+  setTimeout(() => {
+    loadingDiv.value.classList.remove('showLoadingDiv')
+  }, 2000);
+  try {
+    const response = await axios.post('https://fabricaneeds-back-equipe5-3edw.onrender.com/login', login)
+    console.log(response.data)
+    console.log(response)
+    salvarDado(true)
+    salvarUsuario(login.nome)
+
+    serverErrorMensage.value.classList.remove('showErroInputs')
+    userNotfoundErrorMensage.value.classList.remove('showErroInputs')
+    unknownErrorMensage.value.classList.remove('showErroInputs')
+    userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
+    successMensage.value.classList.add('showSuccessMensage')
+    // window.location.href = '/'
+  }
+  catch (error) {
+    if (error.response.status === 401) {
+      serverErrorMensage.value.classList.remove('showErroInputs')
+      userNotfoundErrorMensage.value.classList.remove('showErroInputs')
+      unknownErrorMensage.value.classList.remove('showErroInputs')
+      userOrPasswordLoginErroMensage.value.classList.add('showErroInputs')
+    }
+    else if (error.response.status === 500) {
+      userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
+      userNotfoundErrorMensage.value.classList.remove('showErroInputs')
+      unknownErrorMensage.value.classList.remove('showErroInputs')
+      serverErrorMensage.value.classList.add('showErroInputs')
+    }
+    else if (error.response.status === 404) {
+      userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
+      serverErrorMensage.value.classList.remove('showErroInputs')
+      unknownErrorMensage.value.classList.remove('showErroInputs')
+      userNotfoundErrorMensage.value.classList.add('showErroInputs')
+    }
+    else {
+      userOrPasswordLoginErroMensage.value.classList.remove('showErroInputs')
+      serverErrorMensage.value.classList.remove('showErroInputs')
+      userNotfoundErrorMensage.value.classList.remove('showErroInputs')
+      unknownErrorMensage.value.classList.add('showErroInputs')
+    }
+  }
+}
