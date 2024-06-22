@@ -3,6 +3,7 @@ import HeaderVue from '@/components/HeaderVue.vue';
 import FooterVue from '@/components/FooterVue.vue';
 import CofreVue from '@/components/CofreVue.vue';
 import MostrarEstoqueVue from '@/components/MostrarEstoqueVue.vue';
+import ListaRanking from '@/components/ListaRanking.vue';
 
 </script>
 
@@ -12,6 +13,7 @@ import MostrarEstoqueVue from '@/components/MostrarEstoqueVue.vue';
   <MostrarEstoqueVue />
   <main>
   </main>
+  <ListaRanking />
   <FooterVue />
 </template>
 
