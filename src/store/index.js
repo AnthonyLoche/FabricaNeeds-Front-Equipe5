@@ -49,9 +49,10 @@ export const useCounterStore = defineStore('counter', () => {
                  email: response.email
              }
             
-
+        return true
         } catch (error) {
             console.log(error)
+            return error
         }
     }
 

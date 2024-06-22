@@ -1,14 +1,15 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import axios from 'axios';
-
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 import { useCounterStore } from '@/store';const store = useCounterStore()
 
 
 import router from '@/router'
 
 if(store.isLogged == false){
-    document.write('<body style= "background-color: rgb(26 26 26)"><div style= "width: 30%;display: flex;justify-content: center;align-items: center;color: white;margin: 5% auto;height: 110px;background-color: rgb(26 26 26);border: 2px solid red;border-radius: 1rem;font-size: 1.2rem;z-index: 5;"><p>Você precisa estar logado para acessar essa página</p></div><div style="margin: auto;width: 30%;display: flex;justify-content:center "><button style="width: 30%;margin: auto;font-size: 16px;height: 40px;background-color: #8C52FF;color: white;border: none;cursor: pointer;border-radius: 1rem;margin-top: .5rem;z-index: 4;" onclick="window.location.reload(true)">Login</button></div></body>')
+    toast.warning("Você precisa estar logado para acessar essa página", {autoClose: 1000, position: 'top-center'})
     router.push("/singin")
 }
 
@@ -99,7 +100,7 @@ console.log(store.email)
 </div>
 <div class="ladoImg">
 
-    <div class="cofreImg"><img src="../../../assets/Cofre.png" alt=""></div>
+    <div class="cofreImg"><img src="../assets/Cofre.png" alt=""></div>
     
 </div>
 </section>
