@@ -3,6 +3,9 @@ import { adicionar } from '@/api/api.js'
 import { reactive, ref } from 'vue'
 import { useCounterStore } from '@/store';
 import loading from 'vue-loading-overlay'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+import router from '@/router'
 const store = useCounterStore()
 
 const usuario = reactive({
@@ -14,33 +17,44 @@ const usuario = reactive({
 const nomeInput = ref('')
 const senhaInput = ref('')
 
-const loginView = (name, password) => {
-    try {
+const loginView = async (name, password) => {
         console.log(name, password)
-        store.loginStore({ name, password })
+        const loginFuncao = await store.loginStore({ name, password })
+        console.log(loginFuncao)
+    if(loginFuncao == true){
+        toast.success("Logado com sucesso", {autoClose: 1000})
+        setTimeout(() => {
+            router.push("/")
+        }, 1500); 
     }
-    catch (error) {
-        console.error('Erro ao logar:', error)
-    }
+    else{
+        toast.error(loginFuncao.response.data.error, {autoClose: 1000})
+    } 
 }
 
 let loadingDiv = ref(null);
 
-function verificarCadastro() {
+async function verificarCadastro() {
     if (usuario.nome == '') {
-        alert('Preencha o campo nome')
+        toast.error('Preencha o campo de nome', {autoClose: 1000})
     }
     else if (usuario.email == '') {
-        alert('Preencha o campo email')
+        toast.error('Preencha o campo de email', {autoClose: 1000})
     }
     else if (usuario.senha == '') {
-        alert('Preencha o campo senha')
+        toast.error('Preencha o campo de senha', {autoClose: 1000})
     }
     else {
-        adicionar('contribuinte/', usuario)
+        const add = await adicionar('contribuinte/', usuario)
+        console.log(add)
+        if(add == true){
+            toast.success('Cadastro realizado com sucesso', {autoClose: 1000})
+        }
+        else{
+            toast.error(add.response.data.nome[0], {autoClose: 1000})
+        }
     }
 }
-
 const card = ref(null);
 const btnSign = ref(null);
 const btnLogin = ref(null);
@@ -56,7 +70,6 @@ const giraCard2 = () => {
     btnLogin.value.classList.remove("border-selection")
     btnSign.value.classList.add("border-selection")
 }
-
 </script>
 
 <template>
@@ -330,60 +343,6 @@ form>button {
 .showSuccessMensage {
     display: flex;
 }
-
-/* section>form>h2 {
-    color: white;
-    font-size: 24px;
-    text-align: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    width: 50%;
-    height: 80%;
-}
-
-form>input {
-    width: 100%;
-    height: 40px;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 2rem;
-    background-color: transparent;
-    color: white;
-    border: 2px solid #8C52FF;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-form>button {
-    width: 100%;
-    height: 40px;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 2rem;
-    background-color: #8C52FF;
-    color: white;
-    border: 2px solid #8C52FF;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.logoCofre {
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.logoCofre>img {
-    height: 100%;
-    width: 100%;
-} */
-
 @media screen and (max-width: 1024px) {
     .container-cadastro-logoFabrica {
         flex-direction: column;
