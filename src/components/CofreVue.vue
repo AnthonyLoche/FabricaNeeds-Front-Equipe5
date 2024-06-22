@@ -1,13 +1,15 @@
 <script setup>
-import { ref } from 'vue'
-import axios from 'axios'
+import { ref, Suspense } from 'vue'
+import Loading from 'vue-loading-overlay'
 const total = ref(0)
+const isLoading = ref(false)
+import { carregar } from '@/api/api';
 
-async function getValor() {
-    const { data } = await axios.get('https://fabricaneeds-back-equipe5-3edw.onrender.com/total/')
-    total.value = data[0].total
-}
-getValor()
+isLoading.value = true
+await carregar('total/', total)
+isLoading.value = false
+
+
 </script>
 
 <template>
@@ -18,8 +20,7 @@ getValor()
         <div id="cofreInfo">
             <h2 style="text-align: center;">Porquinho Fabricador</h2>
             <p>Dinheiro Contido No Porquinho:</p>
-            <h3 id="valor">R$: {{ total.toFixed(2).replace(".",",") }}</h3>
-            <p style="text-align: center;">Contribua Você Também com o Nosso Amigo</p>
+            <h3 id="valor" v-if="!isLoading">R$: {{ total[0].total.toFixed(2).replace('.', ',') }}</h3>          <p style="text-align: center;">Contribua Você Também com o Nosso Amigo</p>
             <router-link id="contribuir"  to="/contribuir">Contribuir</router-link>
         </div>
     </section>

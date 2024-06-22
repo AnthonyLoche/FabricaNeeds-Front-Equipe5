@@ -100,7 +100,7 @@ console.log(store.email)
 </div>
 <div class="ladoImg">
 
-    <div class="cofreImg"><img src="../../../assets/Cofre.png" alt=""></div>
+    <div class="cofreImg"><img src="../assets/Cofre.png" alt=""></div>
     
 </div>
 </section>

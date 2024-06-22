@@ -3,15 +3,21 @@ import HeaderVue from '@/components/HeaderVue.vue';
 import FooterVue from '@/components/FooterVue.vue';
 import CofreVue from '@/components/CofreVue.vue';
 import MostrarEstoqueVue from '@/components/MostrarEstoqueVue.vue';
-
+import { Suspense } from 'vue';
+import loading from 'vue-loading-overlay';
 </script>
 
 <template>
   <HeaderVue />
-  <CofreVue />
+  <Suspense>
+    <template #default>
+      <CofreVue />
+    </template>
+    <template #fallback>
+      <loading :active="true" is-full-page style="justify-content: center; display: flex; margin:auto" />
+    </template>
+  </Suspense>
   <MostrarEstoqueVue />
-  <main>
-  </main>
   <FooterVue />
 </template>
 

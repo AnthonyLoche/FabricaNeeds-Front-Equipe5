@@ -2,6 +2,7 @@
 import { adicionar } from '@/api/api.js'
 import { reactive, ref } from 'vue'
 import { useCounterStore } from '@/store';
+import loading from 'vue-loading-overlay'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import router from '@/router'
@@ -92,7 +93,7 @@ const giraCard2 = () => {
                         </div>
                         <div id="logIn">
                             <div class="loadingDiv" ref="loadingDiv">
-                                <img src="../../assets/gif_carregando.gif" alt="">
+                                <loading :active="true" is-full-page style="justify-content: center; display: flex; margin:auto" />
                             </div>
                             <form action="" method="post" @submit.prevent>
                                 <h2>Login:</h2>
