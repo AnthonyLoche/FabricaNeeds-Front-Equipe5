@@ -18,48 +18,40 @@ const senhaInput = ref('')
 
 const loginView = async (name, password) => {
         console.log(name, password)
-        const teste = await store.loginStore({ name, password })
-        console.log(teste)
-    if(teste == true){
-        toast.success("Logado com sucesso", {autoClose: 1000, position: 'top-center'})
+        const loginFuncao = await store.loginStore({ name, password })
+        console.log(loginFuncao)
+    if(loginFuncao == true){
+        toast.success("Logado com sucesso", {autoClose: 1000})
         setTimeout(() => {
             router.push("/")
         }, 1500); 
     }
     else{
-        if(teste.response.status === 404){
-            toast.error("Usuário não encontrado", {autoClose: 1000, position: 'top-center'})
-        }
-        else if(teste.response.status === 401){
-            toast.error("Senha ou usuário incorretos", {autoClose: 1000, position: 'top-center'})
-        }
-        else if(teste.response.status === 400){
-            toast.error("Erro ao logar", {autoClose: 1000, position: 'top-center'})
-        }
-        else{
-            toast.error("Erro ao logar", {autoClose: 1000, position: 'top-center'})
-        }
-    }
-        
-    
-    
+        toast.error(loginFuncao.response.data.error, {autoClose: 1000})
+    } 
 }
 
 let loadingDiv = ref(null);
 
-function verificarCadastro() {
+async function verificarCadastro() {
     if (usuario.nome == '') {
-        toast.error('Preencha o campo de nome', {autoClose: 1000, position: 'top-center'})
+        toast.error('Preencha o campo de nome', {autoClose: 1000})
     }
     else if (usuario.email == '') {
-        toast.error('Preencha o campo de email', {autoClose: 1000, position: 'top-center'})
+        toast.error('Preencha o campo de email', {autoClose: 1000})
     }
     else if (usuario.senha == '') {
-        toast.error('Preencha o campo de senha', {autoClose: 1000, position: 'top-center'})
+        toast.error('Preencha o campo de senha', {autoClose: 1000})
     }
     else {
-        adicionar('contribuinte/', usuario)
-        toast.success('Cadastro realizado com sucesso', {autoClose: 1000, position: 'top-center'})
+        const add = await adicionar('contribuinte/', usuario)
+        console.log(add)
+        if(add == true){
+            toast.success('Cadastro realizado com sucesso', {autoClose: 1000})
+        }
+        else{
+            toast.error(add.response.data.nome[0], {autoClose: 1000})
+        }
     }
 }
 const card = ref(null);
@@ -112,7 +104,7 @@ const giraCard2 = () => {
                     </div>
                 </section>
             </div>
-            <div class="logo"><img src="../../assets/logo_fabrica.png" alt=""></div>
+            <div class="logo"><img src="../assets/logo_fabrica.png" alt=""></div>
         </div>
     </main>
 </template>

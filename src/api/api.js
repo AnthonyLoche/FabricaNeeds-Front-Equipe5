@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 async function carregar(url, array) {
     const { data } = await axios.get(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}`);
@@ -9,9 +11,13 @@ async function adicionar(url, objeto) {
     try {
         const { data } = await axios.post(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}`, objeto);
         console.log(data);
+        toast.success('Cadastrado com sucesso!', {autoClose: 1000,});
     } catch (error) {
-        console.log(error);
+        const key = Object.keys(error.response.data)
+        console.log(error)
+        toast.error(error.response.data[key[0]], {autoClose:1000})
     }
+    
 }
 
 async function atualizar(objeto, url) {
@@ -19,7 +25,7 @@ async function atualizar(objeto, url) {
         console.log(objeto);
         const { data } = await axios.put(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`, objeto);
         console.log(data);
-        alert('Atualizado com sucesso!');
+        toast.success('Atualizado com sucesso!', {autoClose: 1000,});
     }catch(error){
         console.log(error);
     }
@@ -29,14 +35,14 @@ async function deletar(objeto, url) {
     try{
         const { data } = await axios.delete(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`);
         console.log(data);
-        alert('Deletado com sucesso!');
-        window.location.reload();
+        toast.success('Deletado com sucesso!', {autoClose: 1000,});
+        setTimeout(() => {
+            window.location.reload()
+        }, 1500); 
+        ;
     }
     catch(error){
         console.log(error);
     }
 }
-
-
-
 export { carregar, adicionar, atualizar, deletar };
