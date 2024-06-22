@@ -2,6 +2,9 @@
 import { adicionar } from '@/api/api.js'
 import { reactive, ref } from 'vue'
 import { useCounterStore } from '@/store';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+import router from '@/router'
 const store = useCounterStore()
 
 const usuario = reactive({
@@ -13,33 +16,52 @@ const usuario = reactive({
 const nomeInput = ref('')
 const senhaInput = ref('')
 
-const loginView = (name, password) => {
-    try {
+const loginView = async (name, password) => {
         console.log(name, password)
-        store.loginStore({ name, password })
+        const teste = await store.loginStore({ name, password })
+        console.log(teste)
+    if(teste == true){
+        toast.success("Logado com sucesso", {autoClose: 1000, position: 'top-center'})
+        setTimeout(() => {
+            router.push("/")
+        }, 1500); 
     }
-    catch (error) {
-        console.error('Erro ao logar:', error)
+    else{
+        if(teste.response.status === 404){
+            toast.error("Usuário não encontrado", {autoClose: 1000, position: 'top-center'})
+        }
+        else if(teste.response.status === 401){
+            toast.error("Senha ou usuário incorretos", {autoClose: 1000, position: 'top-center'})
+        }
+        else if(teste.response.status === 400){
+            toast.error("Erro ao logar", {autoClose: 1000, position: 'top-center'})
+        }
+        else{
+            toast.error("Erro ao logar", {autoClose: 1000, position: 'top-center'})
+        }
     }
+        
+    
+    
 }
 
 let loadingDiv = ref(null);
 
 function verificarCadastro() {
     if (usuario.nome == '') {
-        alert('Preencha o campo nome')
+        toast.error('Preencha o campo de nome', {autoClose: 1000, position: 'top-center'})
     }
     else if (usuario.email == '') {
-        alert('Preencha o campo email')
+        toast.error('Preencha o campo de email', {autoClose: 1000, position: 'top-center'})
     }
     else if (usuario.senha == '') {
-        alert('Preencha o campo senha')
+        toast.error('Preencha o campo de senha', {autoClose: 1000, position: 'top-center'})
     }
     else {
         adicionar('contribuinte/', usuario)
+        toast.success('Cadastro realizado com sucesso', {autoClose: 1000, position: 'top-center'})
     }
 }
-
 const card = ref(null);
 const btnSign = ref(null);
 const btnLogin = ref(null);
@@ -55,7 +77,6 @@ const giraCard2 = () => {
     btnLogin.value.classList.remove("border-selection")
     btnSign.value.classList.add("border-selection")
 }
-
 </script>
 
 <template>
@@ -329,60 +350,6 @@ form>button {
 .showSuccessMensage {
     display: flex;
 }
-
-/* section>form>h2 {
-    color: white;
-    font-size: 24px;
-    text-align: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    width: 50%;
-    height: 80%;
-}
-
-form>input {
-    width: 100%;
-    height: 40px;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 2rem;
-    background-color: transparent;
-    color: white;
-    border: 2px solid #8C52FF;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-form>button {
-    width: 100%;
-    height: 40px;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 2rem;
-    background-color: #8C52FF;
-    color: white;
-    border: 2px solid #8C52FF;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.logoCofre {
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.logoCofre>img {
-    height: 100%;
-    width: 100%;
-} */
-
 @media screen and (max-width: 1024px) {
     .container-cadastro-logoFabrica {
         flex-direction: column;
