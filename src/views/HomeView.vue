@@ -12,7 +12,6 @@ import loading from 'vue-loading-overlay';
   <Suspense>
     <template #default>
       <CofreVue />
-      
     </template>
     <template #fallback>
       <loading :active="true" is-full-page style="justify-content: center; display: flex; margin:auto" />

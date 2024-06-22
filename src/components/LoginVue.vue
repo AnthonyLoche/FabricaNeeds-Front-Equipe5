@@ -2,6 +2,7 @@
 import { adicionar } from '@/api/api.js'
 import { reactive, ref } from 'vue'
 import { useCounterStore } from '@/store';
+import loading from 'vue-loading-overlay'
 const store = useCounterStore()
 
 const usuario = reactive({
@@ -79,7 +80,7 @@ const giraCard2 = () => {
                         </div>
                         <div id="logIn">
                             <div class="loadingDiv" ref="loadingDiv">
-                                <img src="../../assets/gif_carregando.gif" alt="">
+                                <loading :active="true" is-full-page style="justify-content: center; display: flex; margin:auto" />
                             </div>
                             <form action="" method="post" @submit.prevent>
                                 <h2>Login:</h2>
@@ -91,7 +92,7 @@ const giraCard2 = () => {
                     </div>
                 </section>
             </div>
-            <div class="logo"><img src="../../assets/logo_fabrica.png" alt=""></div>
+            <div class="logo"><img src="../assets/logo_fabrica.png" alt=""></div>
         </div>
     </main>
 </template>
