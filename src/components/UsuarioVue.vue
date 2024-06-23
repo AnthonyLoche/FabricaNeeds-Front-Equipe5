@@ -52,7 +52,7 @@ function copyPixCode(text) {
                 <h2>Veja aqui suas contribuições:</h2>
             </div>
             <div id="contribuicoes">
-                <h2>Pagamentos Aprovados</h2>
+                <h2 v-if="!pagamentosAprovados.length == 0">Pagamentos Aprovados</h2>
                 <div class="pagamento" v-for="item in pagamentosAprovados" :key="item.id">
                     <p>Valor: R${{ item.valor }}</p>
                     <p>Status: <strong style="color: green;">Aprovado</strong></p>
@@ -61,7 +61,7 @@ function copyPixCode(text) {
                     <p>Data de Aprovação: {{ item.data_aprovacao }}</p>
                     <p>Email: {{ item.email }}</p>
                 </div>
-                <h2>Pagamentos Pendentes:</h2>
+                <h2 v-if="!pagamentosPendentes.length == 0">Pagamentos Pendentes:</h2>
                 <div class="pagamento" v-for="item in pagamentosPendentes" :key="item.id" >
                 
                     <p>Valor: R${{ item.valor }}</p>
@@ -72,10 +72,12 @@ function copyPixCode(text) {
                     <p>Email: {{ item.email }}</p>
                     <p>Pix Copia e Cola: 
                         <button @click="copyPixCode(item.pix_copiacola)" class="">Copiar PIX Copia e Cola</button>
-
                     </p>
-                    
                 </div>
+            <div v-if="pagamentosAprovados.length == 0 && pagamentosPendentes == 0" class="semContribuicao">
+                <h2>Você não contribuiu nenhuma vez :(</h2>
+                <button @click="router.push('/contribuir')">click aqui para contribuir :)</button>
+            </div>
             </div>
         </section>
     </main>
@@ -118,15 +120,17 @@ section {
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    margin: 10px auto;
+    margin: 1rem auto;
     color: white;
 }
+
 
 .pagamento{
     width: 100%;
     border: 2px solid #8C52FF;
     border-radius: 10px ;
     padding: 20px;
+    margin: 1rem auto;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;   
@@ -136,7 +140,6 @@ section {
 .pagamento>p{
     width: 50%;
 }
-
 button{
 padding: 10px;
   font-size: 18px;
@@ -147,7 +150,15 @@ padding: 10px;
   cursor: pointer;
   border-radius: .5rem;
   z-index: 2;
-
+}
+.semContribuicao{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 3% auto 20% auto;
+    color: white;
 }
 
 

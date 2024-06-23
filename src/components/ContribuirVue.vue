@@ -9,8 +9,13 @@ import { useCounterStore } from '@/store';const store = useCounterStore()
 import router from '@/router'
 
 if(store.isLogged == false){
-    toast.warning("Você precisa estar logado para acessar essa página", {autoClose: 1000, position: 'top-center'})
-    router.push("/singin")
+    router.push("/")
+    setTimeout(() => {
+        toast.warning("Você precisa estar logado para acessar esta página", { autoClose: 1000 })    
+    }, 300);
+    setTimeout(() => {
+        router.push("/singin")
+    }, 2500);
 }
 
 const isOpen = ref(false)
