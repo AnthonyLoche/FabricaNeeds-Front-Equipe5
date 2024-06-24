@@ -4,8 +4,7 @@ import SingInView from '../views/LoginViews/SingInView.vue'
 import UserView from '../views/LoginViews/UserView.vue'
 import ContribuirView from '../views/CofreViews/ContribuirView.vue'
 import EstoqueView from '../views/EstoqueViews/EstoqueView.vue'
- import { useCounterStore } from '@/store/'
-
+import { useCounterStore } from '@/store/'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,15 +44,16 @@ const router = createRouter({
   ]
 })
 
- router.beforeEach((to, from, next) => {
-  
-const store = useCounterStore()
+router.beforeEach((to, from, next) => {
+  const store = useCounterStore()
 
-   if (to.meta.requiresAuth && store.isLogged) {
-     next('/')
-   } else {
-     next()
-   }
- })
+  if (to.meta.requiresAuth && !store.isLogged) {
+    next('/')
+  } else if (to.matched.length === 0) {
+    next('/') 
+  } else {
+    next() 
+  }
+})
 
 export default router
