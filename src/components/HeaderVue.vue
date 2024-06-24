@@ -21,7 +21,7 @@ const store = useCounterStore()
             <router-link id="github" to="/">
                 <img src="../assets/github.svg" alt="">
             </router-link>
-            <router-link id="singup" to="/singin">Sing Up / Log In</router-link>
+            <router-link id="singup" to="/singin" v-if="!store.isLogged">Sing Up / Log In</router-link>
             <button v-if="store.isLogged == true" @click="store.logout()" id="btnLogout">Logout</button>
         </div>
         <button id="menu" @click="menu = !menu">&#9776;</button>

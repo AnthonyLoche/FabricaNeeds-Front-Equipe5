@@ -31,10 +31,9 @@ async function carregarColaboradores() {
         lista.value = Array.from(clienteMap.values());
         ordenado.value = lista.value
             .sort((a, b) => b.valor - a.valor)
-            .slice(0, 3); // Limita para os 3 primeiros itens após ordenar
+            .slice(0, 3);
     } catch (error) {
         console.error('Erro ao carregar colaboradores:', error);
-        // Tratar o erro, por exemplo, mostrar uma mensagem de erro ao usuário
     }
 }
 
@@ -90,5 +89,15 @@ h2{
     color: white;
     font-size: 2rem;
     margin: 1rem auto;
+    text-align: center;
+}
+@media screen and (max-width: 1024px) {
+    .container{
+        width: 85%;
+        margin: 10% auto;
+    }
+    .classificados> p{
+        text-align: center;
+    }
 }
 </style>
