@@ -9,7 +9,6 @@ const ordenado = ref([]);
 async function carregarColaboradores() {
     try {
         const response = await axios.get('https://webhook.peraza.live/obterPagamentos');
-        console.log(response.data);
         
         colaboradores.value = response.data;
 
