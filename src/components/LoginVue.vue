@@ -33,8 +33,6 @@ const loginView = async (name, password) => {
 }
 
 let loadingDiv = ref(null);
-
-
 const card = ref(null);
 const btnSign = ref(null);
 const btnLogin = ref(null);

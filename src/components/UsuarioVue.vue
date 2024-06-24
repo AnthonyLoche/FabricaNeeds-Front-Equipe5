@@ -8,6 +8,7 @@ import { ref } from 'vue'
 import router from '@/router'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import VerifyEmailVue from './VerifyEmailVue.vue';
 
 if(store.isLogged == false){
     toast.warning("Você precisa estar logado para acessar essa página", {autoClose: 1000, position: 'top-center'})
@@ -80,6 +81,9 @@ function copyPixCode(text) {
             </div>
             </div>
         </section>
+        <div>
+        <verify-email-vue />
+    </div>
     </main>
 
 </template>
