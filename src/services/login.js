@@ -11,11 +11,12 @@ export async function loginService({ name, password }) {
 
     const idTeste = contribuintes.value.find(contribuinte => contribuinte.nome === name).id
     const emailTeste = contribuintes.value.find(contribuinte => contribuinte.nome === name).email
+    const verificado = contribuintes.value.find(contribuinte => contribuinte.nome === name).verificado
 
     console.log({response:response, usuario: name, id: idTeste, email: emailTeste})
 
     console.log(contribuintes.value)
     console.log(response.data)
-    return {response:response, usuario: name, id: idTeste, email: emailTeste}
+    return {response:response, usuario: name, id: idTeste, email: emailTeste, verificado: verificado}
 }
 

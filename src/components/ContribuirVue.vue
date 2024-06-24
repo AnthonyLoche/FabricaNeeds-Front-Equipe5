@@ -8,7 +8,7 @@ import { useCounterStore } from '@/store';
 const store = useCounterStore()
 import router from '@/router'
 
-if(store.isLogged == false){
+if(store.verificado == false){
     router.push("/")
     setTimeout(() => {
         toast.warning("Você precisa estar logado para acessar esta página", { autoClose: 1000 })    

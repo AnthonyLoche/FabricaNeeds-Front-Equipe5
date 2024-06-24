@@ -1,14 +1,10 @@
 <script setup>
-import { reactive, ref } from 'vue'
 import { useCounterStore } from '@/store';
-import loading from 'vue-loading-overlay'
-import { cadastrarService } from '@/services/cadastrar';
-import { toast } from 'vue3-toastify';
+import { ref } from 'vue'
 import 'vue3-toastify/dist/index.css';
-import router from '@/router'
 const store = useCounterStore()
 
-
+const token = ref("")
 </script>
 <template>
     <div class="container">
@@ -19,7 +15,7 @@ const store = useCounterStore()
             <div>
             <label for="">Token:</label>
             <input type="text" v-model="token" placeholder="Token de verificação" class="input" maxlength="6"></div>
-            <button>Enviar token</button>
+            <button @click="store.enviarToken({token})">Enviar token</button>
         </form>
     </div>
 </template>
