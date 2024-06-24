@@ -1,11 +1,11 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
+import { cpf } from 'cpf-cnpj-validator'; 
 import axios from 'axios';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
-import { useCounterStore } from '@/store';const store = useCounterStore()
-
-
+import { useCounterStore } from '@/store';
+const store = useCounterStore()
 import router from '@/router'
 
 if(store.isLogged == false){
@@ -18,36 +18,31 @@ if(store.isLogged == false){
     }, 2500);
 }
 
-const isOpen = ref(false)
 const pagamento = reactive({
     paymentData: {
         transaction_amount: 0,
         description: "",
         paymentMethodId: "pix",
-        email: '',
+        email: store.email,
         identificationType: "CPF",
         number: 0
     }
 })
-let valueErrorMensage = ref(null);
-let cpfErrorMensage = ref(null);
-let descriptionErrorMensage = ref(null);
-let emailErrorMensage = ref(null);
+
+
 async function testePagar(objeto) {
+    console.log(objeto)
     if(pagamento.paymentData.transaction_amount <= 0 || pagamento.paymentData.transaction_amount == ""){
-        alert("O valor não pode ser 0 ou negativo")
+        toast.error("O valor não pode ser 0 ou negativo", {autoClose: 1000})
     }
-    else if(pagamento.paymentData.number == "" || pagamento.paymentData.number.length != 11){
-        alert("Insira um CPF Válido!")
+    else if(pagamento.paymentData.number == "" || pagamento.paymentData.number.length != 11 || !cpf.isValid(pagamento.paymentData.number) ){
+        toast.error("Insira um CPF Válido!", {autoClose: 1000})
     }
     else if(pagamento.paymentData.description == ""){
-        alert("Por Favor, Insira uma descrição")
-     }
-    else if(pagamento.paymentData.email == ""){
-        alert("Insira um Email Válido!")
+        toast.error("Insira uma descrição", {autoClose: 1000})
     }
     else{
-    console.log(objeto)
+    toast.success("Pagamento gerado com sucesso", {autoClose: 1000})
     const { data } = await axios.post("https://webhook.peraza.live/pagamento/", objeto)
     const gerarPagamento = reactive({
         id: data.result.id,
@@ -63,8 +58,6 @@ async function testePagar(objeto) {
     })
     const { response } = await axios.post("https://webhook.peraza.live/cadastrarPagamento/", gerarPagamento)
     console.log(response)
-    console.log(data)
-    isOpen.value = true
     window.open(data.result.point_of_interaction.transaction_data.ticket_url)
 }
 }
@@ -80,25 +73,13 @@ console.log(store.email)
             <label for="valor">Valor:</label>
             <input type="number" v-model="pagamento.paymentData.transaction_amount" placeholder="Valor" required class="input">
         </div>
-        <div class="erroInputs" ref="valueErrorMensage">
-                <p>O valor não pode ser 0 ou negativo</p>
-        </div>
             <div class="input-label">
             <label for="">CPF:</label>
             <input type="text" v-model="pagamento.paymentData.number" required class="input"></div>
-            <div class="erroInputs" ref="cpfErrorMensage">
-                    <p>Insira um CPF Válido!</p>
-            </div>
             <div class="input-label">
             <label for="">Descrição:</label>
             <input type="text" v-model="pagamento.paymentData.description" class="input"></div>
-            <div class="erroInputs" ref="descriptionErrorMensage"><p>Por Favor, Insira uma descrição</p></div>
             <div class="input-label">
-            <label for="">Email</label>
-            <input type="email" v-model="pagamento.paymentData.email" class="input">
-        </div>
-        <div class="erroInputs" ref="emailErrorMensage">
-                <p>Insira um Email Válido!</p>
         </div>
             <button @click="testePagar(pagamento)">Pagar</button>
     </form>
@@ -198,31 +179,6 @@ form > button{
     align-items: center;
     justify-content: center;
 }
-.moedasImg{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
-    width: 40%;
-    height: 100%;
-}
-.rotate1{
-    transform: rotate(45deg);
-}
-.rotate2{
-    transform: rotate(90deg);
-}
-.rotate3{
-    transform: rotate(135deg);
-}
-.rotate4{
-    transform: rotate(180deg);
-}
-.moedasImg > img{
-    width: 20%;
-    margin: 1rem;
-    height: 40%;
-}
 .cofreImg{
     width: 80%;
     height: 100%;
@@ -234,21 +190,6 @@ form > button{
     width: 80%;
     height: 80%;
     animation: animationPorco 1s infinite;
-}
-.erroInputs{
-  display: none;
-  height: 60px;
-  background-color: transparent;
-  border: 2px solid red;
-  border-radius: 1rem;
-  width: 80%;
-  color: white;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-}
-.showErroInputs{
-  display: flex ;
 }
 @keyframes animationPorco {
     0%{
