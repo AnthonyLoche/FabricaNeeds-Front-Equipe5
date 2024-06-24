@@ -1,8 +1,8 @@
 <script setup>
-import { adicionar } from '@/api/api.js'
 import { reactive, ref } from 'vue'
 import { useCounterStore } from '@/store';
 import loading from 'vue-loading-overlay'
+import { cadastrarService } from '@/services/cadastrar';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import router from '@/router'
@@ -11,7 +11,7 @@ const store = useCounterStore()
 const usuario = reactive({
     nome: '',
     email: '',
-    senha: ''
+    senha: '',   
 })
 
 const nomeInput = ref('')
@@ -34,27 +34,7 @@ const loginView = async (name, password) => {
 
 let loadingDiv = ref(null);
 
-async function verificarCadastro() {
-    if (usuario.nome == '') {
-        toast.error('Preencha o campo de nome', {autoClose: 1000})
-    }
-    else if (usuario.email == '') {
-        toast.error('Preencha o campo de email', {autoClose: 1000})
-    }
-    else if (usuario.senha == '') {
-        toast.error('Preencha o campo de senha', {autoClose: 1000})
-    }
-    else {
-        const add = await adicionar('contribuinte/', usuario)
-        console.log(add)
-        if(add == true){
-            toast.success('Cadastro realizado com sucesso', {autoClose: 1000})
-        }
-        else{
-            toast.error(add.response.data.nome[0], {autoClose: 1000})
-        }
-    }
-}
+
 const card = ref(null);
 const btnSign = ref(null);
 const btnLogin = ref(null);
@@ -88,7 +68,7 @@ const giraCard2 = () => {
                                 <input type="text" v-model="usuario.nome" placeholder="Username" class="input" />
                                 <input type="email" v-model="usuario.email" placeholder="Email" class="input" />
                                 <input type="password" v-model="usuario.senha" placeholder="Senha" class="input" />
-                                <button @click="verificarCadastro">Cadastrar</button>
+                                <button @click="cadastrarService(usuario)">Cadastrar</button>
                             </form>
                         </div>
                         <div id="logIn">
