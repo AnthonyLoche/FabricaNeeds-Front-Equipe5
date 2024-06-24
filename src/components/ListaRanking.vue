@@ -90,5 +90,15 @@ h2{
     color: white;
     font-size: 2rem;
     margin: 1rem auto;
+    text-align: center;
+}
+@media screen and (max-width: 1024px) {
+    .container{
+        width: 85%;
+        margin: 10% auto;
+    }
+    .classificados> p{
+        text-align: center;
+    }
 }
 </style>
