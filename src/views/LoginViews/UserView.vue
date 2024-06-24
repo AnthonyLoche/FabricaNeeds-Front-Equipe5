@@ -10,5 +10,3 @@ import UserVue from '@/components/UsuarioVue.vue'
     <FooterVue />
 </template>
 
-<style scoped>
-</style>

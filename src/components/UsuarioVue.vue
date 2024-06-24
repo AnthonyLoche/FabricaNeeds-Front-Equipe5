@@ -1,6 +1,4 @@
 <script setup>
-
-
 import { useCounterStore } from '@/store';
 const store = useCounterStore()
 import axios from 'axios';
