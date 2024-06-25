@@ -27,15 +27,15 @@ const setTipoDiv = (valor) => {
 <template>
   <div id="botoes">
     <div class="botao" @click="setTipoDiv('estoque')">
-      <img src="../../assets/estoque.png" alt="" class="icon" />
+      <img src="../assets/estoque.png" alt="" class="icon" />
       <h1>ESTOQUE</h1>
     </div>
     <div class="botao" @click="setTipoDiv('demandas')">
-      <img src="../../assets/ponto.png" alt="" class="icon" />
+      <img src="../assets/ponto.png" alt="" class="icon" />
       <h1>DEMANDAS</h1>
     </div>
     <div class="botao" @click="setTipoDiv('entradas')">
-      <img src="../../assets/mais.png" alt="" class="icon" />
+      <img src="../assets/mais.png" alt="" class="icon" />
       <h1>ENTRADAS</h1>
     </div>
   </div>
