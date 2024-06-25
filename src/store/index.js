@@ -45,7 +45,6 @@ export const useCounterStore = defineStore('counter', () => {
         ('login', name, password)
         try {
             const response = await loginService({ name, password })
-
             ('response pinia', response)
 
              userStorage.value = {
@@ -55,7 +54,6 @@ export const useCounterStore = defineStore('counter', () => {
                  email: response.email,
                 verificado: response.verificado
              }
-            
         return true
         } catch (error) {
             return error
@@ -69,9 +67,7 @@ export const useCounterStore = defineStore('counter', () => {
         }catch(error){
             return error
         }
-        
     }
-
     const logout = () => (userStorage.value = {
         isLogged: false,
         usuario: '',
@@ -79,6 +75,5 @@ export const useCounterStore = defineStore('counter', () => {
         email: '',
         verificado: false
     })
-
     return { isLogged, usuario, id, email, setisLogged, setUsuario, setId, setEmail, logout, loginStore, setVerificado, verificado, enviarToken }
 })

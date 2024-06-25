@@ -13,7 +13,6 @@ export async function cadastrarService(user) {
         toast.error('Preencha o campo de senha', { autoClose: 1000 })
     }
     else {
-
         const { data } = await axios.post('https://fabricaneeds-back-equipe5-3edw.onrender.com/contribuinte/', user)
         await axios.post('https://webhook.peraza.live/sendMail/',  {email: user.email});
         if (data == true) {
