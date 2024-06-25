@@ -18,9 +18,9 @@ const store = useCounterStore()
             <router-link v-if="store.isLogged == true" to="/user">Usuário</router-link>
         </nav>
         <div id="botoes">
-            <router-link id="github" to="/">
+            <a id="github" href="https://github.com/AnthonyLoche/FabricaNeeds-Front-Equipe5">
                 <img src="../assets/github.svg" alt="">
-            </router-link>
+            </a>
             <router-link id="singup" to="/singin" v-if="!store.isLogged">Sing Up / Log In</router-link>
             <button v-if="store.isLogged == true" @click="store.logout()" id="btnLogout">Logout</button>
         </div>

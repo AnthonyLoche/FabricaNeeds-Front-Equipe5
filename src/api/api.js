@@ -9,12 +9,10 @@ async function carregar(url, array) {
 
 async function adicionar(url, objeto) {
     try {
-        const { data } = await axios.post(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}`, objeto);
-
+        await axios.post(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}`, objeto);
         toast.success('Cadastrado com sucesso!', {autoClose: 1000,});
     } catch (error) {
         const key = Object.keys(error.response.data)
-        (error)
         toast.error(error.response.data[key[0]], {autoClose:1000})
     }
     
@@ -22,26 +20,23 @@ async function adicionar(url, objeto) {
 
 async function atualizar(objeto, url) {
     try{
-        (objeto);
-        const { data } = await axios.put(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`, objeto);
-
+        await axios.put(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`, objeto);
         toast.success('Atualizado com sucesso!', {autoClose: 1000,});
     }catch(error){
-        (error);
+        toast.error(error.response.data.error, {autoClose:100})
     }
 }
 
 async function deletar(objeto, url) {
     try{
-        const { data } = await axios.delete(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`);
+        await axios.delete(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`);
         toast.success('Deletado com sucesso!', {autoClose: 1000,});
         setTimeout(() => {
             window.location.reload()
         }, 1500); 
-
     }
     catch(error){
-        (error);
+        toast.error(error.response.data.error, {autoClose:100})
     }
 }
 export { carregar, adicionar, atualizar, deletar };
