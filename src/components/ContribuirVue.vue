@@ -31,7 +31,6 @@ const pagamento = reactive({
 
 
 async function testePagar(objeto) {
-    (objeto)
     if(pagamento.paymentData.transaction_amount <= 0 || pagamento.paymentData.transaction_amount == ""){
         toast.error("O valor não pode ser 0 ou negativo", {autoClose: 1000})
     }
@@ -56,8 +55,7 @@ async function testePagar(objeto) {
         descricao: pagamento.paymentData.description,
         pix_copiacola: data.result.point_of_interaction.transaction_data.qr_code
     })
-    const { response } = await axios.post("https://webhook.peraza.live/cadastrarPagamento/", gerarPagamento)
-    (response)
+    await axios.post("https://webhook.peraza.live/cadastrarPagamento/", gerarPagamento)
     window.open(data.result.point_of_interaction.transaction_data.ticket_url)
 }
 }

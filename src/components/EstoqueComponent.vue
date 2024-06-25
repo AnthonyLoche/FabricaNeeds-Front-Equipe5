@@ -21,7 +21,6 @@ if (store.isLogged == false) {
 
 const tipoDiv = ref('estoque')
 const setTipoDiv = (valor) => {
-  (valor)
   tipoDiv.value = valor
 }
 </script>

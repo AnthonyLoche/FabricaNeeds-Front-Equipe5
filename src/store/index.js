@@ -58,18 +58,16 @@ export const useCounterStore = defineStore('counter', () => {
             
         return true
         } catch (error) {
-            (error)
             return error
         }
     }
 
     const enviarToken = async ({token}) => {
-        ('token', token)
         try {
             const result = await verificarService({token})
-            ('result', result)
+            return result
         }catch(error){
-            (error)
+            return error
         }
         
     }
