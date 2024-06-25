@@ -1,31 +1,30 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-import { carregar } from '@/api/api.js';
+import { ref, onMounted, onUnmounted } from 'vue'
+import { carregar } from '@/api/api.js'
 
-const items = ref([]);
-const visibleItems = ref([]);
-const currentIndex = ref(0);
-const interval = ref(null);
+const items = ref([])
+const visibleItems = ref([])
+const currentIndex = ref(0)
+const interval = ref(null)
 
 const carregarItens = async () => {
-  await carregar('estoque/', items);
-};
-
+  await carregar('estoque/', items)
+}
 
 const updateVisibleItems = () => {
-  const endIndex = currentIndex.value + 4;
-  visibleItems.value = items.value.slice(currentIndex.value, endIndex);
-  currentIndex.value = endIndex < items.value.length ? endIndex : 0;
-};
+  const endIndex = currentIndex.value + 4
+  visibleItems.value = items.value.slice(currentIndex.value, endIndex)
+  currentIndex.value = endIndex < items.value.length ? endIndex : 0
+}
 
 onMounted(async () => {
-  await carregarItens();
-  updateVisibleItems();
-  interval.value = setInterval(updateVisibleItems, 3500);
-});
+  await carregarItens()
+  updateVisibleItems()
+  interval.value = setInterval(updateVisibleItems, 3500)
+})
 onUnmounted(() => {
-  clearInterval(interval);
-});
+  clearInterval(interval)
+})
 </script>
 
 <template>
@@ -52,7 +51,7 @@ a {
 }
 
 a > h2 {
-  background-color: #8C52FF;
+  background-color: #8c52ff;
   width: 100%;
   text-align: center;
   padding: 10px;
@@ -64,7 +63,7 @@ a > h2 {
   flex-direction: column;
   width: 100%;
   flex-wrap: nowrap;
-  border: 2px solid #8C52FF;
+  border: 2px solid #8c52ff;
   padding: 10px;
 }
 
@@ -74,7 +73,7 @@ a > h2 {
   justify-content: space-around;
   gap: 15px;
   line-height: 2;
-  border-bottom: 2px solid #8C52FF;
+  border-bottom: 2px solid #8c52ff;
 }
 
 #org > div > p {

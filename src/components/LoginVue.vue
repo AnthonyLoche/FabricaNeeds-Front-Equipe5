@@ -18,7 +18,7 @@ const nomeInput = ref('')
 const senhaInput = ref('')
 
 const loginView = async (name, password) => {
-    (name, password)
+  name, password
   try {
     const loginFuncao = await store.loginStore({ name, password })
     if (loginFuncao == true) {
