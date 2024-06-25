@@ -2,17 +2,17 @@
 import { ref } from 'vue'
 import axios from 'axios'
 
-const colaboradores = ref([])
-const lista = ref([])
-const ordenado = ref([])
+const collaborators = ref([])
+const list = ref([])
+const ordenad = ref([])
 
-async function carregarColaboradores() {
+async function loadCollaborators() {
   try {
-    const response = await axios.get('https://webhook.peraza.live/obterPagamentos')
+    const response = await axios.get('https://webhook.peraza.live/getpayments')
 
-    colaboradores.value = response.data
+    collaborators.value = response.data
 
-    const tempRanking = colaboradores.value
+    const tempRanking = collaborators.value
       .filter((item) => item.status === 'approved')
       .map((item) => ({ cliente: item.cliente, valor: item.valor }))
 
@@ -27,22 +27,22 @@ async function carregarColaboradores() {
       }
     })
 
-    lista.value = Array.from(clienteMap.values())
-    ordenado.value = lista.value.sort((a, b) => b.valor - a.valor).slice(0, 3)
+    list.value = Array.from(clienteMap.values())
+    ordenad.value = list.value.sort((a, b) => b.valor - a.valor).slice(0, 3)
   } catch (error) {
-    console.error('Erro ao carregar colaboradores:', error)
+    console.error('Error loadItem collaborators:', error)
   }
 }
 
-carregarColaboradores()
+loadCollaborators()
 </script>
 
 <template>
   <div id="ranking" class="container">
     <h2>Ranking dos Contribuintes</h2>
-    <div v-for="(item, index) in ordenado" :key="index" class="classificados">
+    <div v-for="(item, index) in ordenad" :key="index" class="classificados">
       <p>{{ index + 1 }}º</p>
-      <p id="nomeRanking">Cliente: {{ item.cliente }}</p>
+      <p id="nameRanking">Cliente: {{ item.cliente }}</p>
       <p>Valor: R$ {{ item.valor }}</p>
     </div>
   </div>
@@ -67,7 +67,7 @@ carregarColaboradores()
   color: #8c52ff;
   font-weight: bold;
 }
-#nomeRanking {
+#nameRanking {
   color: white;
 }
 .container {

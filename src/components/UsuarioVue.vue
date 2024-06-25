@@ -1,11 +1,10 @@
 <script setup>
-import { useCounterStore } from '@/store'
-const store = useCounterStore()
+import { useUserStore } from '@/store'
+const store = useUserStore()
 import axios from 'axios'
 import { ref } from 'vue'
 import router from '@/router'
-import { toast } from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
+
 import VerifyEmailVue from './VerifyEmailVue.vue'
 
 if (store.isLogged == false) {
@@ -16,29 +15,29 @@ if (store.isLogged == false) {
   router.push('/singin')
 }
 
-const pagamentos = ref([])
-const pagamentosAprovados = ref([])
-const pagamentosPendentes = ref([])
+const payments = ref([])
+const paymentsApproved = ref([])
+const paymentsPending = ref([])
 
-async function carregarPagamentos() {
+async function loadPayments() {
   try {
-    const response = await axios.get('https://webhook.peraza.live/obterPagamentos')
+    const response = await axios.get('https://webhook.peraza.live/getpayments')
 
-    pagamentos.value = response.data
+    payments.value = response.data
 
-    pagamentosAprovados.value = pagamentos.value.filter(
-      (pagamento) => pagamento.status === 'approved' && pagamento.cliente === store.usuario
+    paymentsApproved.value = payments.value.filter(
+      (payment) => payment.status === 'approved' && payment.cliente === store.usuario
     )
 
-    pagamentosPendentes.value = pagamentos.value.filter(
-      (pagamento) => pagamento.status === 'Pendente' && pagamento.cliente === store.usuario
+    paymentsPending.value = payments.value.filter(
+      (payment) => payment.status === 'Pendente' && payment.cliente === store.usuario
     )
   } catch (error) {
-    console.error('Erro ao carregar os pagamentos:', error)
+    console.error('Error loadItem os payments:', error)
   }
 }
 
-carregarPagamentos()
+loadPayments()
 
 function copyPixCode(text) {
   navigator.clipboard
@@ -46,7 +45,7 @@ function copyPixCode(text) {
     .then(() =>
       toast.success('Código do PIX copiado!', { autoClose: 1000, position: 'top-center' })
     )
-    .catch((err) => console.error('Erro ao copiar o código do PIX:', err))
+    .catch((error) => console.error('Error copiar o código do PIX:', error))
 }
 </script>
 
@@ -58,8 +57,8 @@ function copyPixCode(text) {
         <h2>Veja aqui suas contribuições:</h2>
       </div>
       <div id="contribuicoes">
-        <h2 v-if="!pagamentosAprovados.length == 0">Pagamentos Aprovados</h2>
-        <div class="pagamento" v-for="item in pagamentosAprovados" :key="item.id">
+        <h2 v-if="!paymentsApproved.length == 0">payments Aprovados</h2>
+        <div class="payment" v-for="item in paymentsApproved" :key="item.id">
           <p>Valor: R${{ item.valor }}</p>
           <p>Status: <strong style="color: green">Aprovado</strong></p>
           <p>Data do Pagamento: {{ item.data_pagamento }}</p>
@@ -67,8 +66,8 @@ function copyPixCode(text) {
           <p>Data de Aprovação: {{ item.data_aprovacao }}</p>
           <p>Email: {{ item.email }}</p>
         </div>
-        <h2 v-if="!pagamentosPendentes.length == 0">Pagamentos Pendentes:</h2>
-        <div class="pagamento" v-for="item in pagamentosPendentes" :key="item.id">
+        <h2 v-if="!paymentsPending.length == 0">payments Pendentes:</h2>
+        <div class="payment" v-for="item in paymentsPending" :key="item.id">
           <p>Valor: R${{ item.valor }}</p>
           <p>Status: <strong style="color: red">Pendente</strong></p>
           <p>Data do Pagamento: {{ item.data_pagamento }}</p>
@@ -83,7 +82,7 @@ function copyPixCode(text) {
           </p>
         </div>
         <div
-          v-if="pagamentosAprovados.length == 0 && pagamentosPendentes == 0"
+          v-if="paymentsApproved.length == 0 && paymentsPending == 0"
           class="semContribuicao"
         >
           <h2>Você não contribuiu nenhuma vez :(</h2>
@@ -136,7 +135,7 @@ section {
   color: white;
 }
 
-.pagamento {
+.payment {
   width: 100%;
   border: 2px solid #8c52ff;
   border-radius: 10px;
@@ -148,7 +147,7 @@ section {
   gap: 15px;
 }
 
-.pagamento > p {
+.payment > p {
   width: 50%;
 }
 button {

@@ -1,8 +1,7 @@
 import axios from 'axios'
-import { toast } from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
 
-export async function cadastrarService(user) {
+
+export async function registerService(user) {
   if (user.nome == '') {
     toast.error('Preencha o campo de nome', { autoClose: 1000 })
   } else if (user.email == '') {

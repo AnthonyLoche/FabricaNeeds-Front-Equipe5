@@ -1,17 +1,17 @@
 <script setup>
 import { reactive, ref } from 'vue'
-const entradas = ref([])
-const demandas = ref([])
-import { carregar, adicionar } from '@/api/api'
+const enterups = ref([])
+const requests = ref([])
+import { loadItem, addItem } from '@/api/api'
 
-const entrada = reactive({
+const enterup = reactive({
   quantidade: 0,
   demanda: ''
 })
 
-carregar('entradasEstoque/', entradas)
-carregar('demandas/', demandas)
-const modalAddIten = ref(null)
+loadItem('entradasEstoque/', enterups)
+loadItem('demandas/', requests)
+const modalAddItem = ref(null)
 </script>
 
 <template>
@@ -19,46 +19,46 @@ const modalAddIten = ref(null)
     <section>
       <h2>Entradas Atuais:</h2>
       <div class="rolagemItens">
-        <div class="LoadingDiv" v-if="entradas.length <= 0">
+        <div class="LoadingDiv" v-if="enterups.length <= 0">
           <img src="../../assets/gif_carregando.gif" alt="" />
         </div>
-        <div class="item" v-for="entrada in entradas" :key="entrada.id">
+        <div class="item" v-for="enterup in enterups" :key="enterup.id">
           <div>
             <p class="headerItem">ID:</p>
-            <p>{{ entrada.id }}</p>
+            <p>{{ enterup.id }}</p>
           </div>
           <div class="teste">
             <p class="headerItem">DEMANDA:</p>
-            <p>{{ entrada.demanda }}</p>
+            <p>{{ enterup.demanda }}</p>
           </div>
           <div class="acoes teste">
             <p class="headerItem">QUANTIDADE:</p>
-            <p>{{ entrada.quantidade }}</p>
+            <p>{{ enterup.quantidade }}</p>
           </div>
         </div>
       </div>
-      <button @click="modalAddIten.showModal()">Adicionar Entrada</button>
+      <button @click="modalAddItem.showModal()">Adicionar Entrada</button>
     </section>
-    <dialog id="modalAddIten" ref="modalAddIten">
+    <dialog id="modalAddItem" ref="modalAddItem">
       <div class="modalBody">
         <div class="modalHeader">
           <h2>Adicionar Entrada</h2>
-          <button @click="modalAddIten.close()">X</button>
+          <button @click="modalAddItem.close()">X</button>
         </div>
         <form action="" method="post" @submit.prevent>
           <div class="input-label">
             <label for="">Demanda:</label>
-            <select name="" id="" v-model="entrada.demanda">
-              <option v-for="item in demandas" :key="item.id" :value="item.id">
+            <select name="" id="" v-model="enterup.demanda">
+              <option v-for="item in requests" :key="item.id" :value="item.id">
                 {{ item.nome_produto }}
               </option>
             </select>
           </div>
           <div class="input-label">
             <label for="">Quantidade:</label>
-            <input type="number" placeholder="quantidade" v-model="entrada.quantidade" />
+            <input type="number" placeholder="quantidade" v-model="enterup.quantidade" />
           </div>
-          <button class="acao" @click="adicionar('entradasEstoque/', entrada)">Enviar</button>
+          <button class="acao" @click="addItem('entradasEstoque/', enterup)">Enviar</button>
         </form>
       </div>
     </dialog>

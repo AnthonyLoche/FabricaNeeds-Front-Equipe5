@@ -24,11 +24,11 @@
 //   },
 // });
 
-// app.post("/pagamento", async (req, res) => {
+// app.post("/payment", async (req, res) => {
 //     const paymentData  = req.body;
 //     (paymentData);
 //     try{
-//     const result = await sql`insert into fabricaNeeds_pagamentos values (${paymentData.id}, ${paymentData.cliente}, ${paymentData.email}, ${paymentData.cpf}, ${paymentData.valor}, ${paymentData.status})`;
+//     const result = await sql`insert into fabricaNeeds_payments values (${paymentData.id}, ${paymentData.cliente}, ${paymentData.email}, ${paymentData.cpf}, ${paymentData.valor}, ${paymentData.status})`;
 //     res.send(result);    
 // }
 //     catch(error){

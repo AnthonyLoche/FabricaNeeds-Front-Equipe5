@@ -1,8 +1,8 @@
 <script setup>
-import { useCounterStore } from '@/store';
+import { useUserStore } from '@/store';
 import { ref } from 'vue'
 import 'vue3-toastify/dist/index.css';
-const store = useCounterStore()
+const store = useUserStore()
 
 const token = ref("")
 </script>

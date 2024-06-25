@@ -2,11 +2,10 @@
 import EstoqueView from '@/components/Estoque/EstoqueView.vue'
 import DemandasView from '@/components/Estoque/DemandasView.vue'
 import EntradasView from '@/components/Estoque/EntradasView.vue'
-import { toast } from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
+
 import { ref } from 'vue'
-import { useCounterStore } from '@/store'
-const store = useCounterStore()
+import { useUserStore } from '@/store'
+const store = useUserStore()
 import router from '@/router'
 
 if (store.isLogged == false) {
@@ -19,30 +18,30 @@ if (store.isLogged == false) {
   }, 2500)
 }
 
-const tipoDiv = ref('estoque')
+const tipoDiv = ref('stock')
 const setTipoDiv = (valor) => {
   tipoDiv.value = valor
 }
 </script>
 <template>
-  <div id="botoes">
-    <div class="botao" @click="setTipoDiv('estoque')">
+  <div id="buttons">
+    <div class="botao" @click="setTipoDiv('stock')">
       <img src="../assets/estoque.png" alt="" class="icon" />
       <h1>ESTOQUE</h1>
     </div>
-    <div class="botao" @click="setTipoDiv('demandas')">
+    <div class="botao" @click="setTipoDiv('requests')">
       <img src="../assets/ponto.png" alt="" class="icon" />
       <h1>DEMANDAS</h1>
     </div>
-    <div class="botao" @click="setTipoDiv('entradas')">
+    <div class="botao" @click="setTipoDiv('enterups')">
       <img src="../assets/mais.png" alt="" class="icon" />
       <h1>ENTRADAS</h1>
     </div>
   </div>
-  <div v-if="tipoDiv == 'estoque'">
+  <div v-if="tipoDiv == 'stock'">
     <EstoqueView />
   </div>
-  <div v-else-if="tipoDiv == 'demandas'">
+  <div v-else-if="tipoDiv == 'requests'">
     <DemandasView />
   </div>
   <div v-else>
@@ -51,7 +50,7 @@ const setTipoDiv = (valor) => {
 </template>
 
 <style scoped>
-#botoes {
+#buttons {
   display: flex;
   justify-content: space-around;
   color: white;
@@ -60,7 +59,7 @@ const setTipoDiv = (valor) => {
   width: 90%;
 }
 
-#botoes > div {
+#buttons > div {
   border: 2px solid #8c52ff;
   width: 90%;
   padding: 30px;
@@ -79,7 +78,7 @@ const setTipoDiv = (valor) => {
 }
 
 @media screen and (max-width: 1025px) {
-  #botoes {
+  #buttons {
     flex-direction: column;
     gap: 20px;
     margin: 10px auto;
@@ -88,7 +87,7 @@ const setTipoDiv = (valor) => {
     justify-content: center;
   }
 
-  #botoes > div {
+  #buttons > div {
     padding: 20px;
   }
 }

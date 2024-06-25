@@ -1,12 +1,12 @@
 <script setup>
 import { reactive, ref } from 'vue'
-import { useCounterStore } from '@/store'
 import loading from 'vue-loading-overlay'
-import { cadastrarService } from '@/services/cadastrar'
-import { toast } from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
+
 import router from '@/router'
-const store = useCounterStore()
+import { useUserStore } from '@/store'
+import registerService from '@/services'
+
+const store = useUserStore()
 
 const usuario = reactive({
   nome: '',
@@ -14,8 +14,8 @@ const usuario = reactive({
   senha: ''
 })
 
-const nomeInput = ref('')
-const senhaInput = ref('')
+const nameInput = ref('')
+const passwordInput = ref('')
 
 const loginView = async (name, password) => {
   name, password
@@ -38,15 +38,15 @@ const btnSign = ref(null)
 const btnLogin = ref(null)
 const giraCard1 = () => {
   card.value.classList.remove('rotate2')
-  card.value.classList.add('rotate')
+  card.value.classList.addItem('rotate')
   btnSign.value.classList.remove('border-selection')
-  btnLogin.value.classList.add('border-selection')
+  btnLogin.value.classList.addItem('border-selection')
 }
 const giraCard2 = () => {
   card.value.classList.remove('rotate')
-  card.value.classList.add('rotate2')
+  card.value.classList.addItem('rotate2')
   btnLogin.value.classList.remove('border-selection')
-  btnSign.value.classList.add('border-selection')
+  btnSign.value.classList.addItem('border-selection')
 }
 </script>
 
@@ -66,7 +66,7 @@ const giraCard2 = () => {
                 <input type="text" v-model="usuario.nome" placeholder="Username" class="input" />
                 <input type="email" v-model="usuario.email" placeholder="Email" class="input" />
                 <input type="password" v-model="usuario.senha" placeholder="Senha" class="input" />
-                <button @click="cadastrarService(usuario)">Cadastrar</button>
+                <button @click="registerService(usuario)">Cadastrar</button>
               </form>
             </div>
             <div id="logIn">
@@ -79,9 +79,9 @@ const giraCard2 = () => {
               </div>
               <form action="" method="post" @submit.prevent>
                 <h2>Login:</h2>
-                <input type="text" v-model="nomeInput" placeholder="Username" class="input" />
-                <input type="password" v-model="senhaInput" placeholder="Senha" class="input" />
-                <button @click="loginView(nomeInput, senhaInput)">Login</button>
+                <input type="text" v-model="nameInput" placeholder="Username" class="input" />
+                <input type="password" v-model="passwordInput" placeholder="Senha" class="input" />
+                <button @click="loginView(nameInput, passwordInput)">Login</button>
               </form>
             </div>
           </div>

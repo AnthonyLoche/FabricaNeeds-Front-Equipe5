@@ -2,10 +2,9 @@
 import { reactive } from 'vue'
 import { cpf } from 'cpf-cnpj-validator'
 import axios from 'axios'
-import { toast } from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
-import { useCounterStore } from '@/store'
-const store = useCounterStore()
+
+import { useUserStore } from '@/store'
+const store = useUserStore()
 import router from '@/router'
 
 if (store.verificado == false) {
@@ -18,7 +17,7 @@ if (store.verificado == false) {
   }, 2500)
 }
 
-const pagamento = reactive({
+const payment = reactive({
   paymentData: {
     transaction_amount: 0,
     description: '',
@@ -31,31 +30,31 @@ const pagamento = reactive({
 
 async function testePagar(objeto) {
   if (
-    pagamento.paymentData.transaction_amount <= 0 ||
-    pagamento.paymentData.transaction_amount == ''
+    payment.paymentData.transaction_amount <= 0 ||
+    payment.paymentData.transaction_amount == ''
   ) {
     toast.error('O valor não pode ser 0 ou negativo', { autoClose: 1000 })
   } else if (
-    pagamento.paymentData.number == '' ||
-    pagamento.paymentData.number.length != 11 ||
-    !cpf.isValid(pagamento.paymentData.number)
+    payment.paymentData.number == '' ||
+    payment.paymentData.number.length != 11 ||
+    !cpf.isValid(payment.paymentData.number)
   ) {
     toast.error('Insira um CPF Válido!', { autoClose: 1000 })
-  } else if (pagamento.paymentData.description == '') {
+  } else if (payment.paymentData.description == '') {
     toast.error('Insira uma descrição', { autoClose: 1000 })
   } else {
     toast.success('Pagamento gerado com sucesso', { autoClose: 1000 })
-    const { data } = await axios.post('https://webhook.peraza.live/pagamento/', objeto)
+    const { data } = await axios.post('https://webhook.peraza.live/payment/', objeto)
     const gerarPagamento = reactive({
       id: data.result.id,
       cliente: store.usuario,
-      email: pagamento.paymentData.email,
-      cpf: pagamento.paymentData.number,
-      valor: pagamento.paymentData.transaction_amount,
+      email: payment.paymentData.email,
+      cpf: payment.paymentData.number,
+      valor: payment.paymentData.transaction_amount,
       status: 'Pendente',
       data_pagamento: new Date(),
       data_aprovacao: '',
-      descricao: pagamento.paymentData.description,
+      descricao: payment.paymentData.description,
       pix_copiacola: data.result.point_of_interaction.transaction_data.qr_code
     })
     await axios.post('https://webhook.peraza.live/cadastrarPagamento/', gerarPagamento)
@@ -74,7 +73,7 @@ store.email
           <label for="valor">Valor:</label>
           <input
             type="number"
-            v-model="pagamento.paymentData.transaction_amount"
+            v-model="payment.paymentData.transaction_amount"
             placeholder="Valor"
             required
             class="input"
@@ -82,14 +81,14 @@ store.email
         </div>
         <div class="input-label">
           <label for="">CPF:</label>
-          <input type="text" v-model="pagamento.paymentData.number" required class="input" />
+          <input type="text" v-model="payment.paymentData.number" required class="input" />
         </div>
         <div class="input-label">
           <label for="">Descrição:</label>
-          <input type="text" v-model="pagamento.paymentData.description" class="input" />
+          <input type="text" v-model="payment.paymentData.description" class="input" />
         </div>
         <div class="input-label"></div>
-        <button @click="testePagar(pagamento)">Pagar</button>
+        <button @click="testePagar(payment)">Pagar</button>
       </form>
     </div>
     <div class="ladoImg">

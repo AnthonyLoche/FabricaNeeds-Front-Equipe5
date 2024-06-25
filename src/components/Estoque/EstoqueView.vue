@@ -1,29 +1,29 @@
 <script setup>
-import { carregar, adicionar, atualizar, deletar } from '@/api/api.js'
+import { loadItem, addItem, updateItem, deleteItem } from '@/api/api.js'
 import { ref, reactive } from 'vue'
 
 const itens = ref([])
-carregar('estoque/', itens)
+loadItem('stock/', itens)
 
 const item = reactive({
   item: '',
   quantidade: 0
 })
-const modalAddIten = ref(false)
-const inputPesquisa = ref('')
+const modalAddItem = ref(false)
+const inputSearch = ref('')
 
 function filteredList() {
   return itens.value.filter((itemf) =>
-    itemf.item.toLowerCase().includes(inputPesquisa.value.toLowerCase())
+    itemf.item.toLowerCase().includes(inputSearch.value.toLowerCase())
   )
 }
 
 function openModal() {
-  modalAddIten.value = true
+  modalAddItem.value = true
 }
 
 function closeModal() {
-  modalAddIten.value = false
+  modalAddItem.value = false
 }
 </script>
 
@@ -34,14 +34,14 @@ function closeModal() {
       <input
         class="input-pesquisa"
         type="text"
-        v-model="inputPesquisa"
+        v-model="inputSearch"
         placeholder="Procurar itens..."
       />
       <div class="rolagemItens">
         <div class="LoadingDiv" v-if="filteredList().length <= 0">
           <img src="../../assets/gif_carregando.gif" alt="" />
         </div>
-        <div id="estoque">
+        <div id="stock">
           <div class="item" v-for="item in filteredList()" :key="item.id">
             <div>
               <p class="headerItem">ITEM:</p>
@@ -58,24 +58,24 @@ function closeModal() {
             </div>
             <div class="acoes teste">
               <p>Ações:</p>
-              <button @click="atualizar(item, 'estoque')" class="acao">Atualizar</button>
-              <button @click="deletar(item, 'estoque')" class="acao">EXCLUIR ITEM</button>
+              <button @click="updateItem(item, 'stock')" class="acao">Atualizar</button>
+              <button @click="deleteItem(item, 'stock')" class="acao">EXCLUIR ITEM</button>
             </div>
           </div>
-          <div class="item error" v-if="inputPesquisa && !filteredList().length">
+          <div class="item error" v-if="inputSearch && !filteredList().length">
             <p>No results found!</p>
           </div>
         </div>
       </div>
       <button @click="openModal">Adicionar Item</button>
     </section>
-    <dialog id="modalAddIten" :open="modalAddIten" v-if="modalAddIten">
+    <dialog id="modalAddItem" :open="modalAddItem" v-if="modalAddItem">
       <div class="modalBody">
         <div class="modalHeader">
           <h2>Adicionar Item</h2>
           <button @click="closeModal">X</button>
         </div>
-        <form @submit.prevent="adicionar('estoque/', item)">
+        <form @submit.prevent="addItem('stock/', item)">
           <div class="input-label">
             <label for="">Item:</label>
             <input type="text" v-model="item.item" />
@@ -319,7 +319,7 @@ form > button {
   cursor: pointer;
 }
 
-#estoque {
+#stock {
   width: 80%;
   margin: 20px;
 

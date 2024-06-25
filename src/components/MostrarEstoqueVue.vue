@@ -1,14 +1,14 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { carregar } from '@/api/api.js'
+import { loadItem } from '@/api/api.js'
 
 const items = ref([])
 const visibleItems = ref([])
 const currentIndex = ref(0)
 const interval = ref(null)
 
-const carregarItens = async () => {
-  await carregar('estoque/', items)
+const loadItens = async () => {
+  await loadItem('stock/', items)
 }
 
 const updateVisibleItems = () => {
@@ -18,7 +18,7 @@ const updateVisibleItems = () => {
 }
 
 onMounted(async () => {
-  await carregarItens()
+  await loadItens()
   updateVisibleItems()
   interval.value = setInterval(updateVisibleItems, 3500)
 })
@@ -28,7 +28,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <router-link to="estoque">
+  <router-link to="stock">
     <h2>Estoque</h2>
     <div id="org">
       <div v-for="(item, index) in visibleItems" :key="index">

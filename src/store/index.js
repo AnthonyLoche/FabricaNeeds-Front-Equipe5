@@ -2,9 +2,9 @@ import { defineStore } from 'pinia'
 import { computed } from 'vue'
 import { useStorage } from '@vueuse/core'
 import { loginService } from '@/services/login.js'
-import { verificarService } from '@/services/verificar.js'
+import { verifyService } from '@/services/verificar.js'
 
-export const useCounterStore = defineStore('counter', () => {
+export const useUserStore = defineStore('counter', () => {
     //State
     const user = {
         isLogged: false,
@@ -62,7 +62,7 @@ export const useCounterStore = defineStore('counter', () => {
 
     const enviarToken = async ({token}) => {
         try {
-            const result = await verificarService({token})
+            const result = await verifyService({token})
             return result
         }catch(error){
             return error

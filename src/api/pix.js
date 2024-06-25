@@ -17,7 +17,7 @@ function gerarIdempotencyKey(tamanho) {
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post('/pagamento', (req, res) => {
+app.post('/payment', (req, res) => {
     const client = new MercadoPagoConfig({ accessToken: '' });
     const payment = new Payment(client);
 
@@ -39,7 +39,7 @@ app.post('/pagamento', (req, res) => {
          },
          requestOptions: { idempotencyKey: gerarIdempotencyKey(40) }
      })
-     .then((result) => res.send(result))  // Envie o resultado da criação do pagamento
+     .then((result) => res.send(result))  // Envie o resultado da criação do payment
      .catch((error) => (error)) // Envie um erro caso ocorra um problema
 })
 

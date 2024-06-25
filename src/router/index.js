@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useCounterStore } from '@/store/'
+import { useUserStore } from '@/store/'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,15 +32,15 @@ const router = createRouter({
     
     },
     {
-      path: "/estoque",
-      name: "estoque",
+      path: "/stock",
+      name: "stock",
       component: () => import('../views/EstoqueViews/EstoqueView.vue')
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  const store = useCounterStore()
+  const store = useUserStore()
 
   if (to.meta.requiresAuth && !store.isLogged) {
     next('/')

@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 let menu = ref(false)
 
-import { useCounterStore } from '@/store'
-const store = useCounterStore()
+import { useUserStore } from '@/store'
+const store = useUserStore()
 </script>
 
 <template>
@@ -13,11 +13,11 @@ const store = useCounterStore()
     </div>
     <nav>
       <router-link to="/">Home</router-link>
-      <router-link to="/estoque">Estoque</router-link>
+      <router-link to="/stock">Estoque</router-link>
       <router-link v-if="store.isLogged == true" to="/user">Usuário</router-link>
     </nav>
-    <div id="botoes">
-      <a id="github" href="https://github.com/AnthonyLoche/FabricaNeeds-Front-Equipe5">
+    <div id="buttons">
+      <a id="github" href="https://github.com/AnthonyLoche/FabricaNeeds-Front-Equipe5" target="_blank">
         <img src="../assets/github.svg" alt="" />
       </a>
       <router-link id="singup" to="/singin" v-if="!store.isLogged">Sing Up / Log In</router-link>
@@ -27,12 +27,12 @@ const store = useCounterStore()
     <span id="navDois" v-if="menu == true">
       <button id="fechar" @click="menu = !menu">X</button>
       <router-link to="/">Home</router-link>
-      <router-link to="/estoque">Estoque</router-link>
+      <router-link to="/stock">Estoque</router-link>
       <router-link v-if="store.isLogged == true" to="/user">Usuário</router-link>
       <button v-if="store.isLogged == true" @click="store.logout()" id="btnLogout">Logout</button>
       <div id="botoesDois">
         <router-link id="singup" to="/singin">Sing Up / Log In</router-link>
-        <a id="github" href="https://github.com/AnthonyLoche/FabricaNeeds-Front-Equipe5">
+        <a id="github" href="https://github.com/AnthonyLoche/FabricaNeeds-Front-Equipe5" target="_blank">
         <img src="../assets/github.svg" alt="" />
       </a>
       </div>
@@ -116,7 +116,7 @@ nav {
   justify-content: center;
   cursor: pointer;
 }
-#botoes {
+#buttons {
   display: flex;
   gap: 20px;
 }
@@ -185,7 +185,7 @@ a#github img {
     justify-content: space-between;
   }
 
-  #botoes {
+  #buttons {
     display: none;
   }
 

@@ -2,10 +2,10 @@
 import { ref } from 'vue'
 const total = ref(0)
 const isLoading = ref(false)
-import { carregar } from '@/api/api'
+import { loadItem } from '@/api/api'
 
 isLoading.value = true
-await carregar('total/', total)
+await loadItem('total/', total)
 isLoading.value = false
 </script>
 
