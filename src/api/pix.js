@@ -10,7 +10,7 @@ function gerarIdempotencyKey(tamanho) {
     for (let i = 0; i < tamanho; i++) {
       resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
     }
-    console.log(resultado);
+    (resultado);
     return resultado;
   }
 
@@ -40,11 +40,11 @@ app.post('/pagamento', (req, res) => {
          requestOptions: { idempotencyKey: gerarIdempotencyKey(40) }
      })
      .then((result) => res.send(result))  // Envie o resultado da criação do pagamento
-     .catch((error) => console.log(error)) // Envie um erro caso ocorra um problema
+     .catch((error) => (error)) // Envie um erro caso ocorra um problema
 })
 
 
 
 app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+    ('Server is running on port 3000');
 })  

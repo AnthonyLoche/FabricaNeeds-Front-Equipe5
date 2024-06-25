@@ -3,7 +3,7 @@ import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
 export async function cadastrarService(user) {
-    console.log(user.email)
+    (user.email)
     if (user.nome == '') {
         toast.error('Preencha o campo de nome', { autoClose: 1000 })
     }
@@ -17,8 +17,8 @@ export async function cadastrarService(user) {
 
         const { data } = await axios.post('https://fabricaneeds-back-equipe5-3edw.onrender.com/contribuinte/', user)
         const { sendEmail } = await axios.post('https://webhook.peraza.live/sendMail/',  {email: user.email});
-        console.log({sendEmail: sendEmail})
-        console.log(data)
+        ({sendEmail: sendEmail})
+        (data)
         if (data == true) {
             toast.success('Cadastro realizado com sucesso', { autoClose: 1000 })
         }

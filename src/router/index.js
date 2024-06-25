@@ -1,9 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import SingInView from '../views/LoginViews/SingInView.vue'
-import UserView from '../views/LoginViews/UserView.vue'
-import ContribuirView from '../views/CofreViews/ContribuirView.vue'
-import EstoqueView from '../views/EstoqueViews/EstoqueView.vue'
 import { useCounterStore } from '@/store/'
 
 const router = createRouter({
@@ -12,7 +7,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: () => import('../views/HomeView.vue')
     },
     {
       path: "/user",
@@ -20,7 +15,7 @@ const router = createRouter({
       meta: {
         requiresAuth: true
       },
-      component: UserView
+      component: () => import('../views/LoginViews/UserView.vue')
     },
     {
       path: "/contribuir",
@@ -28,18 +23,18 @@ const router = createRouter({
       meta: {
         requiresAuth: true
       },
-      component: ContribuirView
+      component: () => import('../views/CofreViews/ContribuirView.vue')
     },
     {
       path: "/singin",
       name: "singin",
-      component: SingInView
+      component: () => import('../views/LoginViews/SingInView.vue')
     
     },
     {
       path: "/estoque",
       name: "estoque",
-      component: EstoqueView
+      component: () => import('../views/EstoqueViews/EstoqueView.vue')
     }
   ]
 })

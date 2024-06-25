@@ -10,11 +10,11 @@ async function carregar(url, array) {
 async function adicionar(url, objeto) {
     try {
         const { data } = await axios.post(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}`, objeto);
-        console.log(data);
+        (data);
         toast.success('Cadastrado com sucesso!', {autoClose: 1000,});
     } catch (error) {
         const key = Object.keys(error.response.data)
-        console.log(error)
+        (error)
         toast.error(error.response.data[key[0]], {autoClose:1000})
     }
     
@@ -22,19 +22,19 @@ async function adicionar(url, objeto) {
 
 async function atualizar(objeto, url) {
     try{
-        console.log(objeto);
+        (objeto);
         const { data } = await axios.put(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`, objeto);
-        console.log(data);
+        (data);
         toast.success('Atualizado com sucesso!', {autoClose: 1000,});
     }catch(error){
-        console.log(error);
+        (error);
     }
 }
 
 async function deletar(objeto, url) {
     try{
         const { data } = await axios.delete(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`);
-        console.log(data);
+        (data);
         toast.success('Deletado com sucesso!', {autoClose: 1000,});
         setTimeout(() => {
             window.location.reload()
@@ -42,7 +42,7 @@ async function deletar(objeto, url) {
         ;
     }
     catch(error){
-        console.log(error);
+        (error);
     }
 }
 export { carregar, adicionar, atualizar, deletar };

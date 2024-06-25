@@ -26,23 +26,23 @@
 
 // app.post("/pagamento", async (req, res) => {
 //     const paymentData  = req.body;
-//     console.log(paymentData);
+//     (paymentData);
 //     try{
 //     const result = await sql`insert into fabricaNeeds_pagamentos values (${paymentData.id}, ${paymentData.cliente}, ${paymentData.email}, ${paymentData.cpf}, ${paymentData.valor}, ${paymentData.status})`;
 //     res.send(result);    
 // }
 //     catch(error){
-//         console.log(error);
+//         (error);
 //     }
 // })
 
 // async function getPgVersion() {
 //   const result = await sql`select version()`;
-//   console.log(result);
+//   (result);
 // }
 
 // app.listen(3001, () => {
-//   console.log("Server is running on port 3000");
+//   ("Server is running on port 3000");
 // });
 
 // getPgVersion();

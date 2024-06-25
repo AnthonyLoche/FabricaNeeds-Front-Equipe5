@@ -42,11 +42,11 @@ export const useCounterStore = defineStore('counter', () => {
     }
 
     const loginStore = async ({ name, password }) => {
-        console.log('login', name, password)
+        ('login', name, password)
         try {
             const response = await loginService({ name, password })
 
-            console.log('response pinia', response)
+            ('response pinia', response)
 
              userStorage.value = {
                  isLogged: true,
@@ -58,18 +58,18 @@ export const useCounterStore = defineStore('counter', () => {
             
         return true
         } catch (error) {
-            console.log(error)
+            (error)
             return error
         }
     }
 
     const enviarToken = async ({token}) => {
-        console.log('token', token)
+        ('token', token)
         try {
             const result = await verificarService({token})
-            console.log('result', result)
+            ('result', result)
         }catch(error){
-            console.log(error)
+            (error)
         }
         
     }
