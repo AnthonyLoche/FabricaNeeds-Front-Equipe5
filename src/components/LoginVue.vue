@@ -3,9 +3,8 @@ import { reactive, ref } from 'vue'
 import { useCounterStore } from '@/store';
 import loading from 'vue-loading-overlay'
 import { cadastrarService } from '@/services/cadastrar';
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
-import router from '@/router'
+import notify from '@/notify/toastify.js';
+import router from '@/router';
 const store = useCounterStore()
 
 const usuario = reactive({
@@ -22,13 +21,13 @@ const loginView = async (name, password) => {
         const loginFuncao = await store.loginStore({ name, password })
         console.log(loginFuncao)
     if(loginFuncao == true){
-        toast.success("Logado com sucesso", {autoClose: 1000})
+        notify('success', "logado com sucesso")
         setTimeout(() => {
             router.push("/")
         }, 1500); 
     }
     else{
-        toast.error(loginFuncao.response.data.error, {autoClose: 1000})
+        notify('error', loginFuncao.response.data.error)
     } 
 }
 

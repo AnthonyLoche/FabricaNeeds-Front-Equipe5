@@ -4,12 +4,11 @@ const store = useCounterStore()
 import axios from 'axios';
 import { ref } from 'vue'
 import router from '@/router'
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import notify from '@/notify/toastify.js';
 import VerifyEmailVue from './VerifyEmailVue.vue';
 
 if(store.isLogged == false){
-    toast.warning("Você precisa estar logado para acessar essa página", {autoClose: 1000, position: 'top-center'})
+    notify('warning', "Você precisa estar logado para acessar essa página")
     router.push("/singin")
 }
 
@@ -36,7 +35,7 @@ carregarPagamentos()
 
 function copyPixCode(text) {
     navigator.clipboard.writeText(text)
-    .then(() => toast.success("Código do PIX copiado!", {autoClose: 1000, position: 'top-center'}))
+    .then(() => notify('success', "Código do PIX copiado!"))
     .catch(err => console.error('Erro ao copiar o código do PIX:', err))
 }
 

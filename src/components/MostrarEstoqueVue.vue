@@ -21,7 +21,6 @@ onMounted(() => {
     updateVisibleItems();
     interval = setInterval(updateVisibleItems, 3500);
 });
-
 onUnmounted(() => {
     clearInterval(interval);
 });

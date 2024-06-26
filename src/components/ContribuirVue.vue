@@ -2,22 +2,21 @@
 import { reactive } from 'vue'
 import { cpf } from 'cpf-cnpj-validator'; 
 import axios from 'axios';
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import notify from '@/notify/toastify.js';
 import { useCounterStore } from '@/store';
 const store = useCounterStore()
 import router from '@/router'
 
-if(store.verificado == false){
+
+if(store.isLogged == false){
     router.push("/")
     setTimeout(() => {
-        toast.warning("Você precisa estar logado para acessar esta página", { autoClose: 1000 })    
+        notify('warning', 'Você precisa estar logado para acessar esta página')  
     }, 300);
     setTimeout(() => {
         router.push("/singin")
     }, 2500);
 }
-
 const pagamento = reactive({
     paymentData: {
         transaction_amount: 0,
@@ -33,16 +32,16 @@ const pagamento = reactive({
 async function testePagar(objeto) {
     console.log(objeto)
     if(pagamento.paymentData.transaction_amount <= 0 || pagamento.paymentData.transaction_amount == ""){
-        toast.error("O valor não pode ser 0 ou negativo", {autoClose: 1000})
+        notify('error', "O valor não pode ser 0 ou negativo")
     }
     else if(pagamento.paymentData.number == "" || pagamento.paymentData.number.length != 11 || !cpf.isValid(pagamento.paymentData.number) ){
-        toast.error("Insira um CPF Válido!", {autoClose: 1000})
+        notify('error', "Insira um CPF Válido!")
     }
     else if(pagamento.paymentData.description == ""){
-        toast.error("Insira uma descrição", {autoClose: 1000})
+        notify('error', "Insira uma descrição")
     }
     else{
-    toast.success("Pagamento gerado com sucesso", {autoClose: 1000})
+        notify('success', "Pagamento gerado com sucesso")
     const { data } = await axios.post("https://webhook.peraza.live/pagamento/", objeto)
     const gerarPagamento = reactive({
         id: data.result.id,
