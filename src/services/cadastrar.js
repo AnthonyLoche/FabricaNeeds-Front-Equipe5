@@ -1,17 +1,16 @@
 import axios from "axios";
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import notify from '@/notify/toastify.js'
 
 export async function cadastrarService(user) {
     console.log(user.email)
     if (user.nome == '') {
-        toast.error('Preencha o campo de nome', { autoClose: 1000 })
+        notify('error', 'Preencha o campo de nome')
     }
     else if (user.email == '') {
-        toast.error('Preencha o campo de email', { autoClose: 1000 })
+        notify('error', 'Preencha o campo de email')
     }
     else if (user.senha == '') {
-        toast.error('Preencha o campo de senha', { autoClose: 1000 })
+        notify('error', 'Preencha o campo de senha')
     }
     else {
 
@@ -20,7 +19,7 @@ export async function cadastrarService(user) {
         console.log({sendEmail: sendEmail})
         console.log(data)
         if (data == true) {
-            toast.success('Cadastro realizado com sucesso', { autoClose: 1000 })
+            notify('success', 'Cadastro realizado com sucesso')
         }
     }
 }

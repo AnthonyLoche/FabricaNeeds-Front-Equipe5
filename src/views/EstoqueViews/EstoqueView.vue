@@ -4,17 +4,16 @@ import DemandasView from '@/components/Estoque/DemandasView.vue';
 import EntradasView from '@/components/Estoque/EntradasView.vue';
 import HeaderVue from '@/components/HeaderVue.vue';
 import FooterVue from '@/components/FooterVue.vue';
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
 import { ref } from 'vue';
 import { useCounterStore } from '@/store';
 const store = useCounterStore()
 import router from '@/router';
+import notify from '@/notify/toastify';
 
 if (store.isLogged == false) {
     router.push("/")
     setTimeout(() => {
-        toast.warning("Você precisa estar logado para acessar estoque", { autoClose: 1000 })    
+        notify('error',"Você precisa estar logado para acessar essa página")
     }, 300);
     setTimeout(() => {
         router.push("/singin")
