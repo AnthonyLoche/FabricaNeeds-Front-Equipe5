@@ -72,6 +72,7 @@ button#menu {
     align-items: center;
     padding: 30px;
     gap: 20px;
+    z-index: 10;
     top: 0;
     left: 0;
     width: 150px;
