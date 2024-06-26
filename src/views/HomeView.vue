@@ -2,7 +2,6 @@
 import HeaderVue from '@/components/HeaderVue.vue';
 import FooterVue from '@/components/FooterVue.vue';
 import CofreVue from '@/components/CofreVue.vue';
-import MostrarEstoqueVue from '@/components/MostrarEstoqueVue.vue';
 import ListaRanking from '@/components/ListaRanking.vue';
 import { Suspense } from 'vue';
 import loading from 'vue-loading-overlay';
@@ -18,7 +17,6 @@ import loading from 'vue-loading-overlay';
       <loading :active="true" is-full-page style="justify-content: center; display: flex; margin:auto" />
     </template>
   </Suspense>
-  <MostrarEstoqueVue />
   <ListaRanking />
   <FooterVue />
 </template>
