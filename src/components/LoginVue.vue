@@ -29,7 +29,7 @@ const loginView = async (name, password) => {
       }, 1500)
     }
   } catch (error) {
-    toast.error(error.message, { autoClose: 1000 })
+    notify(error.message, { autoClose: 1000 })
   }
 }
 

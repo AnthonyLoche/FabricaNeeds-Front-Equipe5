@@ -7,7 +7,7 @@ import { useUserStore } from '@/store';
 const store = useUserStore()
 
 
-const pagamento = reactive({
+const payment = reactive({
     paymentData: {
         transaction_amount: 0,
         description: "",
@@ -18,7 +18,7 @@ const pagamento = reactive({
     }
 })
 
-async function testePagar(objeto) {
+async function pay(objeto) {
   if (
     payment.paymentData.transaction_amount <= 0 ||
     payment.paymentData.transaction_amount == ''
@@ -33,7 +33,7 @@ async function testePagar(objeto) {
   } else if (payment.paymentData.description == '') {
     notify('Insira uma descrição', { autoClose: 1000 })
   } else {
-    toast.success('Pagamento gerado com sucesso', { autoClose: 1000 })
+    notify('Pagamento gerado com sucesso', { autoClose: 1000 })
     const { data } = await axios.post('https://webhook.peraza.live/payment/', objeto)
 
     const gerarPagamento = reactive({
@@ -79,7 +79,7 @@ async function testePagar(objeto) {
           <input type="text" v-model="payment.paymentData.description" class="input" />
         </div>
         <div class="input-label"></div>
-        <button @click="testePagar(payment)">Pagar</button>
+        <button @click="pay(payment)">Pagar</button>
       </form>
     </div>
     <div class="ladoImg">

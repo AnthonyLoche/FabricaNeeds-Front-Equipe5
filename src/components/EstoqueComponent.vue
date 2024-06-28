@@ -7,11 +7,12 @@ import { ref } from 'vue'
 import { useUserStore } from '@/store'
 const store = useUserStore()
 import router from '@/router'
+import notify from '@/notify/toastify'
 
 if (store.isLogged == false) {
   router.push('/')
   setTimeout(() => {
-    toast.warning('Você precisa estar logado para acessar estoque', { autoClose: 1000 })
+    notify('Você precisa estar logado para acessar estoque', { autoClose: 1000 })
   }, 300)
   setTimeout(() => {
     router.push('/singin')
