@@ -3,7 +3,7 @@ import { reactive, ref } from 'vue'
 const requests = ref([])
 const stock = ref([])
 import { loadItem, addItem, updateItem, deleteItem } from '@/api/api'
-loadItem('demandas/', requests)
+loadItem('demands/', requests)
 loadItem('stock/', stock)
 
 const demanda = reactive({
@@ -61,8 +61,8 @@ function closeModal() {
             </div>
             <div class="acoes teste">
               <p>Ações:</p>
-              <button @click="updateItem(item, 'demandas')" class="acao">Atualizar</button>
-              <button @click="deleteItem(item, 'demandas')" class="acao">EXCLUIR ITEM</button>
+              <button @click="updateItem(item, 'demands')" class="acao">Atualizar</button>
+              <button @click="deleteItem(item, 'demands')" class="acao">EXCLUIR ITEM</button>
             </div>
           </div>
           <div class="item error" v-if="inputSearch && !filteredList().length">
@@ -78,7 +78,7 @@ function closeModal() {
           <h2>Adicionar Demanda</h2>
           <button @click="closeModal">X</button>
         </div>
-        <form @submit.prevent="addItem('demandas/', demanda)">
+        <form @submit.prevent="addItem('demands/', demanda)">
           <div class="input-label">
             <label for="produto">Item:</label>
             <select name="produto" id="produto" v-model="demanda.produto">

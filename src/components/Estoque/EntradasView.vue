@@ -9,8 +9,8 @@ const enterup = reactive({
   demanda: ''
 })
 
-loadItem('entradasEstoque/', enterups)
-loadItem('demandas/', requests)
+loadItem('addStock/', enterups)
+loadItem('demands/', requests)
 const modalAddItem = ref(null)
 </script>
 
@@ -58,7 +58,7 @@ const modalAddItem = ref(null)
             <label for="">Quantidade:</label>
             <input type="number" placeholder="quantidade" v-model="enterup.quantidade" />
           </div>
-          <button class="acao" @click="addItem('entradasEstoque/', enterup)">Enviar</button>
+          <button class="acao" @click="addItem('addStock/', enterup)">Enviar</button>
         </form>
       </div>
     </dialog>

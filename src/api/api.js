@@ -31,8 +31,8 @@ async function updateItem(objeto, url) {
 
 async function deleteItem(objeto, url) {
   try {
-    await axios.deleteItem(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`)
-    notify('sucess', 'Cadastrado com sucesso!')
+    await axios.delete(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`)
+    notify('sucess', 'Deletado com sucesso!')
     setTimeout(() => {
       window.location.reload()
     }, 1500)
