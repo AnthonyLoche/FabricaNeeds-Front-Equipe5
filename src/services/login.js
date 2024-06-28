@@ -8,7 +8,7 @@ export async function loginService({ name, password }) {
     senha: password
   })
   const contribuintes = []
-  await loadItem('contribuinte/', contribuintes)
+  await loadItem('clients/', contribuintes)
   console.log(contribuintes)
   const idTeste = contribuintes.value.find((contribuinte) => contribuinte.nome === name).id
   const emailTeste = contribuintes.value.find((contribuinte) => contribuinte.nome === name).email

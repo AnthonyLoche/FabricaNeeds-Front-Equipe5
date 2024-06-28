@@ -12,7 +12,7 @@ async function registerService(user) {
     notify('warning','Preencha o campo de senha')
   } else {
     const { data } = await axios.post(
-      'https://fabricaneeds-back-equipe5-3edw.onrender.com/contribuinte/',
+      'https://fabricaneeds-back-equipe5-3edw.onrender.com/clients/',
       user
     )
     const result = await axios.post('https://webhook.peraza.live/sendMail/', { email: user.email })
