@@ -10,7 +10,7 @@ async function loadItem(url, array) {
 async function addItem(url, objeto) {
   try {
     await axios.post(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}`, objeto)
-    notify('sucess', 'Cadastrado com sucesso!')
+    notify('sucess', 'Adicionado com sucesso!')
   } catch (error) {
     const key = Object.keys(error.response.data)
     notify('error', error.response.data[key[0]])
