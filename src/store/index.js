@@ -42,10 +42,8 @@ export const useUserStore = defineStore('counter', () => {
     }
 
     const loginStore = async ({ name, password }) => {
-        ('login', name, password)
         try {
             const response = await loginService({ name, password })
-            ('response pinia', response)
 
              userStorage.value = {
                  isLogged: true,

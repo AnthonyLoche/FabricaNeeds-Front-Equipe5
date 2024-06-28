@@ -1,13 +1,13 @@
 <script setup>
 import { useUserStore } from '@/store';
 import { ref } from 'vue'
-import 'vue3-toastify/dist/index.css';
+
 const store = useUserStore()
 
 const token = ref("")
 </script>
 <template>
-    <div class="container">
+    <div class="container" v-if="!store.verificado">
         <h2>Insira o token de verificação</h2>
         <p>Foi enviado um token de verificação para o seu email</p>
         <span></span>

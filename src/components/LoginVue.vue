@@ -1,12 +1,14 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import loading from 'vue-loading-overlay'
-
-import router from '@/router'
 import { useUserStore } from '@/store'
-import registerService from '@/services'
+import { registerService } from '@/services'
 
 const store = useUserStore()
+
+import notify from '@/notify/toastify.js';
+import router from '@/router';
+ 
 
 const usuario = reactive({
   nome: '',
@@ -18,11 +20,10 @@ const nameInput = ref('')
 const passwordInput = ref('')
 
 const loginView = async (name, password) => {
-  name, password
   try {
     const loginFuncao = await store.loginStore({ name, password })
     if (loginFuncao == true) {
-      toast.success('Logado com sucesso', { autoClose: 1000 })
+      notify('sucess', 'Logado com Sucesso')
       setTimeout(() => {
         router.push('/')
       }, 1500)
@@ -38,15 +39,15 @@ const btnSign = ref(null)
 const btnLogin = ref(null)
 const giraCard1 = () => {
   card.value.classList.remove('rotate2')
-  card.value.classList.addItem('rotate')
+  card.value.classList.add('rotate')
   btnSign.value.classList.remove('border-selection')
-  btnLogin.value.classList.addItem('border-selection')
+  btnLogin.value.classList.add('border-selection')
 }
 const giraCard2 = () => {
   card.value.classList.remove('rotate')
-  card.value.classList.addItem('rotate2')
+  card.value.classList.add('rotate2')
   btnLogin.value.classList.remove('border-selection')
-  btnSign.value.classList.addItem('border-selection')
+  btnSign.value.classList.add('border-selection')
 }
 </script>
 

@@ -1,31 +1,21 @@
 <script setup>
 import { reactive } from 'vue'
-import { cpf } from 'cpf-cnpj-validator'
-import axios from 'axios'
-
-import { useUserStore } from '@/store'
+import { cpf } from 'cpf-cnpj-validator'; 
+import axios from 'axios';
+import notify from '@/notify/toastify.js';
+import { useUserStore } from '@/store';
 const store = useUserStore()
-import router from '@/router'
 
-if (store.verificado == false) {
-  router.push('/')
-  setTimeout(() => {
-    toast.warning('Você precisa estar logado para acessar esta página', { autoClose: 1000 })
-  }, 300)
-  setTimeout(() => {
-    router.push('/singin')
-  }, 2500)
-}
 
-const payment = reactive({
-  paymentData: {
-    transaction_amount: 0,
-    description: '',
-    paymentMethodId: 'pix',
-    email: store.email,
-    identificationType: 'CPF',
-    number: 0
-  }
+const pagamento = reactive({
+    paymentData: {
+        transaction_amount: 0,
+        description: "",
+        paymentMethodId: "pix",
+        email: store.email,
+        identificationType: "CPF",
+        number: 0
+    }
 })
 
 async function testePagar(objeto) {
@@ -33,18 +23,19 @@ async function testePagar(objeto) {
     payment.paymentData.transaction_amount <= 0 ||
     payment.paymentData.transaction_amount == ''
   ) {
-    toast.error('O valor não pode ser 0 ou negativo', { autoClose: 1000 })
+    notify('O valor não pode ser 0 ou negativo', { autoClose: 1000 })
   } else if (
     payment.paymentData.number == '' ||
     payment.paymentData.number.length != 11 ||
     !cpf.isValid(payment.paymentData.number)
   ) {
-    toast.error('Insira um CPF Válido!', { autoClose: 1000 })
+    notify('Insira um CPF Válido!', { autoClose: 1000 })
   } else if (payment.paymentData.description == '') {
-    toast.error('Insira uma descrição', { autoClose: 1000 })
+    notify('Insira uma descrição', { autoClose: 1000 })
   } else {
     toast.success('Pagamento gerado com sucesso', { autoClose: 1000 })
     const { data } = await axios.post('https://webhook.peraza.live/payment/', objeto)
+
     const gerarPagamento = reactive({
       id: data.result.id,
       cliente: store.usuario,
@@ -61,7 +52,7 @@ async function testePagar(objeto) {
     window.open(data.result.point_of_interaction.transaction_data.ticket_url)
   }
 }
-store.email
+
 </script>
 
 <template>

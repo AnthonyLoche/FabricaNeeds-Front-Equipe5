@@ -7,11 +7,12 @@ export async function loginService({ name, password }) {
     nome: name,
     senha: password
   })
-  const contribuintes = ref([])
+  const contribuintes = []
   await loadItem('contribuinte/', contribuintes)
-  const idTeste = contribuintes.find((contribuinte) => contribuinte.nome === name).id
-  const emailTeste = contribuintes.find((contribuinte) => contribuinte.nome === name).email
-  const verificado = contribuintes.find((contribuinte) => contribuinte.nome === name).verificado
+  console.log(contribuintes)
+  const idTeste = contribuintes.value.find((contribuinte) => contribuinte.nome === name).id
+  const emailTeste = contribuintes.value.find((contribuinte) => contribuinte.nome === name).email
+  const verificado = contribuintes.value.find((contribuinte) => contribuinte.nome === name).verificado
   return {
     response: response,
     usuario: name,

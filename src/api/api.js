@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios from 'axios';
+import notify from '@/notify/toastify';
 
 
 async function loadItem(url, array) {
@@ -9,10 +10,10 @@ async function loadItem(url, array) {
 async function addItem(url, objeto) {
   try {
     await axios.post(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}`, objeto)
-    toast.success('Cadastrado com sucesso!', { autoClose: 1000 })
+    notify('sucess', 'Cadastrado com sucesso!')
   } catch (error) {
     const key = Object.keys(error.response.data)
-    toast.error(error.response.data[key[0]], { autoClose: 1000 })
+    notify('error', error.response.data[key[0]])
   }
 }
 
@@ -22,21 +23,21 @@ async function updateItem(objeto, url) {
       `https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`,
       objeto
     )
-    toast.success('Atualizado com sucesso!', { autoClose: 1000 })
+    notify('sucess', 'Atualizado com sucesso!')
   } catch (error) {
-    toast.error(error.response.data.error, { autoClose: 100 })
+    notify('error', error.response.data[key[0]])
   }
 }
 
 async function deleteItem(objeto, url) {
   try {
     await axios.deleteItem(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`)
-    toast.success('Deletado com sucesso!', { autoClose: 1000 })
+    notify('sucess', 'Cadastrado com sucesso!')
     setTimeout(() => {
       window.location.reload()
     }, 1500)
   } catch (error) {
-    toast.error(error.response.data.error, { autoClose: 100 })
+    notify('error', error.response.data[key[0]])
   }
 }
 export { loadItem, addItem, updateItem, deleteItem }

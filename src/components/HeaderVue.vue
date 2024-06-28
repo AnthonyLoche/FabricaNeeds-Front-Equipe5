@@ -65,17 +65,18 @@ button#menu {
 }
 
 #navDois {
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px;
-  gap: 20px;
-  top: 0;
-  left: 0;
-  width: 150px;
-  background-color: #8c52ff;
-  height: 100%;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    gap: 20px;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 150px;
+    background-color: #8C52FF;
+    height: 100%;
 }
 
 #titulo {

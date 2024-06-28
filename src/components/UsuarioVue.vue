@@ -4,15 +4,12 @@ const store = useUserStore()
 import axios from 'axios'
 import { ref } from 'vue'
 import router from '@/router'
+import notify from '@/notify/toastify.js';
+import VerifyEmailVue from './VerifyEmailVue.vue';
 
-import VerifyEmailVue from './VerifyEmailVue.vue'
-
-if (store.isLogged == false) {
-  toast.warning('Você precisa estar logado para acessar essa página', {
-    autoClose: 1000,
-    position: 'top-center'
-  })
-  router.push('/singin')
+if(store.isLogged == false){
+    notify('warning', "Você precisa estar logado para acessar essa página")
+    router.push("/singin")
 }
 
 const payments = ref([])
