@@ -9,4 +9,3 @@ import UserVue from '@/components/UsuarioVue.vue'
     <UserVue />
     <FooterVue />
 </template>
-

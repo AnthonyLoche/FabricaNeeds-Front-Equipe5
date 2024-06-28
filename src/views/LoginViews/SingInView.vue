@@ -11,6 +11,3 @@ import VerifyEmailVue from '@/components/VerifyEmailVue.vue'
   <VerifyEmailVue />
   <FooterVue />
 </template>
-
-<style scoped>
-</style>

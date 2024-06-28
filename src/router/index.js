@@ -1,18 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import SingInView from '../views/LoginViews/SingInView.vue'
-import UserView from '../views/LoginViews/UserView.vue'
-import ContribuirView from '../views/CofreViews/ContribuirView.vue'
-import EstoqueView from '../views/EstoqueViews/EstoqueView.vue'
-import { useCounterStore } from '@/store/'
-
+import { useUserStore } from '@/store/'
+import notify from '@/notify/toastify'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: () => import('../views/HomeView.vue')
     },
     {
       path: "/user",
@@ -20,7 +15,7 @@ const router = createRouter({
       meta: {
         requiresAuth: true
       },
-      component: UserView
+      component: () => import('../views/LoginViews/UserView.vue')
     },
     {
       path: "/contribuir",
@@ -28,27 +23,34 @@ const router = createRouter({
       meta: {
         requiresAuth: true
       },
-      component: ContribuirView
+      component: () => import('../views/CofreViews/ContribuirView.vue')
     },
     {
       path: "/singin",
       name: "singin",
-      component: SingInView
+      component: () => import('../views/LoginViews/SingInView.vue')
     
     },
     {
-      path: "/estoque",
-      name: "estoque",
-      component: EstoqueView
+      path: "/stock",
+      name: "stock",
+      meta: {
+        requiresAuth: true
+      },
+      component: () => import('../views/EstoqueViews/EstoqueView.vue')
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  const store = useCounterStore()
+  const store = useUserStore()
 
   if (to.meta.requiresAuth && !store.isLogged) {
     next('/')
+    notify('warning', 'Você precisa estar logado para acessar esta página')  
+    setTimeout(() => {
+      router.push("/singin")
+  }, 2500);
   } else if (to.matched.length === 0) {
     next('/') 
   } else {

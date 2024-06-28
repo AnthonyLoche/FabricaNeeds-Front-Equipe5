@@ -1,6 +1,3 @@
-<script setup>
-</script>
-
 <template>
     <footer>
         <p>Desenvolvido por: Equipe 5</p>

@@ -20,6 +20,3 @@ import loading from 'vue-loading-overlay';
   <ListaRanking />
   <FooterVue />
 </template>
-
-<style scoped>
-</style>

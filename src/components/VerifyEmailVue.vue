@@ -1,7 +1,8 @@
 <script setup>
-import { useCounterStore } from '@/store';
+import { useUserStore } from '@/store';
 import { ref } from 'vue'
-const store = useCounterStore()
+
+const store = useUserStore()
 
 const token = ref("")
 </script>
@@ -56,10 +57,7 @@ span{
     width: 70%;
     height: 40px;
     padding: 10px;
-    /* text-align: center; */
     border: 2px solid #8C52FF;
-    border-radius: 1rem;
-    /* box-shadow: 3px 3px 2px rgb(249, 255, 85); */
 }
 form{
     display: flex;
