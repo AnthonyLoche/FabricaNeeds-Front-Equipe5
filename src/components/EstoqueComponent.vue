@@ -12,7 +12,7 @@ import notify from '@/notify/toastify'
 if (store.isLogged == false) {
   router.push('/')
   setTimeout(() => {
-    notify('Você precisa estar logado para acessar estoque', { autoClose: 1000 })
+    notify('warning' , 'Você precisa estar logado para acessar estoque')
   }, 300)
   setTimeout(() => {
     router.push('/singin')

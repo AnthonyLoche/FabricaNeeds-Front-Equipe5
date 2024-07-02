@@ -23,13 +23,13 @@ const loginView = async (name, password) => {
   try {
     const loginFuncao = await store.loginStore({ name, password })
     if (loginFuncao == true) {
-      notify('sucess', 'Logado com Sucesso')
+      notify('success', 'Logado com Sucesso')
       setTimeout(() => {
         router.push('/')
       }, 1500)
     }
   } catch (error) {
-    notify(error.message, { autoClose: 1000 })
+    notify('error', error.message)
   }
 }
 

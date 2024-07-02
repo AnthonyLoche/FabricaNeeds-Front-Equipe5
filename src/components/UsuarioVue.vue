@@ -40,7 +40,7 @@ function copyPixCode(text) {
   navigator.clipboard
     .writeText(text)
     .then(() =>
-      notify('Código do PIX copiado!', { autoClose: 1000, position: 'top-center' })
+      notify('success' , 'Código do PIX copiado!')
     )
     .catch((error) => console.error('Error copiar o código do PIX:', error))
 }

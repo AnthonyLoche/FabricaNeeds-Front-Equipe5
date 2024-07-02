@@ -23,17 +23,17 @@ async function pay(objeto) {
     payment.paymentData.transaction_amount <= 0 ||
     payment.paymentData.transaction_amount == ''
   ) {
-    notify('O valor não pode ser 0 ou negativo', { autoClose: 1000 })
+    notify('error' , 'O valor não pode ser 0 ou negativo')
   } else if (
     payment.paymentData.number == '' ||
     payment.paymentData.number.length != 11 ||
     !cpf.isValid(payment.paymentData.number)
   ) {
-    notify('Insira um CPF Válido!', { autoClose: 1000 })
+    notify('error' , 'Insira um CPF Válido!')
   } else if (payment.paymentData.description == '') {
-    notify('Insira uma descrição', { autoClose: 1000 })
+    notify('error' , 'Insira uma descrição')
   } else {
-    notify('Pagamento gerado com sucesso', { autoClose: 1000 })
+    notify('success' , 'Pagamento gerado com sucesso')
     const { data } = await axios.post('https://webhook.peraza.live/payment/', objeto)
 
     const gerarPagamento = reactive({
