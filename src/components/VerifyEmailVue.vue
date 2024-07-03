@@ -1,13 +1,14 @@
 <script setup>
 import { useUserStore } from '@/store';
+import { verifyService } from '../services/verificar'
 import { ref } from 'vue'
 
 const store = useUserStore()
-
+const verifyToken = verifyService()
 const token = ref("")
 </script>
 <template>
-    <div class="container" v-if="!store.verificado">
+    <div class="container" v-if="!verifyToken">
         <h2>Insira o token de verificação</h2>
         <p>Foi enviado um token de verificação para o seu email</p>
         <span></span>
@@ -58,6 +59,7 @@ span{
     height: 40px;
     padding: 10px;
     border: 2px solid #8C52FF;
+    border-radius: 1rem;
 }
 form{
     display: flex;
