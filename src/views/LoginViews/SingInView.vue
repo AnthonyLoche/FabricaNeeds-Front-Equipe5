@@ -1,13 +1,15 @@
 <script setup>
 import HeaderVue from '@/components/HeaderVue.vue'
 import FooterVue from '@/components/FooterVue.vue'
-import LoginVue from '@/components/LoginVue.vue'
-import VerifyEmailVue from '@/components/VerifyEmailVue.vue'
+import '@passageidentity/passage-elements/passage-auth';
 </script>
 
 <template>
   <HeaderVue />
-  <LoginVue />
-  <VerifyEmailVue />
+  <div class="authContainer">
+    <passage-auth
+      app-id="taS2L6fUxtDiTBazd99yHi2D"
+    ></passage-auth>
+  </div>
   <FooterVue />
 </template>
