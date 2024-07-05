@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 let menu = ref(false)
 
-import { useUserStore } from '@/store'
-const store = useUserStore()
+import { useAuthStore } from '@/store/auth.js'
+const store = useAuthStore()
 </script>
 
 <template>

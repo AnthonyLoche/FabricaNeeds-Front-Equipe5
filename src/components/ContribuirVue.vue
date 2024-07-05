@@ -3,8 +3,8 @@ import { reactive } from 'vue'
 import { cpf } from 'cpf-cnpj-validator'; 
 import axios from 'axios';
 import notify from '@/notify/toastify.js';
-import { useUserStore } from '@/store';
-const store = useUserStore()
+import { useAuthStore } from '@/store/auth.js';
+const store = useAuthStore()
 
 
 const payment = reactive({
