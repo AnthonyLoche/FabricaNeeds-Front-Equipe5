@@ -5,7 +5,7 @@ const isLoading = ref(false)
 import { loadItem } from '@/api/api'
 
 isLoading.value = true
-await loadItem('total/', total)
+await loadItem('total/1/', total)
 isLoading.value = false
 </script>
 
@@ -17,7 +17,7 @@ isLoading.value = false
     <div id="cofreInfo">
       <h2 style="text-align: center">Porquinho Fabricador</h2>
       <p>Dinheiro Contido No Porquinho:</p>
-      <h3 id="valor" v-if="!isLoading">R$: {{ total[0].total.toFixed(2).replace('.', ',') }}</h3>
+      <h3 id="valor" v-if="!isLoading">R$: {{ total.total.toFixed(2).replace('.', ',') }}</h3>
       <p style="text-align: center">Contribua Você Também com o Nosso Amigo</p>
       <router-link id="contribuir" to="/contribuir">Contribuir</router-link>
     </div>

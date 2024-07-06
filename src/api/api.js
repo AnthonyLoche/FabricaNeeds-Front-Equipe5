@@ -10,8 +10,8 @@ async function loadItem(url, array) {
           Authorization: `Bearer ${store.token}`
       }
   }
-  )
-  array.value = data
+)
+  array.value = data.results
 }
 
 async function addItem(url, objeto) {

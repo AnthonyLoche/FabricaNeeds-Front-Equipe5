@@ -1,9 +1,22 @@
 <script setup>
-import { loadItem, addItem, updateItem, deleteItem } from '@/api/api.js'
-import { ref, reactive } from 'vue'
+import { addItem, updateItem, deleteItem } from '@/api/api.js'
+import axios from 'axios';
+import { ref, reactive, onMounted } from 'vue'
+import { useAuthStore } from '@/store/auth';
+const store = useAuthStore();
 
 const itens = ref([])
-loadItem('stock/', itens)
+
+onMounted(async() => {
+  const { data } = await axios.get(`https://fabricaneeds-back-equipe5-3edw.onrender.com/stock/`,
+    {
+      headers: {
+          Authorization: `Bearer ${store.token}`
+      }
+  }
+)
+itens.value = data.results
+})
 
 const item = reactive({
   item: '',
@@ -28,6 +41,7 @@ function closeModal() {
 </script>
 
 <template>
+  
   <main>
     <section>
       <h2>Estoque Atual:</h2>

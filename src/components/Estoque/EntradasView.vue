@@ -1,16 +1,43 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 const enterups = ref([])
 const requests = ref([])
-import { loadItem, addItem } from '@/api/api'
+import { addItem } from '@/api/api'
+import axios from 'axios'
+import { useAuthStore } from '@/store/auth';
+const store = useAuthStore();
 
 const enterup = reactive({
   quantidade: 0,
   demanda: ''
 })
 
-loadItem('addStock/', enterups)
-loadItem('demands/', requests)
+onMounted(async() => {
+  const { data } = await axios.get(`https://fabricaneeds-back-equipe5-3edw.onrender.com/demands/`,
+    {
+      headers: {
+          Authorization: `Bearer ${store.token}`
+      }
+  }
+)
+console.log(data.results)
+requests.value = data.results
+})
+
+onMounted(async() => {
+  const { data } = await axios.get(`https://fabricaneeds-back-equipe5-3edw.onrender.com/addStock/`,
+    {
+      headers: {
+          Authorization: `Bearer ${store.token}`
+      }
+  }
+)
+console.log(data.results)
+enterups.value = data.results
+})
+
+
+
 const modalAddItem = ref(null)
 </script>
 

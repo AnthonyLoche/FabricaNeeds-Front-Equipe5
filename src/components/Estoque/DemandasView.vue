@@ -1,26 +1,51 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
+import axios from 'axios'
 const requests = ref([])
 const stock = ref([])
-import { loadItem, addItem, updateItem, deleteItem } from '@/api/api'
-loadItem('demands/', requests)
-loadItem('stock/', stock)
+import { addItem, updateItem, deleteItem } from '@/api/api'
+import { useAuthStore } from '@/store/auth';
+const store = useAuthStore();
+
+onMounted(async() => {
+  const { data } = await axios.get(`https://fabricaneeds-back-equipe5-3edw.onrender.com/demands/`,
+    {
+      headers: {
+          Authorization: `Bearer ${store.token}`
+      }
+  }
+)
+console.log(data.results)
+requests.value = data.results
+})
+
+onMounted(async() => {
+  const { data } = await axios.get(`https://fabricaneeds-back-equipe5-3edw.onrender.com/stock/`,
+    {
+      headers: {
+          Authorization: `Bearer ${store.token}`
+      }
+  }
+)
+console.log(data.results)
+stock.value = data.results
+})
+
+
 
 const demanda = reactive({
   quantidade: 0,
   produto: ''
 })
 
-const modalAddItem = ref(null)
-
-const inputSearch = ref('')
-
 function filteredList() {
   return requests.value.filter((demanda) =>
-    demanda.nome_produto.toLowerCase().includes(inputSearch.value.toLowerCase())
-  )
+  demanda.nome_produto.toLowerCase().includes(inputSearch.value.toLowerCase())
+)
 }
 
+const modalAddItem = ref(null)
+const inputSearch = ref('')
 function openModal() {
   modalAddItem.value = true
 }
