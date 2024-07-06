@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core'
 
 import AuthService from '@/services/auth';
+
 import { computed } from 'vue';
 
 const authService = new AuthService();
@@ -12,6 +13,7 @@ export const useAuthStore = defineStore('auth', () => {
     email: '',
     token: '',
     id: '',
+    verificado: false,
   };
 
   const userStorageLocal = useStorage('user', localUser)
@@ -23,14 +25,20 @@ export const useAuthStore = defineStore('auth', () => {
       email: dados.email,
       token: token,
       id: dados.id,
+      verificado: false,
     };
-    
+  }
+
+  async function setVerify(data){
+    const result = await authService.verifyService(data)
+    userStorageLocal.value.verificado = result
   }
 
   const isLogged = computed(() => userStorageLocal.value.isLogged);
   const email = computed(() => userStorageLocal.value.email);
   const token = computed(() => userStorageLocal.value.token);
   const id = computed(() => userStorageLocal.value.id);
+  const verificado = computed(() => userStorageLocal.value.verificado);
   
   function setIsLogged(novoDado) {
     isLogged.value = novoDado;
@@ -52,7 +60,10 @@ export const useAuthStore = defineStore('auth', () => {
   function unsetToken() {
     localUser.value = {};
   }
+  function setVerficado(novoDado) {
+    verificado.value = novoDado;
+  }
 
 
-  return { localUser, setToken, unsetToken, isLogged, email, token, id, setIsLogged, setEmail, setId, setTokenPinia, };
+  return { localUser, setToken, unsetToken, isLogged, email, token, id, setIsLogged, setEmail, setId, setTokenPinia, setVerify, verificado, setVerficado };
 });
