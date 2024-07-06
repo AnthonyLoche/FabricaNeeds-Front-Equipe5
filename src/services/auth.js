@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { ref } from 'vue'
+import { useAuthStore } from '@/store/auth'
 
 export default class AuthService {
   async postUserToken(token) {
@@ -10,18 +11,24 @@ export default class AuthService {
     })
     return response.data
   }
-  async verifyService(data) { 
+  async verifyService(data) {
+    const store = useAuthStore()
     const membrosFabrica = ref([])
     const usernames = ref([])
     membrosFabrica.value = (await axios.get(
       'https://api.github.com/orgs/fabricadesoftware-ifc/members'
     )).data
-    membrosFabrica.value.forEach((membro) => usernames.value.push((membro.login).toLowerCase()))
-
-    if (usernames.value.includes(data.toLowerCase())) {
-      return true
-    } else {
-      return false
+    for (let i = 0; i < membrosFabrica.value.length; i++) {
+      usernames.value.push({nome: membrosFabrica.value[i].login.toLowerCase(), index: i});
     }
+    for (let i = 0; i < usernames.value.length; i++) {
+      if (usernames.value[i].nome == data.toLowerCase()) {
+        console.log(membrosFabrica.value[usernames.value[i].index].login)
+        store.setUsername(membrosFabrica.value[usernames.value[i].index].login)
+        console.log("setou na store", store.username, membrosFabrica.value[usernames.value[i].index].login)
+        return true
+      }
+    }
+    return false
   }
 }

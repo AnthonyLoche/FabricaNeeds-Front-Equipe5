@@ -26,15 +26,11 @@ export const useAuthStore = defineStore('auth', () => {
   async function setToken(token) {
     const dados = await authService.postUserToken(token);
     console.log(dados)
-    userStorageLocal.value = {
-      isLogged: true,
-      email: dados.email,
-      token: token,
-      id: dados.id,
-      verificado: dados.verified == true ? true : false,
-      picture: await axios.get(`https://api.github.com/users/${dados.github_username}`).then((res) => res.data.avatar_url),
-      username: dados.github_username
-    };
+    setIsLogged(true);
+    setEmail(dados.email);
+    setToken(token);
+    setId(dados.id);
+    setVerficado(dados.verified == true? true : false);
 
     if(verificado.value == false){
       router.push('/dados')
@@ -56,27 +52,32 @@ export const useAuthStore = defineStore('auth', () => {
   const username = computed(() => userStorageLocal.value.username)
   
   function setIsLogged(novoDado) {
-    isLogged.value = novoDado;
+    userStorageLocal.value.isLogged = novoDado;
   }
 
   function setEmail(novoDado) {
-    email.value = novoDado;
+    userStorageLocal.value.email = novoDado;
   }
 
   function setTokenPinia(novoDado) {
-    token.value = novoDado;
+    userStorageLocal.value.token = novoDado;
   }
 
   function setId(novoDado) {
-    id.value = novoDado;
+    userStorageLocal.value.id = novoDado;
   }
 
   function setPicture(novoDado) {
-    picture.value = novoDado;
+
+    userStorageLocal.value.picture = novoDado;
   }
 
   function setUsername(novoDado) {
-    username.value = novoDado;
+    userStorageLocal.value.username = novoDado;
+  }
+
+  function setVerficado(novoDado) {
+    userStorageLocal.value.verificado = novoDado;
   }
 
 
@@ -87,12 +88,12 @@ export const useAuthStore = defineStore('auth', () => {
       token: null,
       id: null,
       verificado: false,
+      picture: '',
+      username: ''
     };
   }
 
-  function setVerficado(novoDado) {
-    verificado.value = novoDado;
-  }
+  
 
   return { localUser, setToken, unsetToken, isLogged, email, token, id, setIsLogged, setEmail, setId, setTokenPinia, setVerify, verificado, setVerficado, picture, setPicture, username, setUsername};
 });

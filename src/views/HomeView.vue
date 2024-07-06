@@ -1,12 +1,11 @@
 <script setup>
+import { Suspense, onMounted } from 'vue';
 import HeaderVue from '@/components/HeaderVue.vue';
 import FooterVue from '@/components/FooterVue.vue';
 import CofreVue from '@/components/CofreVue.vue';
 import ListaRanking from '@/components/ListaRanking.vue';
-import { Suspense } from 'vue';
 import loading from 'vue-loading-overlay';
 
-import { onMounted } from 'vue';
 import { PassageUser } from '@passageidentity/passage-elements/passage-user';
 import { useAuthStore } from '@/store/auth';
 

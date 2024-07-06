@@ -7,11 +7,11 @@ const store = useAuthStore();
 import axios from 'axios';
 
 const nome = ref('')
-
 async function click(){
-    store.setVerify(nome.value)
+    await store.setVerify(nome.value)
     if (store.verificado){
-        submitAndUpgradeData(nome.value)
+        console.log(store.username)
+        await submitAndUpgradeData(store.username)
     }
     
 }
@@ -19,11 +19,14 @@ async function click(){
 
 async function submitAndUpgradeData(dados) {
     try {
+        const picture = (await axios.get(`https://api.github.com/users/${dados}`)).data.avatar_url
+        store.setPicture(picture)
+        console.log(picture)
         const response = await axios.patch(
             `https://fabricaneeds-back-equipe5-3edw.onrender.com/api/usuarios/${store.id}/`,
             { github_username: dados,
               verified: true,
-              picture: store.picture
+              picture: picture
              },
             {
                 headers: {
