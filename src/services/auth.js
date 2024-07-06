@@ -17,7 +17,8 @@ export default class AuthService {
       'https://api.github.com/orgs/fabricadesoftware-ifc/members'
     )).data
     membrosFabrica.value.forEach((membro) => usernames.value.push((membro.login).toLowerCase()))
-    if (usernames.value.includes(data)) {
+
+    if (usernames.value.includes(data.toLowerCase())) {
       return true
     } else {
       return false

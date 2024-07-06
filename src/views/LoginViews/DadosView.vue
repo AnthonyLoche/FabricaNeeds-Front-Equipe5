@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import HeaderVue from '@/components/HeaderVue.vue'
 import FooterVue from '@/components/FooterVue.vue'
 import { useAuthStore } from '@/store/auth';
@@ -22,7 +22,8 @@ async function submitAndUpgradeData(dados) {
         const response = await axios.patch(
             `http://localhost:8000/api/usuarios/${store.id}/`,
             { github_username: dados,
-              verified: true  
+              verified: true,
+              picture: store.picture
              },
             {
                 headers: {
