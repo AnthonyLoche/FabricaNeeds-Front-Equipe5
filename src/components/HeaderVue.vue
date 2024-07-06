@@ -14,24 +14,24 @@ const store = useAuthStore()
     <nav>
       <router-link to="/">Home</router-link>
       <router-link to="/stock">Estoque</router-link>
-      <router-link v-if="store.isLogged == true" to="/user">Usuário</router-link>
+      <router-link v-if="store.isLogged" to="/user">Usuário</router-link>
     </nav>
     <div id="buttons">
       <a id="github" href="https://github.com/AnthonyLoche/FabricaNeeds-Front-Equipe5" target="_blank">
         <img src="../assets/github.svg" alt="" />
       </a>
       <router-link id="singup" to="/singin" v-if="!store.isLogged">Sing Up / Log In</router-link>
-      <button v-if="store.isLogged == true" @click="store.logout()" id="btnLogout">Logout</button>
+      <button v-if="store.isLogged" @click="store.unsetToken()" id="btnLogout">Logout</button>
     </div>
     <button id="menu" @click="menu = !menu">&#9776;</button>
     <span id="navDois" v-if="menu == true">
       <button id="fechar" @click="menu = !menu">X</button>
       <router-link to="/">Home</router-link>
       <router-link to="/stock">Estoque</router-link>
-      <router-link v-if="store.isLogged == true" to="/user">Usuário</router-link>
-      <button v-if="store.isLogged == true" @click="store.logout()" id="btnLogout">Logout</button>
+      <router-link v-if="store.isLogged && store.verificado" to="/user">Usuário</router-link>
+      <button v-if="store.isLogged" @click="store.unsetToken()" id="btnLogout">Logout</button>
       <div id="botoesDois">
-        <router-link id="singup" to="/singin">Sing Up / Log In</router-link>
+        <router-link id="singup" v-if="!store.isLogged" to="/singin">Sing Up / Log In</router-link>
         <a id="github" href="https://github.com/AnthonyLoche/FabricaNeeds-Front-Equipe5" target="_blank">
         <img src="../assets/github.svg" alt="" />
       </a>

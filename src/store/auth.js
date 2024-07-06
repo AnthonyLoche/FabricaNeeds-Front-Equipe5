@@ -58,7 +58,13 @@ export const useAuthStore = defineStore('auth', () => {
 
 
   function unsetToken() {
-    localUser.value = {};
+    userStorageLocal.value = {
+      isLogged: false,
+      email: null,
+      token: null,
+      id: null,
+      verificado: false,
+    };
   }
   function setVerficado(novoDado) {
     verificado.value = novoDado;

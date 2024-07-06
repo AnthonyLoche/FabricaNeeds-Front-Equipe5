@@ -4,8 +4,8 @@ import DemandasView from '@/components/Estoque/DemandasView.vue'
 import EntradasView from '@/components/Estoque/EntradasView.vue'
 
 import { ref } from 'vue'
-import { useUserStore } from '@/store'
-const store = useUserStore()
+import { useAuthStore } from '@/store/auth'
+const store = useAuthStore()
 import router from '@/router'
 import notify from '@/notify/toastify'
 

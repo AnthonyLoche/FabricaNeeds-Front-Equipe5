@@ -50,7 +50,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const store = useAuthStore()
 
-  if (to.meta.requiresAuth && !store.isLogged) {
+  if (to.meta.requiresAuth && !store.isLogged && !store.verificado) {
     next('/')
     notify('warning', 'Você precisa estar logado para acessar esta página')  
     setTimeout(() => {
