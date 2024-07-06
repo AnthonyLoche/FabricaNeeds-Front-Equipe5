@@ -20,7 +20,7 @@ async function click(){
 async function submitAndUpgradeData(dados) {
     try {
         const response = await axios.patch(
-            `http://localhost:8000/api/usuarios/${store.id}/`,
+            `https://fabricaneeds-back-equipe5-3edw.onrender.com/api/usuarios/${store.id}/`,
             { github_username: dados,
               verified: true,
               picture: store.picture
