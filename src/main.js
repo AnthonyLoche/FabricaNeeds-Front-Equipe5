@@ -8,6 +8,7 @@ import { toast } from 'vue3-toastify'
 import App from './App.vue'
 import router from './router'
 import './notify/toastify.js'
+
 const app = createApp(App)
 const pinia = createPinia()
 

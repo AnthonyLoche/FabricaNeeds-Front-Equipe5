@@ -20,7 +20,6 @@ onMounted(async() => {
       }
   }
 )
-console.log(data.results)
 requests.value = data.results
 })
 
@@ -32,7 +31,6 @@ onMounted(async() => {
       }
   }
 )
-console.log(data.results)
 enterups.value = data.results
 })
 

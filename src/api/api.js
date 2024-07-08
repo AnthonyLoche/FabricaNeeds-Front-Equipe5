@@ -4,14 +4,17 @@ import { useAuthStore } from '@/store/auth';
 const store = useAuthStore();
 
 async function loadItem(url, array) {
-  const { data } = await axios.get(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}`,
+  try{
+    const response = await axios.get(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}`,
     {
       headers: {
           Authorization: `Bearer ${store.token}`
-      }
+    }})
+  array.value = response.data
   }
-)
-  array.value = data.results
+  catch (error) {
+    notify('error', `Não foi possível carregar os dados.`)
+  }
 }
 
 async function addItem(url, objeto) {

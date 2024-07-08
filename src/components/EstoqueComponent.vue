@@ -4,20 +4,7 @@ import DemandasView from '@/components/Estoque/DemandasView.vue'
 import EntradasView from '@/components/Estoque/EntradasView.vue'
 
 import { ref } from 'vue'
-import { useAuthStore } from '@/store/auth'
-const store = useAuthStore()
-import router from '@/router'
-import notify from '@/notify/toastify'
 
-if (store.isLogged == false) {
-  router.push('/')
-  setTimeout(() => {
-    notify('warning' , 'Você precisa estar logado para acessar estoque')
-  }, 300)
-  setTimeout(() => {
-    router.push('/singin')
-  }, 2500)
-}
 
 const tipoDiv = ref('stock')
 const setTipoDiv = (valor) => {

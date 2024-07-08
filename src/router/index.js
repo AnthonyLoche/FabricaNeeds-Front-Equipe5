@@ -10,39 +10,36 @@ const router = createRouter({
       component: () => import('../views/HomeView.vue')
     },
     {
-      path: "/user",
-      name: "user",
+      path: '/user',
+      name: 'user',
       meta: {
         requiresAuth: true
       },
       component: () => import('../views/LoginViews/UserView.vue')
     },
     {
-      path: "/contribuir",
-      name: "contribuir",
+      path: '/contribuir',
+      name: 'contribuir',
       meta: {
         requiresAuth: true
       },
       component: () => import('../views/CofreViews/ContribuirView.vue')
     },
     {
-      path: "/singin",
-      name: "singin",
-      component: () => import('../views/LoginViews/SingInView.vue')
-    
+      path: '/singin',
+      name: 'singin',
+      component: () => import('../views/LoginViews/SingInView.vue'),
+      meta: {
+        requiresAuth: false
+      }
     },
     {
-      path: "/stock",
-      name: "stock",
+      path: '/stock',
+      name: 'stock',
       meta: {
         requiresAuth: true
       },
       component: () => import('../views/EstoqueViews/EstoqueView.vue')
-    },
-    {
-      path: "/dados",
-      name: "dados",
-      component: () => import('../views/LoginViews/DadosView.vue')
     }
   ]
 })
@@ -50,16 +47,20 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const store = useAuthStore()
 
-  if (to.meta.requiresAuth && !store.isLogged && !store.verificado) {
+  if (to.meta.requiresAuth && !store.verificado) {
     next('/')
-    notify('warning', 'Você precisa estar logado para acessar esta página')  
-    setTimeout(() => {
-      router.push("/singin")
-  }, 2500);
+    if (!store.isLogged) {
+      notify('warning', 'Você precisa estar logado para acessar esta página')
+      setTimeout(() => {
+        router.push('/singin')
+      }, 2500)
+    } else {
+      notify('warning', 'Você não tem permissão para acessar esta página')
+    }
   } else if (to.matched.length === 0) {
-    next('/') 
+    next('/')
   } else {
-    next() 
+    next()
   }
 })
 

@@ -15,7 +15,6 @@ onMounted(async() => {
       }
   }
 )
-console.log(data.results)
 requests.value = data.results
 })
 
@@ -27,7 +26,6 @@ onMounted(async() => {
       }
   }
 )
-console.log(data.results)
 stock.value = data.results
 })
 

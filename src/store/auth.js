@@ -1,10 +1,8 @@
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core'
-import axios from 'axios';
 import AuthService from '@/services/auth';
 
 import { computed } from 'vue';
-import router from '@/router';
 
 const authService = new AuthService();
 
@@ -19,28 +17,17 @@ export const useAuthStore = defineStore('auth', () => {
     username: ''
   };
 
-  console.log(localUser)
-
   const userStorageLocal = useStorage('user', localUser)
 
   async function setToken(token) {
     const dados = await authService.postUserToken(token);
-    console.log(dados)
     setIsLogged(true);
     setEmail(dados.email);
-    setToken(token);
+    setTokenPinia(token);
     setId(dados.id);
-    setVerficado(dados.verified == true? true : false);
-
-    if(verificado.value == false){
-      router.push('/dados')
-    }
-  }
-
-  async function setVerify(data){
-    const result = await authService.verifyService(data)
-    userStorageLocal.value.verificado = result
-    console.log("verificar",result)
+    setVerficado(dados.verified);
+    setPicture(dados.picture);
+    setUsername(dados.github_username);
   }
 
   const isLogged = computed(() => userStorageLocal.value.isLogged);
@@ -82,18 +69,16 @@ export const useAuthStore = defineStore('auth', () => {
 
 
   function unsetToken() {
-    userStorageLocal.value = {
-      isLogged: false,
-      email: null,
-      token: null,
-      id: null,
-      verificado: false,
-      picture: '',
-      username: ''
-    };
+    setIsLogged(false);
+    setEmail(null);
+    setTokenPinia(null);
+    setId(null);
+    setPicture('');
+    setUsername('');
+    setVerficado(false);
   }
 
   
 
-  return { localUser, setToken, unsetToken, isLogged, email, token, id, setIsLogged, setEmail, setId, setTokenPinia, setVerify, verificado, setVerficado, picture, setPicture, username, setUsername};
+  return { localUser, setToken, unsetToken, isLogged, email, token, id, setIsLogged, setEmail, setId, setTokenPinia, verificado, setVerficado, picture, setPicture, username, setUsername};
 });
