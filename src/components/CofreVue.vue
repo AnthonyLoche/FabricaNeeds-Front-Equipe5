@@ -17,7 +17,7 @@ isLoading.value = false
     <div id="cofreInfo">
       <h2 style="text-align: center">Porquinho Fabricador</h2>
       <p>Dinheiro Contido No Porquinho:</p>
-      <h3 id="valor" v-if="!isLoading">R$: {{ total.total || "Voce precisa estar Logado" }}</h3>
+      <h3 id="valor" v-if="!isLoading">R$: {{ total.total }}</h3>
       <p style="text-align: center">Contribua Você Também com o Nosso Amigo</p>
       <router-link id="contribuir" to="/contribuir">Contribuir</router-link>
     </div>

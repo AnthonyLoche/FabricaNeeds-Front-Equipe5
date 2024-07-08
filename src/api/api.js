@@ -4,22 +4,18 @@ import { useAuthStore } from '@/store/auth';
 const store = useAuthStore();
 
 async function loadItem(url, array) {
-  try{
-    const response = await axios.get(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}`,
+    const response = await axios.get(`http://localhost:8000/${url}`,
     {
       headers: {
           Authorization: `Bearer ${store.token}`
     }})
   array.value = response.data
-  }
-  catch (error) {
-    notify('error', `Não foi possível carregar os dados.`)
-  }
+ 
 }
 
 async function addItem(url, objeto) {
   try {
-    await axios.post(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}`, objeto,
+    await axios.post(`http://localhost:8000/${url}`, objeto,
       {
         headers: {
             Authorization: `Bearer ${store.token}`
@@ -36,7 +32,7 @@ async function addItem(url, objeto) {
 async function updateItem(objeto, url) {
   try {
     await axios.put(
-      `https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`,
+      `http://localhost:8000/${url}/${objeto.id}/`,
       objeto,
       {
         headers: {
@@ -52,7 +48,7 @@ async function updateItem(objeto, url) {
 
 async function deleteItem(objeto, url) {
   try {
-    await axios.delete(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`,
+    await axios.delete(`http://localhost:8000/${url}/${objeto.id}/`,
       {
         headers: {
             Authorization: `Bearer ${store.token}`
