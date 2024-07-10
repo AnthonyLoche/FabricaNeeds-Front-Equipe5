@@ -47,16 +47,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const store = useAuthStore()
 
-  if (to.meta.requiresAuth && !store.verificado) {
-    next('/')
-    if (!store.isLogged) {
-      notify('warning', 'Você precisa estar logado para acessar esta página')
-      setTimeout(() => {
-        router.push('/singin')
-      }, 2500)
-    } else {
-      notify('warning', 'Você não tem permissão para acessar esta página')
-    }
+  if (to.meta.requiresAuth && !store.isLogged) {
+    notify('warning', 'Você precisa estar logado para acessar esta página')
+    setTimeout(() => {
+      router.push('/singin')
+    }, 2500)
   } else if (to.matched.length === 0) {
     next('/')
   } else {

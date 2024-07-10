@@ -28,7 +28,7 @@ const store = useAuthStore()
       <button id="fechar" @click="menu = !menu">X</button>
       <router-link to="/">Home</router-link>
       <router-link to="/stock">Estoque</router-link>
-      <router-link v-if="store.isLogged && store.verificado" to="/user">Usuário</router-link>
+      <router-link v-if="store.isLogged" to="/user">Usuário</router-link>
       <button v-if="store.isLogged" @click="store.unsetToken()" id="btnLogout">Logout</button>
       <div id="botoesDois">
         <router-link id="singup" v-if="!store.isLogged" to="/singin">Sing Up / Log In</router-link>
