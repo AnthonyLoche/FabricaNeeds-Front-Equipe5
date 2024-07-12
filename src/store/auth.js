@@ -71,7 +71,7 @@ export const useAuthStore = defineStore('auth', () => {
       username: '',
     };
     localStorage.clear();
-    router.push('/')
+    router.push('/singin')
   }
 
   return { localUser, setToken, unsetToken, isLogged, email, token, id, setIsLogged, setEmail, setId, setTokenPinia, picture, setPicture, username, setUsername};

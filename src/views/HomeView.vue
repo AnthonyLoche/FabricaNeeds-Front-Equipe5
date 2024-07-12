@@ -5,6 +5,7 @@ import CofreVue from '@/components/CofreVue.vue';
 import ListaRanking from '@/components/ListaRanking.vue';
 import { Suspense } from 'vue';
 import loading from 'vue-loading-overlay';
+import router from '@/router';
 
 import { onMounted } from 'vue';
 import { PassageUser } from '@passageidentity/passage-elements/passage-user';
@@ -21,9 +22,11 @@ const getUserInfo = async () => {
       await authStore.setToken(authToken);
     } else {
       authStore.unsetToken();
+      router.push("/singin")
     }
   } catch (error) {
     authStore.unsetToken();
+    router.push("/singin")
   }
 };
 
