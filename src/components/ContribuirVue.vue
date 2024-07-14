@@ -33,22 +33,26 @@ async function pay(objeto) {
   } else if (payment.paymentData.description == '') {
     notify('error' , 'Insira uma descrição')
   } else {
-    notify('success' , 'Pagamento gerado com sucesso')
     const { data } = await axios.post('https://webhook.peraza.live/payment/', objeto)
 
     const gerarPagamento = reactive({
-      id: data.result.id,
-      cliente: store.usuario,
+      payment_id: data.result.id,
+      cliente: store.username,
       email: payment.paymentData.email,
       cpf: payment.paymentData.number,
       valor: payment.paymentData.transaction_amount,
       status: 'Pendente',
-      data_pagamento: new Date(),
-      data_aprovacao: '',
       descricao: payment.paymentData.description,
       pix_copiacola: data.result.point_of_interaction.transaction_data.qr_code
     })
-    await axios.post('https://webhook.peraza.live/cadastrarPagamento/', gerarPagamento)
+    await axios.post('https://fabricaneeds-back-equipe5-3edw.onrender.com/payments/', gerarPagamento,
+    {
+        headers: {
+            Authorization: `Bearer ${store.token}`
+        }
+    }
+    )
+    notify('success' , 'Pagamento gerado com sucesso')
     window.open(data.result.point_of_interaction.transaction_data.ticket_url)
   }
 }
@@ -76,7 +80,7 @@ async function pay(objeto) {
         </div>
         <div class="input-label">
           <label for="">Descrição:</label>
-          <input type="text" v-model="payment.paymentData.description" class="input" />
+          <input type="text" v-model="payment.paymentData.description" class="input" maxlength="100">
         </div>
         <div class="input-label"></div>
         <button @click="pay(payment)">Pagar</button>
