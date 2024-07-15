@@ -3,7 +3,6 @@ import HeaderVue from '@/components/HeaderVue.vue';
 import FooterVue from '@/components/FooterVue.vue';
 import CofreVue from '@/components/CofreVue.vue';
 import ListaRanking from '@/components/ListaRanking.vue';
-import AsideBar from '@/components/AsideBar.vue';
 import { Suspense } from 'vue';
 import loading from 'vue-loading-overlay';
 import router from '@/router';
@@ -37,7 +36,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <AsideBar />
+  <HeaderVue />
   <Suspense>
     <template #default>
       <CofreVue />
