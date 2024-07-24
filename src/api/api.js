@@ -1,10 +1,11 @@
-import axios from 'axios';
 import notify from '@/notify/toastify';
 import { useAuthStore } from '@/store/auth';
+import { api } from '@/plugins/api';
+
 const store = useAuthStore();
 
 async function loadItem(url, array) {
-    const response = await axios.get(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}`,
+    const response = await api.get(url,
     {
       headers: {
           Authorization: `Bearer ${store.token}`
@@ -15,24 +16,23 @@ async function loadItem(url, array) {
 
 async function addItem(url, objeto) {
   try {
-    await axios.post(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}`, objeto,
+    await api.post(url, objeto,
       {
         headers: {
             Authorization: `Bearer ${store.token}`
         }
     }
     )
-    notify('sucess', 'Adicionado com sucesso!')
+    notify('success', 'Adicionado com sucesso!')
   } catch (error) {
     const key = Object.keys(error.response.data)
-    notify('error', error.response.data[key[0]])
+    notify('error', error.response.data[key])
   }
 }
 
 async function updateItem(objeto, url) {
   try {
-    await axios.put(
-      `https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`,
+    await api.put(url,
       objeto,
       {
         headers: {
@@ -40,27 +40,29 @@ async function updateItem(objeto, url) {
         }
     }
     )
-    notify('sucess', 'Atualizado com sucesso!')
+    notify('success', 'Atualizado com sucesso!')
   } catch (error) {
-    notify('error', error.response.data[key[0]])
+    const key = Object.keys(error.response.data)
+    notify('error', error.response.data[key])
   }
 }
 
 async function deleteItem(objeto, url) {
   try {
-    await axios.delete(`https://fabricaneeds-back-equipe5-3edw.onrender.com/${url}/${objeto.id}/`,
+    await api.delete(url,
       {
         headers: {
             Authorization: `Bearer ${store.token}`
         }
     }
     )
-    notify('sucess', 'Deletado com sucesso!')
+    notify('success', 'Deletado com sucesso!')
     setTimeout(() => {
       window.location.reload()
     }, 1500)
   } catch (error) {
-    notify('error', error.response.data[key[0]])
+    const key = Object.keys(error.response.data)
+    notify('error', error.response.data[key])
   }
 }
 export { loadItem, addItem, updateItem, deleteItem }
